@@ -1,4 +1,4 @@
-# Task runner untuk project droid. Daftar perintah: `just` atau `just --list`.
+# Task runner project. Daftar perintah: `just` atau `just --list`.
 
 set shell := ["bash", "-euo", "pipefail", "-c"]
 
@@ -71,6 +71,21 @@ theme *args:
 # Generate boilerplate style/snippet forui: `just forui style create button`
 forui *args:
     dart run forui {{args}}
+
+# ---------- Template ----------
+
+# Ganti identitas app: `just rename kasir_app com.perusahaan "Kasir App"`
+rename name org title="":
+    #!/usr/bin/env bash
+    set -euo pipefail
+    if [ -n "{{title}}" ]; then
+      dart run tool/rename.dart --name "{{name}}" --org "{{org}}" --title "{{title}}"
+    else
+      dart run tool/rename.dart --name "{{name}}" --org "{{org}}"
+    fi
+    flutter clean >/dev/null && flutter pub get
+    # Nama package baru mengubah urutan import; rapikan agar lint tetap hijau.
+    dart fix --apply
 
 # ---------- FSD ----------
 

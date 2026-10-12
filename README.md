@@ -50,6 +50,24 @@ flutter build apk --debug
 Untuk menjalankan di Waydroid (Android container di Linux), lihat
 [docs/waydroid.md](docs/waydroid.md).
 
+## Alur bawaan
+
+Splash → onboarding (sekali) → sign in / sign up / lupa password → menu utama
+bottom tabs (Beranda, Jelajah, Profil) → pengaturan (tema persisten, versi) →
+keluar. Auth memakai `FakeAuthApi` in-memory (akun demo `demo@example.com` /
+`password123`) yang bisa diganti lewat satu provider. Detail di
+[docs/screens.md](docs/screens.md).
+
+## Memulai app baru dari template
+
+Repo ini adalah GitHub template. Setelah "Use this template" dan clone:
+
+```bash
+just rename kasir_app com.perusahaan "Kasir App"   # nama package, app id, judul
+just setup
+just check
+```
+
 Konfigurasi runtime lewat `--dart-define`, misalnya:
 
 ```bash
@@ -120,6 +138,9 @@ dan path-nya di `lib/shared/config/app_routes.dart`.
 - `dio`: HTTP client (`dioProvider` di `shared/api`)
 - `forui`: UI kit bergaya shadcn/ui, dipakai lewat `shared/ui` (lihat
   [docs/ui-kit.md](docs/ui-kit.md))
+- `shared_preferences`, `flutter_secure_storage`: preferensi dan token, dibungkus
+  `KeyValueStore` / `SecureStore` di `shared/lib/storage`
+- `package_info_plus`: versi app di halaman pengaturan
 
 ## Contoh alur yang sudah ada
 
