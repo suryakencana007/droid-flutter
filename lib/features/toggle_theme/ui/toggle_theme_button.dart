@@ -19,7 +19,8 @@ class ToggleThemeButton extends ConsumerWidget {
     return IconButton(
       tooltip: isDark ? 'Mode terang' : 'Mode gelap',
       icon: Icon(isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined),
-      onPressed: () => ref.read(themeModeProvider.notifier).toggle(),
+      onPressed: () =>
+          ref.read(themeModeProvider.notifier).toggle(isCurrentlyDark: isDark),
     );
   }
 }

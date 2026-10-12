@@ -5,12 +5,15 @@ class ThemeModeNotifier extends Notifier<ThemeMode> {
   @override
   ThemeMode build() => ThemeMode.system;
 
-  void toggle() {
-    state = switch (state) {
-      ThemeMode.dark => ThemeMode.light,
-      ThemeMode.light || ThemeMode.system => ThemeMode.dark,
-    };
+  /// Balik tema berdasarkan brightness yang sedang efektif di layar.
+  ///
+  /// Dari [ThemeMode.system] kita tidak tahu apakah layar gelap atau terang,
+  /// jadi caller mengirim [isCurrentlyDark] hasil resolusi di UI.
+  void toggle({required bool isCurrentlyDark}) {
+    state = isCurrentlyDark ? ThemeMode.light : ThemeMode.dark;
   }
+
+  void reset() => state = ThemeMode.system;
 }
 
 final themeModeProvider =
