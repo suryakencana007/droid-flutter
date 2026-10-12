@@ -33,6 +33,9 @@ flutter analyze
 flutter build apk --debug
 ```
 
+Untuk menjalankan di Waydroid (Android container di Linux), lihat
+[docs/waydroid.md](docs/waydroid.md).
+
 Konfigurasi runtime lewat `--dart-define`, misalnya:
 
 ```bash

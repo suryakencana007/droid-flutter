@@ -15,6 +15,13 @@ Buat slice baru dengan `dart run tool/fsd.dart <layer> <slice>`.
   "mengapa" dalam bentuk bullet seperlunya.
 - Jalankan `flutter analyze` dan `flutter test` sebelum commit.
 
+## Dokumentasi project
+
+Pengetahuan project disimpan di repo, bukan di memori asisten, agar tetap ada
+saat ganti sesi atau akun. Letakkan catatan operasional di `docs/`:
+
+- `docs/waydroid.md`: menjalankan dan mengendalikan aplikasi di Waydroid.
+
 ## Toolchain
 
 - Flutter dan JDK dipin di `mise.toml`; `ANDROID_HOME` menunjuk ke `~/.androidsdk`.
