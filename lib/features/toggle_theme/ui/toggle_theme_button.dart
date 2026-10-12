@@ -9,7 +9,7 @@ class ToggleThemeButton extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final mode = ref.watch(themeModeProvider);
+    final mode = ref.watch(themeModeProvider).value ?? ThemeMode.system;
     final isDark = switch (mode) {
       ThemeMode.dark => true,
       ThemeMode.light => false,

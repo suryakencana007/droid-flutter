@@ -1,24 +1,25 @@
 import 'package:droid/entities/user/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:droid/widgets/app_bar/index.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
-class HomePage extends StatelessWidget {
+class HomePage extends ConsumerWidget {
   const HomePage({super.key});
 
   @override
-  Widget build(BuildContext context) {
-    const user = User(id: '1', name: 'Surya', email: 'surya@example.com');
+  Widget build(BuildContext context, WidgetRef ref) {
+    final user = ref.watch(currentUserProvider).value;
     final typography = context.theme.typography;
     final colors = context.theme.colors;
 
     return Scaffold(
-      appBar: const DroidAppBar(title: 'Droid'),
+      appBar: const DroidAppBar(title: 'Beranda'),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
           Text(
-            'Feature-Sliced Design bootstrap',
+            'Halo, ${user?.name ?? 'teman'}',
             // Typeface display forui memakai line-height besar untuk judul satu
             // baris; rapatkan untuk judul yang bisa membungkus.
             style: typography.display.xl2.copyWith(
@@ -33,7 +34,7 @@ class HomePage extends StatelessWidget {
             style: typography.body.sm.copyWith(color: colors.mutedForeground),
           ),
           const Gap(AppSpacing.lg),
-          const UserCard(user: user),
+          if (user != null) UserCard(user: user),
           const Gap(AppSpacing.lg),
           FButton(
             onPress: () => showFToast(
