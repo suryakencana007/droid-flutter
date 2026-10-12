@@ -3,6 +3,28 @@
 Waydroid dipakai sebagai device Android di mesin Linux tanpa emulator.
 Diverifikasi jalan dengan Flutter 3.47.7 pada Waydroid (Android 13, x86_64).
 
+## Jalan pintas lewat just
+
+Semua langkah di bawah sudah dibungkus recipe di `justfile`. IP Waydroid dibaca
+otomatis dari `waydroid status`; override dengan `just ip=10.0.0.5 run`.
+
+| Perintah                | Fungsi                                              |
+|-------------------------|-----------------------------------------------------|
+| `just connect`          | `adb connect` ke Waydroid                           |
+| `just info`             | Versi Android, ABI, ukuran layar                    |
+| `just run`              | connect + info + `flutter run` (hot reload `r`)     |
+| `just run-release`      | Sama, mode release                                  |
+| `just install`          | Pasang APK debug tanpa sesi flutter                 |
+| `just launch` / `stop`  | Buka / hentikan aplikasi                            |
+| `just screenshot [out]` | Screenshot device, default `screenshots/<waktu>.png`|
+| `just tap X Y`          | Simulasi tap                                        |
+| `just type "teks"`      | Ketik teks                                          |
+| `just key BACK`         | Kirim keyevent                                      |
+| `just logcat`           | Log hanya untuk proses aplikasi                     |
+| `just shell`            | Shell adb interaktif                                |
+
+Perintah mentah di bawah tetap berguna kalau `just` tidak tersedia.
+
 ## Sambungkan adb
 
 ```bash

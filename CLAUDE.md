@@ -22,6 +22,12 @@ saat ganti sesi atau akun. Letakkan catatan operasional di `docs/`:
 
 - `docs/waydroid.md`: menjalankan dan mengendalikan aplikasi di Waydroid.
 
+## Task runner
+
+Gunakan `just` (lihat `justfile`) daripada mengetik perintah flutter/adb panjang:
+`just check` sebelum commit, `just run` untuk Waydroid, `just slice <layer> <nama>`
+untuk slice FSD baru. Tambahkan recipe baru ke `justfile` saat ada alur berulang.
+
 ## Toolchain
 
 - Flutter dan JDK dipin di `mise.toml`; `ANDROID_HOME` menunjuk ke `~/.androidsdk`.

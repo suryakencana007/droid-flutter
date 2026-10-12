@@ -25,6 +25,20 @@ flutter config --android-sdk ~/.androidsdk
 
 ## Menjalankan
 
+Perintah harian dibungkus [just](https://github.com/casey/just) (dipin di
+`mise.toml`). Ketik `just` untuk daftar lengkap.
+
+```bash
+just setup            # mise install + flutter pub get
+just doctor
+just run              # jalankan di Waydroid (connect adb + info device + flutter run)
+just check            # flutter analyze + flutter test
+just build-apk
+just slice feature auth
+```
+
+Tanpa just, perintah mentahnya:
+
 ```bash
 flutter pub get
 flutter run           # pilih device/emulator yang tersedia
@@ -89,10 +103,11 @@ import yang bermasalah.
 ## Membuat slice baru
 
 ```bash
-dart run tool/fsd.dart feature auth            # lib/features/auth/{ui,model}
-dart run tool/fsd.dart entity product ui model api
-dart run tool/fsd.dart page profile
-dart run tool/fsd.dart widget sidebar
+just slice feature auth                        # lib/features/auth/{ui,model}
+just slice entity product ui model api
+just slice page profile
+just slice widget sidebar
+# atau langsung: dart run tool/fsd.dart <layer> <slice> [segment ...]
 ```
 
 Setelah membuat page baru, daftarkan route-nya di `lib/app/router/app_router.dart`

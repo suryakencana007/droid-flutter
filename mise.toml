@@ -1,6 +1,7 @@
 [tools]
 flutter = "3.47.7"
 java = "temurin-21"
+just = "1.58.0"
 
 [env]
 ANDROID_HOME = "{{env.HOME}}/.androidsdk"

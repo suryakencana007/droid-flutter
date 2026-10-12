@@ -1,0 +1,140 @@
+# Task runner untuk project droid. Daftar perintah: `just` atau `just --list`.
+
+set shell := ["bash", "-euo", "pipefail", "-c"]
+
+# IP Waydroid dibaca dari `waydroid status`; bisa dioverride: `just ip=10.0.0.5 run`
+ip := `waydroid status 2>/dev/null | awk -F'\t' '/IP address/{print $2}' || true`
+device := ip + ":5555"
+app_id := "com.kubus.work.droid"
+
+# Tampilkan daftar recipe
+default:
+    @just --list --unsorted
+
+# ---------- Setup ----------
+
+# Pasang toolchain (mise) dan dependensi Dart
+setup:
+    mise install
+    flutter pub get
+
+# Cek toolchain Flutter dan Android
+doctor:
+    flutter doctor
+
+# ---------- Kualitas ----------
+
+# Analisis statis
+analyze:
+    flutter analyze
+
+# Semua test, termasuk uji aturan arsitektur FSD
+test *args:
+    flutter test {{args}}
+
+# Hanya uji aturan import FSD
+test-arch:
+    flutter test test/architecture
+
+# Format kode
+fmt:
+    dart format lib test tool
+
+# Analyze + test, dipakai sebelum commit
+check: analyze test
+
+# Terapkan perbaikan otomatis dari analyzer
+fix:
+    dart fix --apply
+
+# ---------- Build ----------
+
+# Build APK debug
+build-apk:
+    flutter build apk --debug
+
+# Build APK release
+build-release:
+    flutter build apk --release
+
+# Bersihkan artefak build lalu pub get
+clean:
+    flutter clean
+    flutter pub get
+
+# ---------- FSD ----------
+
+# Buat slice baru: `just slice feature auth` atau `just slice entity product ui model api`
+slice layer name *segments:
+    dart run tool/fsd.dart {{layer}} {{name}} {{segments}}
+
+# ---------- Waydroid ----------
+
+# Sambungkan adb ke Waydroid
+connect:
+    @test -n "{{ip}}" || { echo "Waydroid belum jalan: waydroid session start"; exit 1; }
+    @adb connect {{device}} >/dev/null
+    @adb devices | grep -q "{{device}}.*device$" || { echo "adb belum authorized; cek dialog di Waydroid lalu ulangi"; exit 1; }
+
+# Putuskan adb dari Waydroid
+disconnect:
+    adb disconnect {{device}}
+
+# Info device: versi Android, ABI, ukuran layar
+info: connect
+    @echo "Android : $(adb -s {{device}} shell getprop ro.build.version.release)"
+    @echo "ABI     : $(adb -s {{device}} shell getprop ro.product.cpu.abi)"
+    @echo "Layar   : $(adb -s {{device}} shell wm size | sed 's/.*: //')"
+
+# Jalankan aplikasi di Waydroid (hot reload: r, hot restart: R, keluar: q)
+run *args: info
+    flutter run -d {{device}} {{args}}
+
+# Jalankan aplikasi dalam mode release di Waydroid
+run-release: info
+    flutter run -d {{device}} --release
+
+# Pasang APK debug ke Waydroid tanpa menjalankan sesi flutter
+install: connect
+    flutter install -d {{device}} --debug
+
+# Hapus aplikasi dari Waydroid
+uninstall: connect
+    adb -s {{device}} uninstall {{app_id}}
+
+# Buka aplikasi yang sudah terpasang
+launch: connect
+    adb -s {{device}} shell am start -n {{app_id}}/.MainActivity
+
+# Hentikan aplikasi di Waydroid
+stop: connect
+    adb -s {{device}} shell am force-stop {{app_id}}
+
+# Screenshot device ke file (default: screenshots/<timestamp>.png)
+screenshot out="": connect
+    #!/usr/bin/env bash
+    set -euo pipefail
+    out="{{out}}"
+    if [ -z "$out" ]; then mkdir -p screenshots; out="screenshots/$(date +%Y%m%d-%H%M%S).png"; fi
+    adb -s {{device}} shell 'screencap -p /sdcard/cap.png && base64 /sdcard/cap.png' 2>/dev/null | base64 -d > "$out"
+    echo "$out"
+
+# Tap koordinat layar: `just tap 453 62`
+tap x y: connect
+    adb -s {{device}} shell input tap {{x}} {{y}}
+
+# Ketik teks ke field yang sedang fokus
+type text: connect
+    adb -s {{device}} shell input text '{{text}}'
+
+# Kirim keyevent, contoh: `just key BACK`
+key name: connect
+    adb -s {{device}} shell input keyevent KEYCODE_{{name}}
+
+# Logcat hanya untuk proses aplikasi
+logcat: connect
+    adb -s {{device}} logcat --pid="$(adb -s {{device}} shell pidof {{app_id}})"
+
+# Shell adb interaktif ke Waydroid
+shell: connect
+    adb -s {{device}} shell
