@@ -118,10 +118,13 @@ dan path-nya di `lib/shared/config/app_routes.dart`.
 - `flutter_riverpod`: dependency injection dan state management
 - `go_router`: routing deklaratif
 - `dio`: HTTP client (`dioProvider` di `shared/api`)
+- `forui`: UI kit bergaya shadcn/ui, dipakai lewat `shared/ui` (lihat
+  [docs/ui-kit.md](docs/ui-kit.md))
 
 ## Contoh alur yang sudah ada
 
 `HomePage` (pages) memakai `DroidAppBar` (widgets) yang menyertakan
-`ToggleThemeButton` (features). Halaman yang sama menampilkan `UserCard`
-(entities) dengan spasi dari `shared/ui`. Layer `app` membaca
-`themeModeProvider` dari feature `toggle_theme` untuk mengatur `themeMode`.
+`ToggleThemeButton` (features, `FButton.icon`). Halaman yang sama menampilkan
+`UserCard` (entities, `FCard` + `FAvatar`) dengan spasi dan komponen forui dari
+`shared/ui`. Layer `app` membaca `themeModeProvider` dari feature
+`toggle_theme` untuk mengatur `themeMode` dan membungkus app dengan `FTheme`.

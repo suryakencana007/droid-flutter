@@ -1,5 +1,5 @@
 import 'package:droid/features/toggle_theme/index.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 /// Composite block: AppBar standar aplikasi yang menyertakan feature toggle tema.
 class DroidAppBar extends StatelessWidget implements PreferredSizeWidget {

@@ -1,4 +1,5 @@
-import 'package:flutter/material.dart';
+import 'package:droid/shared/ui/index.dart';
+import 'package:flutter/widgets.dart';
 
 import '../model/user.dart';
 
@@ -12,12 +13,28 @@ class UserCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      child: ListTile(
-        leading: CircleAvatar(child: Text(user.initials)),
-        title: Text(user.name),
-        subtitle: Text(user.email),
-        trailing: trailing,
+    final style = context.theme.cardStyle;
+
+    return FCard(
+      child: Padding(
+        padding: style.padding,
+        child: Row(
+          children: [
+            FAvatar.raw(child: Text(user.initials)),
+            const Gap(AppSpacing.md),
+            Expanded(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(user.name, style: style.titleTextStyle),
+                  const Gap(AppSpacing.xs),
+                  Text(user.email, style: style.subtitleTextStyle),
+                ],
+              ),
+            ),
+            ?trailing,
+          ],
+        ),
       ),
     );
   }

@@ -5,6 +5,10 @@
 //  2. Slice tidak boleh mengimpor slice lain pada layer yang sama.
 //  3. Import lintas slice harus lewat public API slice (`index.dart`).
 //  4. Import di dalam satu slice memakai path relatif dan tidak keluar dari slice.
+//  5. Package UI kit (forui) hanya boleh diimpor dari `shared/ui`; layer lain
+//     memakai `package:droid/shared/ui/index.dart`.
+//  6. Library Material/Cupertino bawaan Flutter (deprecated sejak 3.47) tidak
+//     dipakai; gunakan `package:material_ui` / `package:cupertino_ui`.
 import 'dart:io';
 
 import 'package:flutter_test/flutter_test.dart';
@@ -17,6 +21,19 @@ const layers = ['app', 'pages', 'widgets', 'features', 'entities', 'shared'];
 
 /// Layer tanpa slice: isinya langsung segment, jadi bebas saling impor di dalamnya.
 const sliceLessLayers = {'app', 'shared'};
+
+/// Package pihak ketiga yang dibungkus di satu tempat. Key: nama package,
+/// value: prefix path (relatif terhadap lib/) yang boleh mengimpornya.
+const wrappedPackages = {
+  'forui': 'shared/ui/',
+  'forui_lucide': 'shared/ui/',
+};
+
+/// Import yang dilarang di mana pun, beserta penggantinya.
+const forbiddenImports = {
+  'package:flutter/material.dart': 'package:material_ui/material_ui.dart',
+  'package:flutter/cupertino.dart': 'package:cupertino_ui/cupertino_ui.dart',
+};
 
 final _importPattern = RegExp(
   r'''^\s*(?:import|export)\s+['"]([^'"]+)['"]''',
@@ -71,12 +88,26 @@ void main() {
       final uri = match.group(1)!;
       if (uri.startsWith('dart:')) continue;
 
+      final replacement = forbiddenImports[uri];
+      if (replacement != null) {
+        violations.add('$rel -> $uri: deprecated, pakai $replacement');
+        continue;
+      }
+
       String target;
       var isPackageImport = false;
       if (uri.startsWith('package:$packageName/')) {
         target = uri.substring('package:$packageName/'.length);
         isPackageImport = true;
       } else if (uri.startsWith('package:')) {
+        final pkg = uri.substring('package:'.length).split('/').first;
+        final allowedPrefix = wrappedPackages[pkg];
+        if (allowedPrefix != null && !rel.startsWith(allowedPrefix)) {
+          violations.add(
+            '$rel -> $uri: package $pkg hanya boleh diimpor dari '
+            '$allowedPrefix, pakai package:$packageName/shared/ui/index.dart',
+          );
+        }
         continue; // dependency eksternal
       } else {
         target = p.normalize(p.join(p.dirname(rel), uri));

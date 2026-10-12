@@ -1,5 +1,6 @@
-import 'package:flutter/material.dart';
+import 'package:droid/shared/ui/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_ui/material_ui.dart';
 
 import '../model/theme_mode_provider.dart';
 
@@ -16,11 +17,12 @@ class ToggleThemeButton extends ConsumerWidget {
         MediaQuery.platformBrightnessOf(context) == Brightness.dark,
     };
 
-    return IconButton(
-      tooltip: isDark ? 'Mode terang' : 'Mode gelap',
-      icon: Icon(isDark ? Icons.light_mode_outlined : Icons.dark_mode_outlined),
-      onPressed: () =>
+    return FButton.icon(
+      variant: FButtonVariant.ghost,
+      semanticsLabel: isDark ? 'Mode terang' : 'Mode gelap',
+      onPress: () =>
           ref.read(themeModeProvider.notifier).toggle(isCurrentlyDark: isDark),
+      child: Icon(isDark ? FLucideIcons.sun : FLucideIcons.moon),
     );
   }
 }

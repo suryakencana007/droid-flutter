@@ -62,6 +62,16 @@ clean:
     flutter clean
     flutter pub get
 
+# ---------- UI kit (forui) ----------
+
+# Generate tema forui custom (interaktif), lihat docs/ui-kit.md
+theme *args:
+    dart run forui theme create {{args}}
+
+# Generate boilerplate style/snippet forui: `just forui style create button`
+forui *args:
+    dart run forui {{args}}
+
 # ---------- FSD ----------
 
 # Buat slice baru: `just slice feature auth` atau `just slice entity product ui model api`
@@ -94,8 +104,8 @@ run *args: info
 run-release: info
     flutter run -d {{device}} --release
 
-# Pasang APK debug ke Waydroid tanpa menjalankan sesi flutter
-install: connect
+# Build lalu pasang APK debug ke Waydroid tanpa menjalankan sesi flutter
+install: connect build-apk
     flutter install -d {{device}} --debug
 
 # Hapus aplikasi dari Waydroid

@@ -21,6 +21,8 @@ Pengetahuan project disimpan di repo, bukan di memori asisten, agar tetap ada
 saat ganti sesi atau akun. Letakkan catatan operasional di `docs/`:
 
 - `docs/waydroid.md`: menjalankan dan mengendalikan aplikasi di Waydroid.
+- `docs/ui-kit.md`: UI kit forui, wajib diimpor lewat `shared/ui/index.dart`.
+  Material diimpor dari `package:material_ui`, bukan `package:flutter/material.dart`.
 
 ## Task runner
 
