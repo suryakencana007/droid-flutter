@@ -745,6 +745,102 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Gagal memuat halaman berikutnya'**
   String get loadMoreFailed;
+
+  /// No description provided for @permissionsLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Izin'**
+  String get permissionsLabel;
+
+  /// No description provided for @permissionsDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Status izin sistem untuk fitur yang membutuhkannya.'**
+  String get permissionsDescription;
+
+  /// No description provided for @permissionNotifications.
+  ///
+  /// In id, this message translates to:
+  /// **'Notifikasi'**
+  String get permissionNotifications;
+
+  /// No description provided for @permissionNotificationsBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Dipakai untuk mengabarkan pembaruan penting. Kamu bisa mematikannya kapan saja.'**
+  String get permissionNotificationsBody;
+
+  /// No description provided for @permissionCamera.
+  ///
+  /// In id, this message translates to:
+  /// **'Kamera'**
+  String get permissionCamera;
+
+  /// No description provided for @permissionCameraBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Dipakai untuk memotret lampiran. Foto tidak dikirim ke mana pun tanpa persetujuanmu.'**
+  String get permissionCameraBody;
+
+  /// No description provided for @permissionLocation.
+  ///
+  /// In id, this message translates to:
+  /// **'Lokasi'**
+  String get permissionLocation;
+
+  /// No description provided for @permissionLocationBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Dipakai untuk menampilkan konten di sekitarmu saat aplikasi dibuka.'**
+  String get permissionLocationBody;
+
+  /// No description provided for @permissionGranted.
+  ///
+  /// In id, this message translates to:
+  /// **'Diizinkan'**
+  String get permissionGranted;
+
+  /// No description provided for @permissionDenied.
+  ///
+  /// In id, this message translates to:
+  /// **'Ditolak'**
+  String get permissionDenied;
+
+  /// No description provided for @permissionPermanentlyDenied.
+  ///
+  /// In id, this message translates to:
+  /// **'Ditolak permanen'**
+  String get permissionPermanentlyDenied;
+
+  /// No description provided for @permissionUnknown.
+  ///
+  /// In id, this message translates to:
+  /// **'Belum diminta'**
+  String get permissionUnknown;
+
+  /// No description provided for @permissionContinue.
+  ///
+  /// In id, this message translates to:
+  /// **'Lanjutkan'**
+  String get permissionContinue;
+
+  /// No description provided for @permissionDeniedTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Izin ditolak'**
+  String get permissionDeniedTitle;
+
+  /// No description provided for @permissionDeniedBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Aktifkan izin ini lewat pengaturan sistem.'**
+  String get permissionDeniedBody;
+
+  /// No description provided for @openSettings.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka pengaturan'**
+  String get openSettings;
 }
 
 class _AppLocalizationsDelegate

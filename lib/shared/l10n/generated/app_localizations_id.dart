@@ -354,4 +354,57 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get loadMoreFailed => 'Gagal memuat halaman berikutnya';
+
+  @override
+  String get permissionsLabel => 'Izin';
+
+  @override
+  String get permissionsDescription =>
+      'Status izin sistem untuk fitur yang membutuhkannya.';
+
+  @override
+  String get permissionNotifications => 'Notifikasi';
+
+  @override
+  String get permissionNotificationsBody =>
+      'Dipakai untuk mengabarkan pembaruan penting. Kamu bisa mematikannya kapan saja.';
+
+  @override
+  String get permissionCamera => 'Kamera';
+
+  @override
+  String get permissionCameraBody =>
+      'Dipakai untuk memotret lampiran. Foto tidak dikirim ke mana pun tanpa persetujuanmu.';
+
+  @override
+  String get permissionLocation => 'Lokasi';
+
+  @override
+  String get permissionLocationBody =>
+      'Dipakai untuk menampilkan konten di sekitarmu saat aplikasi dibuka.';
+
+  @override
+  String get permissionGranted => 'Diizinkan';
+
+  @override
+  String get permissionDenied => 'Ditolak';
+
+  @override
+  String get permissionPermanentlyDenied => 'Ditolak permanen';
+
+  @override
+  String get permissionUnknown => 'Belum diminta';
+
+  @override
+  String get permissionContinue => 'Lanjutkan';
+
+  @override
+  String get permissionDeniedTitle => 'Izin ditolak';
+
+  @override
+  String get permissionDeniedBody =>
+      'Aktifkan izin ini lewat pengaturan sistem.';
+
+  @override
+  String get openSettings => 'Buka pengaturan';
 }

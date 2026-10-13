@@ -14,5 +14,6 @@ export 'confirm_dialog.dart';
 export 'gap.dart';
 export 'loading_view.dart';
 export 'offline_banner.dart';
+export 'permission_rationale.dart';
 export 'spacing.dart';
 export 'theme/ui_theme.dart';

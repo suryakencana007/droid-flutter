@@ -68,5 +68,11 @@
 		</array>
 		<key>UIStatusBarHidden</key>
 		<false/>
-	</dict>
+		<key>NSCameraUsageDescription</key>
+	<string>Dipakai untuk memotret lampiran.</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>Dipakai untuk menampilkan konten di sekitarmu saat aplikasi dibuka.</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>Dipakai untuk memilih foto lampiran.</string>
+</dict>
 </plist>

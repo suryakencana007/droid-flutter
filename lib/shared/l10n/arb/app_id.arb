@@ -159,5 +159,21 @@
       }
     }
   },
-  "loadMoreFailed": "Gagal memuat halaman berikutnya"
+  "loadMoreFailed": "Gagal memuat halaman berikutnya",
+  "permissionsLabel": "Izin",
+  "permissionsDescription": "Status izin sistem untuk fitur yang membutuhkannya.",
+  "permissionNotifications": "Notifikasi",
+  "permissionNotificationsBody": "Dipakai untuk mengabarkan pembaruan penting. Kamu bisa mematikannya kapan saja.",
+  "permissionCamera": "Kamera",
+  "permissionCameraBody": "Dipakai untuk memotret lampiran. Foto tidak dikirim ke mana pun tanpa persetujuanmu.",
+  "permissionLocation": "Lokasi",
+  "permissionLocationBody": "Dipakai untuk menampilkan konten di sekitarmu saat aplikasi dibuka.",
+  "permissionGranted": "Diizinkan",
+  "permissionDenied": "Ditolak",
+  "permissionPermanentlyDenied": "Ditolak permanen",
+  "permissionUnknown": "Belum diminta",
+  "permissionContinue": "Lanjutkan",
+  "permissionDeniedTitle": "Izin ditolak",
+  "permissionDeniedBody": "Aktifkan izin ini lewat pengaturan sistem.",
+  "openSettings": "Buka pengaturan"
 }

@@ -107,5 +107,21 @@
   "noteSaved": "Note saved",
   "noteDeleted": "Note deleted",
   "updatedAt": "Updated {date}",
-  "loadMoreFailed": "Could not load the next page"
+  "loadMoreFailed": "Could not load the next page",
+  "permissionsLabel": "Permissions",
+  "permissionsDescription": "System permission status for features that need them.",
+  "permissionNotifications": "Notifications",
+  "permissionNotificationsBody": "Used to tell you about important updates. You can turn it off anytime.",
+  "permissionCamera": "Camera",
+  "permissionCameraBody": "Used to take attachment photos. Photos are not sent anywhere without your consent.",
+  "permissionLocation": "Location",
+  "permissionLocationBody": "Used to show content near you while the app is open.",
+  "permissionGranted": "Granted",
+  "permissionDenied": "Denied",
+  "permissionPermanentlyDenied": "Permanently denied",
+  "permissionUnknown": "Not asked yet",
+  "permissionContinue": "Continue",
+  "permissionDeniedTitle": "Permission denied",
+  "permissionDeniedBody": "Enable this permission in the system settings.",
+  "openSettings": "Open settings"
 }

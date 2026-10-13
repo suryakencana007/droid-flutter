@@ -228,6 +228,52 @@ void main() {
     expect(analytics.screens, containsAll([AppRoutes.signIn, AppRoutes.home]));
   });
 
+  testWidgets('izin: dialog penjelasan lalu status berubah menjadi diizinkan', (
+    tester,
+  ) async {
+    final permissions = MemoryPermissionService(
+      initial: {AppPermission.camera: PermissionResult.denied},
+    );
+    final api = FakeAuthApi(latency: Duration.zero);
+    final session = await tester.runAsync(
+      () => api.signIn(
+        email: FakeAuthApi.demoEmail,
+        password: FakeAuthApi.demoPassword,
+      ),
+    );
+    await pumpPhone(
+      tester,
+      ProviderScope(
+        overrides: [
+          permissionServiceProvider.overrideWithValue(permissions),
+          isOnlineProvider.overrideWith((ref) => Stream.value(true)),
+          keyValueStoreProvider.overrideWithValue(
+            MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'}),
+          ),
+          secureStoreProvider.overrideWithValue(
+            MemorySecureStore({'auth_token': session!.token}),
+          ),
+          authApiProvider.overrideWithValue(api),
+        ],
+        child: const App(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Profil').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Pengaturan'));
+    await tester.pumpAndSettle();
+
+    await tester.ensureVisible(find.text('Kamera'));
+    expect(find.text('Ditolak'), findsOneWidget);
+    await tester.tap(find.text('Kamera'));
+    await tester.pumpAndSettle();
+    expect(find.text('Lanjutkan'), findsOneWidget); // dialog penjelasan
+    await tester.tap(find.text('Lanjutkan'));
+    await tester.pumpAndSettle();
+    expect(find.text('Diizinkan'), findsOneWidget);
+  });
+
   testWidgets('banner offline tampil saat tidak ada koneksi', (tester) async {
     final api = FakeAuthApi(latency: Duration.zero);
     final session = await tester.runAsync(

@@ -352,4 +352,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get loadMoreFailed => 'Could not load the next page';
+
+  @override
+  String get permissionsLabel => 'Permissions';
+
+  @override
+  String get permissionsDescription =>
+      'System permission status for features that need them.';
+
+  @override
+  String get permissionNotifications => 'Notifications';
+
+  @override
+  String get permissionNotificationsBody =>
+      'Used to tell you about important updates. You can turn it off anytime.';
+
+  @override
+  String get permissionCamera => 'Camera';
+
+  @override
+  String get permissionCameraBody =>
+      'Used to take attachment photos. Photos are not sent anywhere without your consent.';
+
+  @override
+  String get permissionLocation => 'Location';
+
+  @override
+  String get permissionLocationBody =>
+      'Used to show content near you while the app is open.';
+
+  @override
+  String get permissionGranted => 'Granted';
+
+  @override
+  String get permissionDenied => 'Denied';
+
+  @override
+  String get permissionPermanentlyDenied => 'Permanently denied';
+
+  @override
+  String get permissionUnknown => 'Not asked yet';
+
+  @override
+  String get permissionContinue => 'Continue';
+
+  @override
+  String get permissionDeniedTitle => 'Permission denied';
+
+  @override
+  String get permissionDeniedBody =>
+      'Enable this permission in the system settings.';
+
+  @override
+  String get openSettings => 'Open settings';
 }
