@@ -1,0 +1,16 @@
+# Splash native (Android 12+ dan iOS). Ganti gambar lalu `just splash`.
+flutter_native_splash:
+  color: "#fafafa"
+  color_dark: "#09090b"
+  image: assets/brand/splash.png
+  image_dark: assets/brand/splash.png
+  android_12:
+    color: "#fafafa"
+    color_dark: "#09090b"
+    image: assets/brand/icon_foreground.png
+    image_dark: assets/brand/icon_foreground.png
+    icon_background_color: "#18181b"
+    icon_background_color_dark: "#18181b"
+  ios: true
+  android: true
+  web: false

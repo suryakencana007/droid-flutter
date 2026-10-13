@@ -17,11 +17,12 @@ default:
 
 # ---------- Setup ----------
 
-# Pasang toolchain (mise), dependensi Dart, dan generate kode
+# Pasang toolchain (mise), dependensi Dart, generate kode, dan git hook
 setup:
     mise install
     flutter pub get
     just gen
+    git config core.hooksPath .githooks
 
 # Cek toolchain Flutter dan Android
 doctor:
@@ -66,6 +67,19 @@ build-release:
 clean:
     flutter clean
     flutter pub get
+
+# ---------- Branding ----------
+
+# Generate ikon launcher Android/iOS dari assets/brand
+icons:
+    dart run flutter_launcher_icons
+
+# Generate splash native Android/iOS dari assets/brand
+splash:
+    dart run flutter_native_splash:create
+
+# Ikon + splash sekaligus
+brand: icons splash
 
 # ---------- Codegen ----------
 
@@ -176,6 +190,10 @@ type text: connect
 # Kirim keyevent, contoh: `just key BACK`
 key name: connect
     adb -s {{device}} shell input keyevent KEYCODE_{{name}}
+
+# Integration test di Waydroid (flavor dari `env=`)
+itest: connect
+    flutter test integration_test -d {{device}} {{defines}}
 
 # Logcat hanya untuk proses aplikasi
 logcat: connect

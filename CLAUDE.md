@@ -23,7 +23,12 @@ saat ganti sesi atau akun. Letakkan catatan operasional di `docs/`:
 - `docs/waydroid.md`: menjalankan dan mengendalikan aplikasi di Waydroid.
 - `docs/ui-kit.md`: UI kit forui, wajib diimpor lewat `shared/ui/index.dart`.
 - `docs/screens.md`: alur splash/onboarding/auth/tabs, aturan redirect router,
-  cara mengganti `AuthApi`, menambah tab/halaman, dan `tool/rename.dart`.
+  contoh CRUD catatan, cara mengganti `AuthApi`, menambah tab/halaman, dan
+  `tool/rename.dart`.
+- `docs/flavors.md`: env/*.json, `Env`, logging, `CrashReporter`.
+- `docs/i18n.md`: ARB, `context.l10n`, menambah string/bahasa.
+- `docs/networking.md`: `ApiException`, 401, `DioAuthApi`, `AsyncValueView`, offline.
+- `docs/branding.md`: ikon/splash (`just brand`), git hook, integration test.
   Material diimpor dari `package:material_ui`, bukan `package:flutter/material.dart`.
 
 ## Task runner
