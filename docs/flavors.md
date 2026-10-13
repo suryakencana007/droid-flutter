@@ -25,6 +25,19 @@ binary; rahasia server tetap di server.
 
 Saat bukan prod, pojok kanan atas app menampilkan pita nama flavor.
 
+## Kunci lokal: `env/<flavor>.local.json`
+
+Nilai rahasia atau khusus mesin (kunci Parse, Firebase, Flagsmith) tidak
+ditulis di `env/dev.json` yang di-commit. Salin file flavor ke
+`env/dev.local.json` (di-gitignore lewat `env/*.local.json`), isi kuncinya, lalu:
+
+```bash
+just env=dev.local run
+just env=dev.local test
+```
+
+Semua recipe menerima `env=` apa pun yang punya file `env/<nama>.json`.
+
 ## Menambah lingkungan
 
 1. Salin `env/staging.json` ke `env/<nama>.json`.

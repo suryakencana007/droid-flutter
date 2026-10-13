@@ -51,3 +51,7 @@ screenshots/
 # Signing release (jangan di-commit)
 android/key.properties
 android/keystore/
+
+# .env
+# Kunci lokal per flavor (dev.local.json, staging.local.json, ...)
+env/*.local.json
