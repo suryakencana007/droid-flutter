@@ -183,3 +183,21 @@ tidak mendefinisikan `clientKey`).
 Jika push tidak sampai: periksa log Parse Server (`verbose: true`), pastikan
 package name app sama dengan yang terdaftar di Firebase, dan perangkat punya
 Google Play Services.
+
+### Catatan dari verifikasi nyata (Parse 9.10 + Waydroid)
+
+- Parse mengirim isi push sebagai **JSON string di `data.data`**
+  (`{"data":"{\"title\":..,\"alert\":..,\"route\":..}","push_id":..,"time":..}`).
+  `ParseFcmPushService.toPushMessage` sudah membongkarnya; jangan mengandalkan
+  `notification` dari FCM.
+- Notifikasi hanya tampil bila izin `POST_NOTIFICATIONS` sudah diberikan.
+  Pasang ulang APK mencabut izin itu, jadi aktifkan lagi lewat toggle
+  "Terima notifikasi" di Pengaturan (atau `adb shell pm grant <package>
+  android.permission.POST_NOTIFICATIONS` saat menguji). Pesan tetap diterima dan
+  diproses app walau izin belum ada; hanya tampilannya yang diblokir sistem.
+- Setiap pasang ulang membuat `_Installation` baru (store SDK ikut terhapus);
+  baris lama dengan token kedaluwarsa menyumbang `numFailed`. Bersihkan lewat
+  Dashboard atau `DELETE /parse/installations/<objectId>` dengan master key.
+- `_PushStatus.numSent > 0` berarti FCM menerima pesan; bila perangkat tetap
+  diam, periksa izin notifikasi dan apakah container Waydroid sedang `FROZEN`
+  (lihat docs/waydroid.md).

@@ -71,3 +71,15 @@ Ulangi tap sebelum menyimpulkan ada bug.
 - Jendela Waydroid di Hyprland bersifat floating; screenshot sisi host dengan
   `grim -g` bisa menampilkan frame lama. Lebih andal pakai screencap dari device.
 - Log runtime: `adb logcat --pid=$(adb shell pidof com.kubus.work.droid)`.
+
+## Container FROZEN
+
+Waydroid membekukan container saat jendelanya tidak tampil (`waydroid status`
+→ `Container: FROZEN`). Dalam keadaan itu proses di dalamnya, termasuk Google
+Play Services, tidak menerima push atau koneksi apa pun, dan `adb` bisa
+menggantung. Pastikan jendela Waydroid terbuka (`waydroid show-full-ui`) atau
+matikan pembekuan secara permanen:
+
+```bash
+waydroid prop set persist.waydroid.suspend false   # berlaku setelah session restart
+```
