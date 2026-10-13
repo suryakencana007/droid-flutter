@@ -4,8 +4,6 @@ import 'package:droid/shared/ui/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
-import '../model/permission_status_provider.dart';
-
 /// Daftar izin dengan status dan tombol minta; ditaruh di halaman pengaturan.
 class PermissionTiles extends ConsumerWidget {
   const PermissionTiles({super.key});

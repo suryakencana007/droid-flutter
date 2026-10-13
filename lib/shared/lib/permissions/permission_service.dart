@@ -68,6 +68,10 @@ class MemoryPermissionService implements PermissionService {
     openedSettings++;
     return true;
   }
+
+  /// Simulasi user mengubah izin lewat pengaturan sistem.
+  void setStatus(AppPermission permission, PermissionResult result) =>
+      _status[permission] = result;
 }
 
 final permissionServiceProvider = Provider<PermissionService>(

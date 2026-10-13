@@ -64,6 +64,7 @@ Future<void> enterField(WidgetTester tester, int index, String text) async {
 }
 
 void main() {
+  notificationPermissionTests();
   notesTests();
   flagTests();
   appLockTests();
@@ -694,5 +695,50 @@ void responsiveTests() {
     await tester.tap(find.widgetWithText(FSidebarItem, 'Catatan'));
     await tester.pumpAndSettle();
     expect(find.text('Catatan 40'), findsOneWidget);
+  });
+}
+
+void notificationPermissionTests() {
+  testWidgets('preferensi notifikasi mati saat app mulai tanpa izin sistem', (
+    tester,
+  ) async {
+    final push = MemoryPushService();
+    final permissions = MemoryPermissionService(
+      initial: {AppPermission.notifications: PermissionResult.denied},
+    );
+    final api = FakeAuthApi(latency: Duration.zero);
+    final session = await tester.runAsync(
+      () => api.signIn(
+        email: FakeAuthApi.demoEmail,
+        password: FakeAuthApi.demoPassword,
+      ),
+    );
+    final prefs = MemoryKeyValueStore({
+      'onboarding_done': true,
+      'locale': 'id',
+      notificationsEnabledKey: true, // tersimpan on, tapi izin sudah dicabut
+    });
+    await pumpPhone(
+      tester,
+      ProviderScope(
+        overrides: [
+          pushServiceProvider.overrideWithValue(push),
+          permissionServiceProvider.overrideWithValue(permissions),
+          deviceAuthenticatorProvider.overrideWithValue(
+            MemoryAuthenticator(available: false),
+          ),
+          isOnlineProvider.overrideWith((ref) => Stream.value(true)),
+          keyValueStoreProvider.overrideWithValue(prefs),
+          secureStoreProvider.overrideWithValue(
+            MemorySecureStore({'auth_token': session!.token}),
+          ),
+          authApiProvider.overrideWithValue(api),
+        ],
+        child: const App(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(push.enabled, isFalse);
+    expect(await prefs.getBool(notificationsEnabledKey), isFalse);
   });
 }

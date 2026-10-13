@@ -12,6 +12,7 @@ Future<PermissionResult> ensurePermission(
   required AppPermission permission,
   required String title,
   required String rationale,
+  VoidCallback? onStatusChanged,
 }) async {
   final current = await service.status(permission);
   if (current == PermissionResult.granted) return current!;
@@ -32,6 +33,7 @@ Future<PermissionResult> ensurePermission(
   if (!proceed) return PermissionResult.denied;
 
   final result = await service.request(permission);
+  onStatusChanged?.call();
   if (result == PermissionResult.permanentlyDenied && context.mounted) {
     return _offerSettings(context, service, l10n);
   }

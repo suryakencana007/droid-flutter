@@ -23,6 +23,7 @@ class NotificationSettings extends ConsumerWidget {
       permission: AppPermission.notifications,
       title: l10n.permissionNotifications,
       rationale: l10n.permissionNotificationsBody,
+      onStatusChanged: ref.read(permissionStatusProvider.notifier).refresh,
     );
     await ref
         .read(notificationsEnabledProvider.notifier)

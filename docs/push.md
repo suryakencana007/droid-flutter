@@ -24,6 +24,12 @@ saat diketuk. Toggle itu nyata di tiga lapis lewat `PushService.setEnabled`:
   juga mengabaikan pesan yang masih sempat masuk.
 - **on**: token diminta lagi dan didaftarkan bersama `userId`.
 - Default **off** (opt-in): tidak ada `_Installation` sampai user mengaktifkan.
+- Hubungan dengan izin sistem: izin `POST_NOTIFICATIONS` adalah prasyarat,
+  toggle adalah preferensi app. Status izin (`permissionStatusProvider` di
+  `shared/lib/permissions`) dimuat ulang setiap app kembali ke depan dan
+  setelah dialog izin, sehingga tile "Izin → Notifikasi" selalu mutakhir. Jika
+  izin dicabut dari pengaturan sistem (Android mematikan proses app saat itu),
+  saat app mulai lagi preferensi ikut dimatikan dan token dicabut dari server.
 
 ## Menukar ke Firebase Cloud Messaging
 
