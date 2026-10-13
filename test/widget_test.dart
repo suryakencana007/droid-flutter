@@ -8,15 +8,20 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_test/flutter_test.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// App dengan storage in-memory dan FakeAuthApi tanpa delay.
+/// App dengan storage in-memory dan FakeAuthApi tanpa delay. Bahasa
+/// default test adalah Indonesia (`locale` di prefs) agar finder teks stabil
+/// walau locale platform test adalah en_US.
 Widget buildApp({
   Map<String, Object> prefs = const {},
   Map<String, String> secrets = const {},
   FakeAuthApi? authApi,
+  String? locale = 'id',
 }) {
   return ProviderScope(
     overrides: [
-      keyValueStoreProvider.overrideWithValue(MemoryKeyValueStore(prefs)),
+      keyValueStoreProvider.overrideWithValue(
+        MemoryKeyValueStore({'locale': ?locale, ...prefs}),
+      ),
       secureStoreProvider.overrideWithValue(MemorySecureStore(secrets)),
       authApiProvider.overrideWithValue(
         authApi ?? FakeAuthApi(latency: Duration.zero),
@@ -130,7 +135,7 @@ void main() {
         password: FakeAuthApi.demoPassword,
       ),
     );
-    final prefs = MemoryKeyValueStore({'onboarding_done': true});
+    final prefs = MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'});
 
     await tester.pumpWidget(ProviderScope(
       overrides: [
@@ -156,5 +161,17 @@ void main() {
     final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
     expect(app.themeMode, ThemeMode.dark);
     expect(await prefs.getString('theme_mode'), 'dark');
+  });
+
+  testWidgets('bahasa mengikuti pilihan user dan bisa diganti', (tester) async {
+    await tester.pumpWidget(buildApp(prefs: {'onboarding_done': true}, locale: 'en'));
+    await tester.pumpAndSettle();
+    expect(find.text('Sign in'), findsWidgets);
+    expect(find.text('Masuk'), findsNothing);
+
+    // Tanpa preferensi: ikuti locale platform test (en_US).
+    await tester.pumpWidget(buildApp(prefs: {'onboarding_done': true}, locale: null));
+    await tester.pumpAndSettle();
+    expect(find.text('Sign in'), findsWidgets);
   });
 }

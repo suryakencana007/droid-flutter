@@ -1,6 +1,8 @@
 import 'package:droid/entities/user/index.dart';
+import 'package:droid/features/select_locale/index.dart';
 import 'package:droid/features/toggle_theme/index.dart';
 import 'package:droid/shared/config/index.dart';
+import 'package:droid/shared/l10n/index.dart';
 import 'package:droid/shared/lib/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -16,6 +18,7 @@ class App extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final themeMode = ref.watch(themeModeProvider).value ?? ThemeMode.system;
     final router = ref.watch(appRouterProvider);
+    final locale = ref.watch(localeProvider).value;
 
     ref.listen(currentUserProvider, (_, next) {
       ref.read(crashReporterProvider).setUser(next.value?.id);
@@ -27,8 +30,12 @@ class App extends ConsumerWidget {
       theme: AppTheme.light,
       darkTheme: AppTheme.dark,
       themeMode: themeMode,
-      supportedLocales: FLocalizations.supportedLocales,
-      localizationsDelegates: FLocalizations.localizationsDelegates,
+      locale: locale,
+      supportedLocales: AppLocalizations.supportedLocales,
+      localizationsDelegates: const [
+        ...AppLocalizations.localizationsDelegates,
+        ...FLocalizations.localizationsDelegates,
+      ],
       routerConfig: router,
       builder: (context, child) {
         final themed = FTheme(

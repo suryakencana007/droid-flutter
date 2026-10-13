@@ -1,4 +1,5 @@
 import 'package:droid/entities/user/index.dart';
+import 'package:droid/shared/l10n/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:droid/widgets/app_bar/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -10,16 +11,17 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider).value;
+    final l10n = context.l10n;
     final typography = context.theme.typography;
     final colors = context.theme.colors;
 
     return Scaffold(
-      appBar: const DroidAppBar(title: 'Beranda'),
+      appBar: DroidAppBar(title: l10n.tabHome),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
           Text(
-            'Halo, ${user?.name ?? 'teman'}',
+            l10n.homeGreeting(user?.name ?? l10n.homeGuest),
             // Typeface display forui memakai line-height besar untuk judul satu
             // baris; rapatkan untuk judul yang bisa membungkus.
             style: typography.display.xl2.copyWith(
@@ -30,7 +32,7 @@ class HomePage extends ConsumerWidget {
           ),
           const Gap(AppSpacing.sm),
           Text(
-            'Halaman ini merakit widget, feature, dan entity dari layer di bawahnya.',
+            l10n.homeDescription,
             style: typography.body.sm.copyWith(color: colors.mutedForeground),
           ),
           const Gap(AppSpacing.lg),
@@ -39,10 +41,10 @@ class HomePage extends ConsumerWidget {
           FButton(
             onPress: () => showFToast(
               context: context,
-              title: const Text('UI kit: forui'),
-              description: const Text('Komponen dipakai lewat shared/ui.'),
+              title: Text(l10n.toastTitle),
+              description: Text(l10n.toastBody),
             ),
-            child: const Text('Tampilkan toast'),
+            child: Text(l10n.showToast),
           ),
         ],
       ),

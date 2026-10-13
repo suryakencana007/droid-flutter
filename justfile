@@ -66,6 +66,12 @@ clean:
     flutter clean
     flutter pub get
 
+# ---------- i18n ----------
+
+# Generate kelas lokalisasi dari lib/shared/l10n/arb/*.arb
+l10n:
+    flutter gen-l10n
+
 # ---------- UI kit (forui) ----------
 
 # Generate tema forui custom (interaktif), lihat docs/ui-kit.md

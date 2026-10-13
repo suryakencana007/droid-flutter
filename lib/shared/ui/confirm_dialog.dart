@@ -10,8 +10,8 @@ Future<bool> showConfirmDialog(
   BuildContext context, {
   required String title,
   required String message,
-  String confirmLabel = 'Ya',
-  String cancelLabel = 'Batal',
+  required String confirmLabel,
+  required String cancelLabel,
   bool destructive = false,
 }) async {
   final result = await showFDialog<bool>(

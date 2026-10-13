@@ -1,4 +1,5 @@
 import 'package:droid/shared/config/index.dart';
+import 'package:droid/shared/l10n/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
@@ -10,6 +11,8 @@ class NotFoundPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       body: Center(
         child: Padding(
@@ -19,11 +22,11 @@ class NotFoundPage extends StatelessWidget {
             children: [
               const Icon(FLucideIcons.compass, size: 48),
               const Gap(AppSpacing.md),
-              Text('Halaman tidak ditemukan: $uri', textAlign: TextAlign.center),
+              Text(l10n.notFoundMessage(uri.toString()), textAlign: TextAlign.center),
               const Gap(AppSpacing.md),
               FButton(
                 onPress: () => context.go(AppRoutes.home),
-                child: const Text('Kembali ke beranda'),
+                child: Text(l10n.backHome),
               ),
             ],
           ),

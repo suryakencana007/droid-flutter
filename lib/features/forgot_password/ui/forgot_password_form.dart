@@ -1,4 +1,5 @@
 import 'package:droid/entities/user/index.dart';
+import 'package:droid/shared/l10n/index.dart';
 import 'package:droid/shared/lib/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -31,14 +32,13 @@ class _ForgotPasswordFormState extends ConsumerState<ForgotPasswordForm> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(forgotPasswordControllerProvider);
+    final l10n = context.l10n;
 
     if (state.value ?? false) {
       return FAlert(
         icon: const Icon(FLucideIcons.mailCheck),
-        title: const Text('Periksa email kamu'),
-        subtitle: Text(
-          'Jika ${_email.text.trim()} terdaftar, tautan reset password sudah dikirim.',
-        ),
+        title: Text(l10n.forgotSentTitle),
+        subtitle: Text(l10n.forgotSentBody(_email.text.trim())),
       );
     }
 
@@ -49,12 +49,13 @@ class _ForgotPasswordFormState extends ConsumerState<ForgotPasswordForm> {
         children: [
           FTextFormField.email(
             control: FTextFieldControl.managed(controller: _email),
-            hint: 'nama@contoh.com',
+            label: Text(l10n.emailLabel),
+            hint: l10n.emailHint,
             textInputAction: TextInputAction.done,
             onSubmit: (_) => _submit(),
             validator: Validators.compose([
-              Validators.required(),
-              Validators.email(),
+              Validators.required(l10n.validationRequired),
+              Validators.email(l10n.validationEmail),
             ]),
           ),
           if (state.hasError) ...[
@@ -62,14 +63,14 @@ class _ForgotPasswordFormState extends ConsumerState<ForgotPasswordForm> {
             FAlert(
               variant: FAlertVariant.destructive,
               icon: const Icon(FLucideIcons.circleAlert),
-              title: const Text('Gagal mengirim'),
-              subtitle: Text(describeAuthError(state.error!)),
+              title: Text(l10n.forgotFailed),
+              subtitle: Text(describeAuthError(state.error!, l10n)),
             ),
           ],
           const Gap(AppSpacing.lg),
           FButton(
             onPress: state.isLoading ? null : _submit,
-            child: Text(state.isLoading ? 'Mengirim...' : 'Kirim tautan reset'),
+            child: Text(state.isLoading ? l10n.forgotSending : l10n.forgotSend),
           ),
         ],
       ),

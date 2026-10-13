@@ -1,4 +1,5 @@
 import 'package:droid/entities/user/index.dart';
+import 'package:droid/shared/l10n/index.dart';
 import 'package:droid/shared/lib/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -41,6 +42,7 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(signUpControllerProvider);
+    final l10n = context.l10n;
 
     return Form(
       key: _formKey,
@@ -49,39 +51,41 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
         children: [
           FTextFormField(
             control: FTextFieldControl.managed(controller: _name),
-            label: const Text('Nama'),
-            hint: 'Nama lengkap',
+            label: Text(l10n.nameLabel),
+            hint: l10n.nameHint,
             textInputAction: TextInputAction.next,
             textCapitalization: TextCapitalization.words,
-            validator: Validators.required(),
+            validator: Validators.required(l10n.validationRequired),
           ),
           const Gap(AppSpacing.md),
           FTextFormField.email(
             control: FTextFieldControl.managed(controller: _email),
-            hint: 'nama@contoh.com',
+            label: Text(l10n.emailLabel),
+            hint: l10n.emailHint,
             validator: Validators.compose([
-              Validators.required(),
-              Validators.email(),
+              Validators.required(l10n.validationRequired),
+              Validators.email(l10n.validationEmail),
             ]),
           ),
           const Gap(AppSpacing.md),
           FTextFormField.password(
             control: FTextFieldControl.managed(controller: _password),
-            description: const Text('Minimal 8 karakter'),
+            label: Text(l10n.passwordLabel),
+            description: Text(l10n.passwordMinHint),
             validator: Validators.compose([
-              Validators.required(),
-              Validators.minLength(8),
+              Validators.required(l10n.validationRequired),
+              Validators.minLength(8, l10n.validationMinLength(8)),
             ]),
           ),
           const Gap(AppSpacing.md),
           FTextFormField.password(
             control: FTextFieldControl.managed(controller: _confirm),
-            label: const Text('Ulangi password'),
+            label: Text(l10n.confirmPasswordLabel),
             textInputAction: TextInputAction.done,
             onSubmit: (_) => _submit(),
             validator: Validators.compose([
-              Validators.required(),
-              Validators.match(() => _password.text, message: 'Password tidak sama'),
+              Validators.required(l10n.validationRequired),
+              Validators.match(() => _password.text, l10n.passwordMismatch),
             ]),
           ),
           if (state.hasError) ...[
@@ -89,14 +93,14 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
             FAlert(
               variant: FAlertVariant.destructive,
               icon: const Icon(FLucideIcons.circleAlert),
-              title: const Text('Gagal mendaftar'),
-              subtitle: Text(describeAuthError(state.error!)),
+              title: Text(l10n.signUpFailed),
+              subtitle: Text(describeAuthError(state.error!, l10n)),
             ),
           ],
           const Gap(AppSpacing.lg),
           FButton(
             onPress: state.isLoading ? null : _submit,
-            child: Text(state.isLoading ? 'Memproses...' : 'Daftar'),
+            child: Text(state.isLoading ? l10n.signUpProcessing : l10n.signUpAction),
           ),
         ],
       ),

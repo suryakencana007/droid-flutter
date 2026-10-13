@@ -1,35 +1,18 @@
 import 'package:droid/features/complete_onboarding/index.dart';
 import 'package:droid/shared/config/index.dart';
+import 'package:droid/shared/l10n/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
-typedef _Slide = ({IconData icon, String title, String description});
+typedef _Slide = ({IconData icon, String title, String body});
 
-const _slides = <_Slide>[
-  (
-    icon: FLucideIcons.layers,
-    title: 'Terstruktur sejak awal',
-    description:
-        'Feature-Sliced Design memisahkan halaman, fitur, entity, dan kode bersama '
-        'dengan aturan import yang diuji otomatis.',
-  ),
-  (
-    icon: FLucideIcons.palette,
-    title: 'UI kit siap pakai',
-    description:
-        'Komponen forui bergaya shadcn/ui, tema terang dan gelap, satu pintu '
-        'masuk lewat shared/ui.',
-  ),
-  (
-    icon: FLucideIcons.rocket,
-    title: 'Langsung jalan',
-    description:
-        'Auth, onboarding, navigasi tab, dan pengaturan sudah ada. Ganti '
-        'backend-nya, lalu bangun fiturmu.',
-  ),
-];
+List<_Slide> _slides(AppLocalizations l10n) => [
+      (icon: FLucideIcons.layers, title: l10n.onboarding1Title, body: l10n.onboarding1Body),
+      (icon: FLucideIcons.palette, title: l10n.onboarding2Title, body: l10n.onboarding2Body),
+      (icon: FLucideIcons.rocket, title: l10n.onboarding3Title, body: l10n.onboarding3Body),
+    ];
 
 class OnboardingPage extends ConsumerStatefulWidget {
   const OnboardingPage({super.key});
@@ -48,8 +31,6 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
     super.dispose();
   }
 
-  bool get _isLast => _index == _slides.length - 1;
-
   Future<void> _finish() async {
     await ref.read(onboardingDoneProvider.notifier).complete();
     if (mounted) context.go(AppRoutes.signIn);
@@ -63,6 +44,9 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   @override
   Widget build(BuildContext context) {
     final theme = context.theme;
+    final l10n = context.l10n;
+    final slides = _slides(l10n);
+    final isLast = _index == slides.length - 1;
 
     return Scaffold(
       body: SafeArea(
@@ -74,22 +58,20 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                 padding: const EdgeInsets.all(AppSpacing.sm),
                 child: FButton(
                   variant: FButtonVariant.ghost,
-                  onPress: _isLast ? null : _finish,
-                  child: const Text('Lewati'),
+                  onPress: isLast ? null : _finish,
+                  child: Text(l10n.onboardingSkip),
                 ),
               ),
             ),
             Expanded(
               child: PageView.builder(
                 controller: _controller,
-                itemCount: _slides.length,
+                itemCount: slides.length,
                 onPageChanged: (index) => setState(() => _index = index),
                 itemBuilder: (context, index) {
-                  final slide = _slides[index];
+                  final slide = slides[index];
                   return Padding(
-                    padding: const EdgeInsets.symmetric(
-                      horizontal: AppSpacing.xl,
-                    ),
+                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -100,11 +82,7 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                             color: theme.colors.secondary,
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(
-                            slide.icon,
-                            size: 56,
-                            color: theme.colors.primary,
-                          ),
+                          child: Icon(slide.icon, size: 56, color: theme.colors.primary),
                         ),
                         const Gap(AppSpacing.xl),
                         Text(
@@ -118,11 +96,10 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                         ),
                         const Gap(AppSpacing.sm),
                         Text(
-                          slide.description,
+                          slide.body,
                           textAlign: TextAlign.center,
-                          style: theme.typography.body.md.copyWith(
-                            color: theme.colors.mutedForeground,
-                          ),
+                          style: theme.typography.body.md
+                              .copyWith(color: theme.colors.mutedForeground),
                         ),
                       ],
                     ),
@@ -134,13 +111,13 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
               padding: const EdgeInsets.all(AppSpacing.lg),
               child: Column(
                 children: [
-                  _Dots(count: _slides.length, index: _index),
+                  _Dots(count: slides.length, index: _index),
                   const Gap(AppSpacing.lg),
                   SizedBox(
                     width: double.infinity,
                     child: FButton(
-                      onPress: _isLast ? _finish : _next,
-                      child: Text(_isLast ? 'Mulai' : 'Lanjut'),
+                      onPress: isLast ? _finish : _next,
+                      child: Text(isLast ? l10n.onboardingStart : l10n.onboardingNext),
                     ),
                   ),
                 ],

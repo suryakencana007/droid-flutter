@@ -1,5 +1,6 @@
 import 'package:droid/features/forgot_password/index.dart';
 import 'package:droid/shared/config/index.dart';
+import 'package:droid/shared/l10n/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:droid/widgets/auth_layout/index.dart';
 import 'package:go_router/go_router.dart';
@@ -10,14 +11,16 @@ class ForgotPasswordPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return AuthLayout(
-      title: 'Lupa password',
-      subtitle: 'Masukkan email, kami kirim tautan untuk mengatur ulang.',
+      title: l10n.forgotTitle,
+      subtitle: l10n.forgotSubtitle,
       footer: FButton(
         variant: FButtonVariant.ghost,
         prefix: const Icon(FLucideIcons.arrowLeft),
         onPress: () => context.go(AppRoutes.signIn),
-        child: const Text('Kembali ke masuk'),
+        child: Text(l10n.backToSignIn),
       ),
       child: const ForgotPasswordForm(),
     );

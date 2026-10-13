@@ -1,4 +1,6 @@
 import 'package:droid/entities/user/index.dart';
+import 'package:droid/shared/l10n/index.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {
@@ -45,8 +47,13 @@ void main() {
     );
   });
 
-  test('describeAuthError memakai pesan AuthException', () {
-    expect(describeAuthError(const AuthException('x', 'Pesan')), 'Pesan');
-    expect(describeAuthError(StateError('boom')), isNot(contains('boom')));
+  test('describeAuthError memetakan kode ke bahasa aktif', () async {
+    final l10n = await AppLocalizations.delegate.load(const Locale('en'));
+    expect(
+      describeAuthError(const AuthException('invalid-credentials', 'x'), l10n),
+      l10n.authInvalidCredentials,
+    );
+    expect(describeAuthError(const AuthException('lain', 'Pesan'), l10n), 'Pesan');
+    expect(describeAuthError(StateError('boom'), l10n), l10n.errorGeneric);
   });
 }

@@ -1,0 +1,290 @@
+// ignore: unused_import
+import 'package:intl/intl.dart' as intl;
+
+import 'app_localizations.dart';
+
+// ignore_for_file: type=lint
+
+/// The translations for English (`en`).
+class AppLocalizationsEn extends AppLocalizations {
+  AppLocalizationsEn([String locale = 'en']) : super(locale);
+
+  @override
+  String get onboardingSkip => 'Skip';
+
+  @override
+  String get onboardingNext => 'Next';
+
+  @override
+  String get onboardingStart => 'Get started';
+
+  @override
+  String get onboarding1Title => 'Structured from day one';
+
+  @override
+  String get onboarding1Body =>
+      'Feature-Sliced Design separates pages, features, entities, and shared code with import rules that are tested automatically.';
+
+  @override
+  String get onboarding2Title => 'UI kit included';
+
+  @override
+  String get onboarding2Body =>
+      'forui components in the shadcn/ui style, light and dark themes, one entry point through shared/ui.';
+
+  @override
+  String get onboarding3Title => 'Ready to run';
+
+  @override
+  String get onboarding3Body =>
+      'Auth, onboarding, tab navigation, and settings are in place. Swap the backend, then build your features.';
+
+  @override
+  String get signInTitle => 'Sign in';
+
+  @override
+  String signInSubtitle(String appName) {
+    return 'Welcome back to $appName.';
+  }
+
+  @override
+  String get signInAction => 'Sign in';
+
+  @override
+  String get signInProcessing => 'Signing in...';
+
+  @override
+  String get signInFailed => 'Sign in failed';
+
+  @override
+  String get forgotPasswordLink => 'Forgot password?';
+
+  @override
+  String get noAccountLink => 'No account yet? Sign up';
+
+  @override
+  String demoAccountHint(String email, String password) {
+    return 'Demo account: $email / $password';
+  }
+
+  @override
+  String get emailLabel => 'Email';
+
+  @override
+  String get emailHint => 'name@example.com';
+
+  @override
+  String get passwordLabel => 'Password';
+
+  @override
+  String get signUpTitle => 'Create account';
+
+  @override
+  String get signUpSubtitle => 'Free and takes a minute.';
+
+  @override
+  String get signUpAction => 'Sign up';
+
+  @override
+  String get signUpProcessing => 'Creating...';
+
+  @override
+  String get signUpFailed => 'Sign up failed';
+
+  @override
+  String get haveAccountLink => 'Already have an account? Sign in';
+
+  @override
+  String get nameLabel => 'Name';
+
+  @override
+  String get nameHint => 'Full name';
+
+  @override
+  String get passwordMinHint => 'At least 8 characters';
+
+  @override
+  String get confirmPasswordLabel => 'Confirm password';
+
+  @override
+  String get passwordMismatch => 'Passwords do not match';
+
+  @override
+  String get forgotTitle => 'Forgot password';
+
+  @override
+  String get forgotSubtitle =>
+      'Enter your email and we will send a reset link.';
+
+  @override
+  String get forgotSend => 'Send reset link';
+
+  @override
+  String get forgotSending => 'Sending...';
+
+  @override
+  String get forgotFailed => 'Could not send';
+
+  @override
+  String get forgotSentTitle => 'Check your email';
+
+  @override
+  String forgotSentBody(String email) {
+    return 'If $email is registered, a password reset link has been sent.';
+  }
+
+  @override
+  String get backToSignIn => 'Back to sign in';
+
+  @override
+  String get tabHome => 'Home';
+
+  @override
+  String get tabExplore => 'Explore';
+
+  @override
+  String get tabProfile => 'Profile';
+
+  @override
+  String homeGreeting(String name) {
+    return 'Hello, $name';
+  }
+
+  @override
+  String get homeGuest => 'friend';
+
+  @override
+  String get homeDescription =>
+      'This page composes widgets, features, and entities from the layers below it.';
+
+  @override
+  String get showToast => 'Show toast';
+
+  @override
+  String get toastTitle => 'UI kit: forui';
+
+  @override
+  String get toastBody => 'Components are used through shared/ui.';
+
+  @override
+  String get exploreListLabel => 'Sample list';
+
+  @override
+  String get exploreItemBody => 'Sample item. Replace it with a real feature.';
+
+  @override
+  String get exploreFsd => 'Feature-Sliced Design';
+
+  @override
+  String get exploreFsdSub => 'Layer and slice rules';
+
+  @override
+  String get exploreUiKit => 'forui UI kit';
+
+  @override
+  String get exploreUiKitSub => 'Components and theme';
+
+  @override
+  String get exploreWaydroid => 'Waydroid';
+
+  @override
+  String get exploreWaydroidSub => 'Test on Android without an emulator';
+
+  @override
+  String get settingsTitle => 'Settings';
+
+  @override
+  String get settingsSubtitle => 'Theme, language, and app info';
+
+  @override
+  String get signOut => 'Sign out';
+
+  @override
+  String get signingOut => 'Signing out...';
+
+  @override
+  String get signOutConfirmTitle => 'Sign out of your account?';
+
+  @override
+  String get signOutConfirmBody =>
+      'You will need to sign in again to use the app.';
+
+  @override
+  String get cancel => 'Cancel';
+
+  @override
+  String get themeLabel => 'Theme';
+
+  @override
+  String get themeDescription => 'Applies across the app and is remembered.';
+
+  @override
+  String get themeSystem => 'Follow system';
+
+  @override
+  String get themeSystemSub => 'Matches the device setting';
+
+  @override
+  String get themeLight => 'Light';
+
+  @override
+  String get themeDark => 'Dark';
+
+  @override
+  String get lightMode => 'Light mode';
+
+  @override
+  String get darkMode => 'Dark mode';
+
+  @override
+  String get languageLabel => 'Language';
+
+  @override
+  String get languageDescription => 'Display language of the app.';
+
+  @override
+  String get languageSystem => 'Follow system';
+
+  @override
+  String get languageId => 'Indonesia';
+
+  @override
+  String get languageEn => 'English';
+
+  @override
+  String get aboutLabel => 'About';
+
+  @override
+  String get appLabel => 'App';
+
+  @override
+  String get versionLabel => 'Version';
+
+  @override
+  String notFoundMessage(String uri) {
+    return 'Page not found: $uri';
+  }
+
+  @override
+  String get backHome => 'Back to home';
+
+  @override
+  String get validationRequired => 'Required';
+
+  @override
+  String get validationEmail => 'Invalid email format';
+
+  @override
+  String validationMinLength(int count) {
+    return 'At least $count characters';
+  }
+
+  @override
+  String get errorGeneric => 'Something went wrong. Try again.';
+
+  @override
+  String get authInvalidCredentials => 'Incorrect email or password.';
+
+  @override
+  String get authEmailInUse => 'This email is already registered.';
+}

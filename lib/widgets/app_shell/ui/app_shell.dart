@@ -1,3 +1,4 @@
+import 'package:droid/shared/l10n/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
@@ -10,6 +11,8 @@ class AppShell extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
+
     return Scaffold(
       body: navigationShell,
       bottomNavigationBar: FBottomNavigationBar(
@@ -19,18 +22,18 @@ class AppShell extends StatelessWidget {
           // Tap tab yang sedang aktif mengembalikan ke root branch tersebut.
           initialLocation: index == navigationShell.currentIndex,
         ),
-        children: const [
+        children: [
           FBottomNavigationBarItem(
-            icon: Icon(FLucideIcons.house),
-            label: Text('Beranda'),
+            icon: const Icon(FLucideIcons.house),
+            label: Text(l10n.tabHome),
           ),
           FBottomNavigationBarItem(
-            icon: Icon(FLucideIcons.compass),
-            label: Text('Jelajah'),
+            icon: const Icon(FLucideIcons.compass),
+            label: Text(l10n.tabExplore),
           ),
           FBottomNavigationBarItem(
-            icon: Icon(FLucideIcons.user),
-            label: Text('Profil'),
+            icon: const Icon(FLucideIcons.user),
+            label: Text(l10n.tabProfile),
           ),
         ],
       ),

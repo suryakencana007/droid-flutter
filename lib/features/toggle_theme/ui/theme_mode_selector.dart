@@ -1,3 +1,4 @@
+import 'package:droid/shared/l10n/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
@@ -11,6 +12,7 @@ class ThemeModeSelector extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final mode = ref.watch(themeModeProvider).value ?? ThemeMode.system;
+    final l10n = context.l10n;
 
     return FSelectTileGroup<ThemeMode>(
       control: FMultiValueControl.lifted(
@@ -23,16 +25,16 @@ class ThemeModeSelector extends ConsumerWidget {
           }
         },
       ),
-      label: const Text('Tema'),
-      description: const Text('Berlaku di seluruh aplikasi dan diingat.'),
-      children: const [
+      label: Text(l10n.themeLabel),
+      description: Text(l10n.themeDescription),
+      children: [
         FSelectTile(
-          title: Text('Ikuti sistem'),
-          subtitle: Text('Mengikuti pengaturan perangkat'),
+          title: Text(l10n.themeSystem),
+          subtitle: Text(l10n.themeSystemSub),
           value: ThemeMode.system,
         ),
-        FSelectTile(title: Text('Terang'), value: ThemeMode.light),
-        FSelectTile(title: Text('Gelap'), value: ThemeMode.dark),
+        FSelectTile(title: Text(l10n.themeLight), value: ThemeMode.light),
+        FSelectTile(title: Text(l10n.themeDark), value: ThemeMode.dark),
       ],
     );
   }

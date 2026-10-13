@@ -1,6 +1,7 @@
 import 'package:droid/entities/user/index.dart';
 import 'package:droid/features/sign_out/index.dart';
 import 'package:droid/shared/config/index.dart';
+import 'package:droid/shared/l10n/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:droid/widgets/app_bar/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -13,9 +14,10 @@ class ProfilePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider).value;
+    final l10n = context.l10n;
 
     return Scaffold(
-      appBar: const DroidAppBar(title: 'Profil'),
+      appBar: DroidAppBar(title: l10n.tabProfile),
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
@@ -25,8 +27,8 @@ class ProfilePage extends ConsumerWidget {
             children: [
               FTile(
                 prefix: const Icon(FLucideIcons.settings),
-                title: const Text('Pengaturan'),
-                subtitle: const Text('Tema dan info aplikasi'),
+                title: Text(l10n.settingsTitle),
+                subtitle: Text(l10n.settingsSubtitle),
                 suffix: const Icon(FLucideIcons.chevronRight),
                 onPress: () => context.go(AppRoutes.settings),
               ),

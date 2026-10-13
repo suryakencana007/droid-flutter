@@ -1,0 +1,135 @@
+{
+  "@@locale": "id",
+  "onboardingSkip": "Lewati",
+  "onboardingNext": "Lanjut",
+  "onboardingStart": "Mulai",
+  "onboarding1Title": "Terstruktur sejak awal",
+  "onboarding1Body": "Feature-Sliced Design memisahkan halaman, fitur, entity, dan kode bersama dengan aturan import yang diuji otomatis.",
+  "onboarding2Title": "UI kit siap pakai",
+  "onboarding2Body": "Komponen forui bergaya shadcn/ui, tema terang dan gelap, satu pintu masuk lewat shared/ui.",
+  "onboarding3Title": "Langsung jalan",
+  "onboarding3Body": "Auth, onboarding, navigasi tab, dan pengaturan sudah ada. Ganti backend-nya, lalu bangun fiturmu.",
+  "signInTitle": "Masuk",
+  "signInSubtitle": "Selamat datang kembali di {appName}.",
+  "@signInSubtitle": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "signInAction": "Masuk",
+  "signInProcessing": "Memproses...",
+  "signInFailed": "Gagal masuk",
+  "forgotPasswordLink": "Lupa password?",
+  "noAccountLink": "Belum punya akun? Daftar",
+  "demoAccountHint": "Akun demo: {email} / {password}",
+  "@demoAccountHint": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      },
+      "password": {
+        "type": "String"
+      }
+    }
+  },
+  "emailLabel": "Email",
+  "emailHint": "nama@contoh.com",
+  "passwordLabel": "Password",
+  "signUpTitle": "Buat akun",
+  "signUpSubtitle": "Gratis dan hanya butuh satu menit.",
+  "signUpAction": "Daftar",
+  "signUpProcessing": "Memproses...",
+  "signUpFailed": "Gagal mendaftar",
+  "haveAccountLink": "Sudah punya akun? Masuk",
+  "nameLabel": "Nama",
+  "nameHint": "Nama lengkap",
+  "passwordMinHint": "Minimal 8 karakter",
+  "confirmPasswordLabel": "Ulangi password",
+  "passwordMismatch": "Password tidak sama",
+  "forgotTitle": "Lupa password",
+  "forgotSubtitle": "Masukkan email, kami kirim tautan untuk mengatur ulang.",
+  "forgotSend": "Kirim tautan reset",
+  "forgotSending": "Mengirim...",
+  "forgotFailed": "Gagal mengirim",
+  "forgotSentTitle": "Periksa email kamu",
+  "forgotSentBody": "Jika {email} terdaftar, tautan reset password sudah dikirim.",
+  "@forgotSentBody": {
+    "placeholders": {
+      "email": {
+        "type": "String"
+      }
+    }
+  },
+  "backToSignIn": "Kembali ke masuk",
+  "tabHome": "Beranda",
+  "tabExplore": "Jelajah",
+  "tabProfile": "Profil",
+  "homeGreeting": "Halo, {name}",
+  "@homeGreeting": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "homeGuest": "teman",
+  "homeDescription": "Halaman ini merakit widget, feature, dan entity dari layer di bawahnya.",
+  "showToast": "Tampilkan toast",
+  "toastTitle": "UI kit: forui",
+  "toastBody": "Komponen dipakai lewat shared/ui.",
+  "exploreListLabel": "Contoh daftar",
+  "exploreItemBody": "Contoh item. Ganti dengan fitur nyata.",
+  "exploreFsd": "Feature-Sliced Design",
+  "exploreFsdSub": "Aturan layer dan slice",
+  "exploreUiKit": "UI kit forui",
+  "exploreUiKitSub": "Komponen dan tema",
+  "exploreWaydroid": "Waydroid",
+  "exploreWaydroidSub": "Uji di Android tanpa emulator",
+  "settingsTitle": "Pengaturan",
+  "settingsSubtitle": "Tema, bahasa, dan info aplikasi",
+  "signOut": "Keluar",
+  "signingOut": "Keluar...",
+  "signOutConfirmTitle": "Keluar dari akun?",
+  "signOutConfirmBody": "Kamu perlu masuk lagi untuk menggunakan aplikasi.",
+  "cancel": "Batal",
+  "themeLabel": "Tema",
+  "themeDescription": "Berlaku di seluruh aplikasi dan diingat.",
+  "themeSystem": "Ikuti sistem",
+  "themeSystemSub": "Mengikuti pengaturan perangkat",
+  "themeLight": "Terang",
+  "themeDark": "Gelap",
+  "lightMode": "Mode terang",
+  "darkMode": "Mode gelap",
+  "languageLabel": "Bahasa",
+  "languageDescription": "Bahasa tampilan aplikasi.",
+  "languageSystem": "Ikuti sistem",
+  "languageId": "Indonesia",
+  "languageEn": "English",
+  "aboutLabel": "Tentang",
+  "appLabel": "Aplikasi",
+  "versionLabel": "Versi",
+  "notFoundMessage": "Halaman tidak ditemukan: {uri}",
+  "@notFoundMessage": {
+    "placeholders": {
+      "uri": {
+        "type": "String"
+      }
+    }
+  },
+  "backHome": "Kembali ke beranda",
+  "validationRequired": "Wajib diisi",
+  "validationEmail": "Format email tidak valid",
+  "validationMinLength": "Minimal {count} karakter",
+  "@validationMinLength": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "errorGeneric": "Terjadi kesalahan. Coba lagi.",
+  "authInvalidCredentials": "Email atau password salah.",
+  "authEmailInUse": "Email sudah terdaftar."
+}

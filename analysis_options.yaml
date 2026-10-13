@@ -10,6 +10,9 @@ analyzer:
     missing_return: error
   exclude:
     - build/**
+    - lib/shared/l10n/generated/**
+    - "**/*.g.dart"
+    - "**/*.freezed.dart"
     - android/**
     - ios/**
     - web/**
