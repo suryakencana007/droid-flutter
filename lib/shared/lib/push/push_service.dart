@@ -3,7 +3,9 @@ import 'dart:async';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
+import '../../config/env.dart';
 import '../logging/app_logger.dart';
+import 'parse_fcm_push_service.dart';
 
 /// Pesan push yang sudah dinormalisasi dari sumber mana pun (FCM, lokal).
 class PushMessage {
@@ -35,6 +37,9 @@ abstract interface class PushService {
 
   /// Tampilkan notifikasi sekarang (dipakai untuk pesan foreground dan uji).
   Future<void> showLocal(PushMessage message);
+
+  /// Kaitkan perangkat dengan user (untuk push tertarget); `null` saat keluar.
+  Future<void> identify(String? userId);
 }
 
 class LocalPushService implements PushService {
@@ -80,6 +85,9 @@ class LocalPushService implements PushService {
   Stream<PushMessage> get onMessage => _messages.stream;
 
   @override
+  Future<void> identify(String? userId) async {}
+
+  @override
   Future<void> showLocal(PushMessage message) async {
     await _plugin.show(
       id: _nextId++,
@@ -116,6 +124,9 @@ class NoopPushService implements PushService {
 
   @override
   Future<void> showLocal(PushMessage message) async {}
+
+  @override
+  Future<void> identify(String? userId) async {}
 }
 
 /// Untuk test: menyimpan notifikasi yang ditampilkan dan bisa mensimulasikan
@@ -141,15 +152,25 @@ class MemoryPushService implements PushService {
   @override
   Future<void> showLocal(PushMessage message) async => shown.add(message);
 
+  String? identifiedUser;
+
+  @override
+  Future<void> identify(String? userId) async => identifiedUser = userId;
+
   void open(PushMessage message) => _onOpened?.call(message);
 
   void receive(PushMessage message) => _messages.add(message);
 }
 
-/// Nama channel diisi di `app` dari l10n karena shared tidak punya context.
-final pushServiceProvider = Provider<PushService>(
-  (_) => LocalPushService(
+/// Lokal saja bila Parse/Firebase belum dikonfigurasi di `env/*.json`;
+/// selain itu FCM lewat Parse (lihat `parse_fcm_push_service.dart`).
+final pushServiceProvider = Provider<PushService>((_) {
+  final local = LocalPushService(
     channelName: 'General',
     channelDescription: 'General app notifications',
-  ),
-);
+  );
+  if (Env.parseConfigured && Env.firebaseConfigured) {
+    return ParseFcmPushService(local: local);
+  }
+  return local;
+});

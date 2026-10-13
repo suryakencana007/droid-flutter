@@ -11,6 +11,7 @@ export 'flags/feature_flags.dart';
 export 'logging/app_logger.dart';
 export 'pagination.dart';
 export 'permissions/permission_service.dart';
+export 'push/parse_fcm_push_service.dart';
 export 'push/push_service.dart';
 export 'result.dart';
 export 'storage/key_value_store.dart';

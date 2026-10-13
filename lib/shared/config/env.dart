@@ -40,6 +40,25 @@ abstract final class Env {
     defaultValue: 'notes_create_enabled:true;beta_badge:true',
   );
 
+  // ---------- Parse Server (push lewat FCM, opsional backend) ----------
+  static const parseServerUrl = String.fromEnvironment(
+    'PARSE_SERVER_URL',
+    defaultValue: 'https://parse.kubus.work',
+  );
+  static const parseAppId = String.fromEnvironment('PARSE_APP_ID');
+  static const parseClientKey = String.fromEnvironment('PARSE_CLIENT_KEY');
+  static bool get parseConfigured => parseAppId.isNotEmpty;
+
+  // ---------- Firebase (hanya untuk FCM; tanpa google-services.json) ----------
+  static const firebaseApiKey = String.fromEnvironment('FIREBASE_API_KEY');
+  static const firebaseAppId = String.fromEnvironment('FIREBASE_APP_ID');
+  static const firebaseSenderId = String.fromEnvironment('FIREBASE_SENDER_ID');
+  static const firebaseProjectId = String.fromEnvironment(
+    'FIREBASE_PROJECT_ID',
+  );
+  static bool get firebaseConfigured =>
+      firebaseApiKey.isNotEmpty && firebaseAppId.isNotEmpty;
+
   static bool get isProd => flavor == AppFlavor.prod;
 
   static const bool isDebug = kDebugMode;
