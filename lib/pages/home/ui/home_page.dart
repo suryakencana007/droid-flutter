@@ -1,5 +1,6 @@
 import 'package:droid/entities/user/index.dart';
 import 'package:droid/shared/l10n/index.dart';
+import 'package:droid/shared/lib/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:droid/widgets/app_bar/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -11,6 +12,7 @@ class HomePage extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final user = ref.watch(currentUserProvider).value;
+    final showBeta = ref.watch(flagProvider('beta_badge'));
     final l10n = context.l10n;
     final typography = context.theme.typography;
     final colors = context.theme.colors;
@@ -20,6 +22,13 @@ class HomePage extends ConsumerWidget {
       body: ListView(
         padding: const EdgeInsets.all(AppSpacing.md),
         children: [
+          if (showBeta) ...[
+            Align(
+              alignment: Alignment.centerLeft,
+              child: FBadge(child: Text(l10n.betaBadge)),
+            ),
+            const Gap(AppSpacing.sm),
+          ],
           Text(
             l10n.homeGreeting(user?.name ?? l10n.homeGuest),
             // Typeface display forui memakai line-height besar untuk judul satu

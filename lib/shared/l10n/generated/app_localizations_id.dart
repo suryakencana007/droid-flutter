@@ -434,4 +434,21 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get notificationChannelDescription => 'Notifikasi umum aplikasi';
+
+  @override
+  String get featureFlagsLabel => 'Feature flags';
+
+  @override
+  String featureFlagsDescription(String source) {
+    return 'Nilai aktif dari $source.';
+  }
+
+  @override
+  String get featureFlagsEmpty => 'Tidak ada flag.';
+
+  @override
+  String get betaBadge => 'Beta';
+
+  @override
+  String get refresh => 'Muat ulang';
 }

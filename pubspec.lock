@@ -281,11 +281,27 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.1.1"
+  flagsmith:
+    dependency: "direct main"
+    description:
+      name: flagsmith
+      sha256: "61283026e41cc459365b0c7f23fc68d7f9f76e1837eb1d9cfd212a6f1703a6ef"
+      url: "https://pub.dev"
+    source: hosted
+    version: "6.2.1"
   flutter:
     dependency: "direct main"
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_client_sse:
+    dependency: transitive
+    description:
+      name: flutter_client_sse
+      sha256: "4ce0297206473dfc064b255fe086713240002e149f52519bd48c21423e4aa5d2"
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.3"
   flutter_driver:
     dependency: transitive
     description: flutter
@@ -852,6 +868,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "2.1.8"
+  pointycastle:
+    dependency: transitive
+    description:
+      name: pointycastle
+      sha256: "92aa3841d083cc4b0f4709b5c74fd6409a3e6ba833ffc7dc6a8fee096366acf5"
+      url: "https://pub.dev"
+    source: hosted
+    version: "4.0.0"
   pool:
     dependency: transitive
     description:
@@ -908,6 +932,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "3.4.3"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      sha256: "5c3004a4a8dbb94bd4bf5412a4def4acdaa12e12f269737a5751369e12d1a962"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.28.0"
   shared_preferences:
     dependency: "direct main"
     description:

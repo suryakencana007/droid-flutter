@@ -190,5 +190,17 @@
   },
   "testNotificationBody": "Ketuk untuk membuka catatan.",
   "notificationChannelName": "Umum",
-  "notificationChannelDescription": "Notifikasi umum aplikasi"
+  "notificationChannelDescription": "Notifikasi umum aplikasi",
+  "featureFlagsLabel": "Feature flags",
+  "featureFlagsDescription": "Nilai aktif dari {source}.",
+  "@featureFlagsDescription": {
+    "placeholders": {
+      "source": {
+        "type": "String"
+      }
+    }
+  },
+  "featureFlagsEmpty": "Tidak ada flag.",
+  "betaBadge": "Beta",
+  "refresh": "Muat ulang"
 }

@@ -889,6 +889,36 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Notifikasi umum aplikasi'**
   String get notificationChannelDescription;
+
+  /// No description provided for @featureFlagsLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Feature flags'**
+  String get featureFlagsLabel;
+
+  /// No description provided for @featureFlagsDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Nilai aktif dari {source}.'**
+  String featureFlagsDescription(String source);
+
+  /// No description provided for @featureFlagsEmpty.
+  ///
+  /// In id, this message translates to:
+  /// **'Tidak ada flag.'**
+  String get featureFlagsEmpty;
+
+  /// No description provided for @betaBadge.
+  ///
+  /// In id, this message translates to:
+  /// **'Beta'**
+  String get betaBadge;
+
+  /// No description provided for @refresh.
+  ///
+  /// In id, this message translates to:
+  /// **'Muat ulang'**
+  String get refresh;
 }
 
 class _AppLocalizationsDelegate

@@ -14,6 +14,7 @@ abstract final class AppRoutes {
   static String noteEdit(String id) => '/notes/$id/edit';
   static const profile = '/profile';
   static const settings = '/profile/settings';
+  static const featureFlags = '/profile/settings/flags';
 
   /// Halaman yang hanya untuk pengguna yang belum masuk.
   static const authPages = {signIn, signUp, forgotPassword};

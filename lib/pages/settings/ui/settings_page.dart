@@ -6,6 +6,7 @@ import 'package:droid/features/toggle_theme/index.dart';
 import 'package:droid/shared/config/index.dart';
 import 'package:droid/shared/l10n/index.dart';
 import 'package:droid/shared/ui/index.dart';
+import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 
@@ -49,6 +50,13 @@ class SettingsPage extends StatelessWidget {
                     title: Text(l10n.versionLabel),
                     details: Text(version),
                   ),
+                  if (!Env.isProd)
+                    FTile(
+                      prefix: const Icon(FLucideIcons.flag),
+                      title: Text(l10n.featureFlagsLabel),
+                      suffix: const Icon(FLucideIcons.chevronRight),
+                      onPress: () => context.go(AppRoutes.featureFlags),
+                    ),
                 ],
               );
             },

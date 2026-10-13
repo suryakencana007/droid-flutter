@@ -4,6 +4,8 @@ import 'package:droid/entities/user/index.dart';
 import 'package:droid/features/delete_note/index.dart';
 import 'package:droid/features/sign_out/index.dart';
 import 'package:droid/features/toggle_theme/index.dart';
+import 'package:droid/pages/feature_flags/index.dart';
+import 'package:droid/pages/settings/index.dart';
 import 'package:droid/shared/config/index.dart';
 import 'package:droid/shared/lib/index.dart';
 import 'package:droid/shared/ui/index.dart';
@@ -57,6 +59,7 @@ Future<void> enterField(WidgetTester tester, int index, String text) async {
 
 void main() {
   notesTests();
+  flagTests();
   responsiveTests();
 
   testWidgets('alur pertama: onboarding → sign in → home → sign out', (
@@ -375,6 +378,7 @@ Future<void> pumpSignedIn(
   WidgetTester tester, {
   FakeNoteApi? notes,
   bool phone = true,
+  Map<String, bool>? flags,
 }) async {
   if (phone) usePhoneViewport(tester);
   final api = FakeAuthApi(latency: Duration.zero);
@@ -398,6 +402,8 @@ Future<void> pumpSignedIn(
         noteApiProvider.overrideWithValue(
           notes ?? FakeNoteApi(latency: Duration.zero),
         ),
+        if (flags != null)
+          featureFlagsProvider.overrideWithValue(MemoryFeatureFlags(flags)),
       ],
       child: const App(),
     ),
@@ -469,6 +475,40 @@ void notesTests() {
 
     expect(find.text('Catatan 40'), findsNothing);
     expect(find.text('Catatan 39'), findsOneWidget);
+  });
+}
+
+void flagTests() {
+  testWidgets('flag notes_create_enabled=false menyembunyikan tombol buat', (
+    tester,
+  ) async {
+    await pumpSignedIn(tester, flags: {'notes_create_enabled': false});
+    await tester.tap(find.text('Catatan').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Catatan 40'), findsOneWidget);
+    expect(find.bySemanticsLabel('Catatan baru'), findsNothing);
+
+    await tester.tap(find.text('Profil').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Pengaturan'));
+    await tester.pumpAndSettle();
+    // ListView membangun anak secara lazy; gulir daftar pengaturan ke bawah.
+    final settingsList = find.descendant(
+      of: find.byType(SettingsPage),
+      matching: find.byType(Scrollable),
+    );
+    await tester.scrollUntilVisible(
+      find.text('Feature flags'),
+      200,
+      scrollable: settingsList.first,
+    );
+    // Gulir sedikit lagi agar tile tidak tertutup bottom tabs saat ditap.
+    await tester.drag(settingsList.first, const Offset(0, -300));
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Feature flags'));
+    await tester.pumpAndSettle();
+    expect(find.byType(FeatureFlagsPage), findsOneWidget);
+    expect(find.text('notes_create_enabled'), findsOneWidget);
   });
 }
 

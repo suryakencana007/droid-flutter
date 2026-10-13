@@ -2,5 +2,7 @@
   "APP_ENV": "staging",
   "API_BASE_URL": "https://staging-api.example.com",
   "USE_FAKE_API": false,
-  "LOG_LEVEL": "INFO"
+  "LOG_LEVEL": "INFO",
+  "FLAGSMITH_ENV_KEY": "",
+  "FEATURE_FLAGS": "notes_create_enabled:true;beta_badge:true"
 }

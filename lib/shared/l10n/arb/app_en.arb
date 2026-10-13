@@ -131,5 +131,10 @@
   "testNotificationTitle": "Hello from {appName}",
   "testNotificationBody": "Tap to open your notes.",
   "notificationChannelName": "General",
-  "notificationChannelDescription": "General app notifications"
+  "notificationChannelDescription": "General app notifications",
+  "featureFlagsLabel": "Feature flags",
+  "featureFlagsDescription": "Active values from {source}.",
+  "featureFlagsEmpty": "No flags.",
+  "betaBadge": "Beta",
+  "refresh": "Refresh"
 }

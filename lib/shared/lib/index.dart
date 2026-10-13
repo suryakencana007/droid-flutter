@@ -5,6 +5,7 @@ export 'analytics/analytics_route_observer.dart';
 export 'connectivity/connectivity_provider.dart';
 export 'errors/crash_reporter.dart';
 export 'errors/describe_error.dart';
+export 'flags/feature_flags.dart';
 export 'logging/app_logger.dart';
 export 'pagination.dart';
 export 'permissions/permission_service.dart';

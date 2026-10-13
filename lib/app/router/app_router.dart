@@ -1,5 +1,6 @@
 import 'package:droid/entities/user/index.dart';
 import 'package:droid/features/complete_onboarding/index.dart';
+import 'package:droid/pages/feature_flags/index.dart';
 import 'package:droid/pages/forgot_password/index.dart';
 import 'package:droid/pages/home/index.dart';
 import 'package:droid/pages/not_found/index.dart';
@@ -108,6 +109,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'settings',
                     builder: (context, state) => const SettingsPage(),
+                    routes: [
+                      GoRoute(
+                        path: 'flags',
+                        builder: (context, state) => const FeatureFlagsPage(),
+                      ),
+                    ],
                   ),
                 ],
               ),

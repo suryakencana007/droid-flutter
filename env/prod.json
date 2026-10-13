@@ -2,5 +2,7 @@
   "APP_ENV": "prod",
   "API_BASE_URL": "https://api.example.com",
   "USE_FAKE_API": false,
-  "LOG_LEVEL": "WARNING"
+  "LOG_LEVEL": "WARNING",
+  "FLAGSMITH_ENV_KEY": "",
+  "FEATURE_FLAGS": "notes_create_enabled:true;beta_badge:false"
 }

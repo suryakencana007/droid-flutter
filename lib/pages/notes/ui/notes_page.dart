@@ -51,15 +51,18 @@ class _NotesPageState extends ConsumerState<NotesPage> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     final notes = ref.watch(notesProvider);
+    final canCreate = ref.watch(flagProvider('notes_create_enabled'));
 
     return Scaffold(
       appBar: DroidAppBar(title: l10n.notesTitle),
-      floatingActionButton: FButton.icon(
-        variant: FButtonVariant.primary,
-        semanticsLabel: l10n.noteNew,
-        onPress: () => context.go(AppRoutes.noteNew),
-        child: const Icon(FLucideIcons.plus),
-      ),
+      floatingActionButton: canCreate
+          ? FButton.icon(
+              variant: FButtonVariant.primary,
+              semanticsLabel: l10n.noteNew,
+              onPress: () => context.go(AppRoutes.noteNew),
+              child: const Icon(FLucideIcons.plus),
+            )
+          : null,
       body: AsyncValueView<Paginated<Note>>(
         value: notes,
         onRetry: () => ref.invalidate(notesProvider),

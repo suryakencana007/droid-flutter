@@ -432,4 +432,21 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get notificationChannelDescription => 'General app notifications';
+
+  @override
+  String get featureFlagsLabel => 'Feature flags';
+
+  @override
+  String featureFlagsDescription(String source) {
+    return 'Active values from $source.';
+  }
+
+  @override
+  String get featureFlagsEmpty => 'No flags.';
+
+  @override
+  String get betaBadge => 'Beta';
+
+  @override
+  String get refresh => 'Refresh';
 }

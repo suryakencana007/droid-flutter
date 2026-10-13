@@ -30,6 +30,16 @@ abstract final class Env {
     defaultValue: 'ALL',
   );
 
+  /// Environment key Flagsmith; kosong = pakai [featureFlags] lokal.
+  static const flagsmithEnvKey = String.fromEnvironment('FLAGSMITH_ENV_KEY');
+
+  /// Flag lokal, format `nama:nilai;nama2:nilai2`. Nilai `true`/`false`
+  /// berarti aktif/nonaktif; nilai lain dianggap aktif dengan value itu.
+  static const featureFlags = String.fromEnvironment(
+    'FEATURE_FLAGS',
+    defaultValue: 'notes_create_enabled:true;beta_badge:true',
+  );
+
   static bool get isProd => flavor == AppFlavor.prod;
 
   static const bool isDebug = kDebugMode;

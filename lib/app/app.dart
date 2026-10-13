@@ -26,6 +26,7 @@ class App extends ConsumerWidget {
       final id = next.value?.id;
       ref.read(crashReporterProvider).setUser(id);
       ref.read(analyticsProvider).setUser(id);
+      ref.read(flagsProvider.notifier).identify(id);
     });
 
     return MaterialApp.router(
