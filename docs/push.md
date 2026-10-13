@@ -82,3 +82,90 @@ curl -X POST https://parse.kubus.work/parse/push \
 
 Catatan: FCM di Android butuh Google Play Services di perangkat; iOS butuh
 APNs key di Firebase dan `GoogleService-Info.plist`/opsi iOS sendiri.
+
+## Menyiapkan Parse Server dan Parse Dashboard untuk push
+
+Kredensial FCM **tidak bisa diatur dari Dashboard**; ia bagian dari konfigurasi
+Parse Server. Dashboard dipakai untuk membaca kunci, memeriksa `_Installation`,
+dan mengirim push uji.
+
+### 1. Ambil service account Firebase
+
+Firebase console → ikon gear → *Project settings* → tab *Service accounts* →
+*Generate new private key*. Simpan JSON-nya di server, misalnya
+`/config/firebase-service-account.json`. Pastikan *Firebase Cloud Messaging API
+(V1)* aktif di tab *Cloud Messaging*.
+
+### 2. Tambahkan `push` ke konfigurasi Parse Server
+
+`config.json` (parse-server ≥ 5):
+
+```json
+{
+  "appId": "APP_ID",
+  "masterKey": "MASTER_KEY",
+  "clientKey": "CLIENT_KEY",
+  "serverURL": "https://parse.kubus.work/parse",
+  "publicServerURL": "https://parse.kubus.work/parse",
+  "push": {
+    "android": {
+      "firebaseServiceAccount": "/config/firebase-service-account.json"
+    }
+  }
+}
+```
+
+Dengan image Docker `parseplatform/parse-server`, nilai yang sama bisa lewat
+environment:
+
+```yaml
+services:
+  parse:
+    image: parseplatform/parse-server
+    environment:
+      PARSE_SERVER_APPLICATION_ID: APP_ID
+      PARSE_SERVER_MASTER_KEY: MASTER_KEY
+      PARSE_SERVER_CLIENT_KEY: CLIENT_KEY
+      PARSE_SERVER_URL: https://parse.kubus.work/parse
+      PARSE_SERVER_PUSH: '{"android":{"firebaseServiceAccount":"/config/firebase-service-account.json"}}'
+    volumes:
+      - ./firebase-service-account.json:/config/firebase-service-account.json:ro
+```
+
+Restart server, lalu cek `GET /parse/serverInfo` dengan header master key:
+`features.push.immediatePush` harus `true`.
+
+### 3. Parse Dashboard
+
+`parse-dashboard-config.json`:
+
+```json
+{
+  "apps": [{
+    "serverURL": "https://parse.kubus.work/parse",
+    "appId": "APP_ID",
+    "masterKey": "MASTER_KEY",
+    "appName": "droid"
+  }]
+}
+```
+
+Menu *Push* baru muncul setelah server melaporkan push aktif (langkah 2).
+Kunci untuk app ada di *App Settings → Security & Keys*: `Application ID`
+→ `PARSE_APP_ID`, `Client Key` → `PARSE_CLIENT_KEY` (kosongkan bila server
+tidak mendefinisikan `clientKey`).
+
+### 4. Verifikasi
+
+1. Jalankan app (`just run`), sign in. Di Dashboard → *Core* → `_Installation`
+   harus ada baris dengan `deviceToken`, `pushType: gcm`, `deviceType: android`,
+   dan `userId`.
+2. Dashboard → *Push* → *Send a new push*: audience *Everyone* (atau filter
+   `deviceType = android`), isi pesan, kirim. Untuk membuka halaman tertentu,
+   tambahkan key `route` di *Advanced/Data* dengan nilai misalnya `/notes`.
+3. Atau lewat REST dengan master key (lihat perintah `curl` di atas).
+4. Push tertarget: `where: {"userId": "<id>"}`.
+
+Jika push tidak sampai: periksa log Parse Server (`verbose: true`), pastikan
+package name app sama dengan yang terdaftar di Firebase, dan perangkat punya
+Google Play Services.
