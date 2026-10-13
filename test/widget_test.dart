@@ -182,6 +182,7 @@ void main() {
       tester,
       ProviderScope(
         overrides: [
+          pushServiceProvider.overrideWithValue(const NoopPushService()),
           isOnlineProvider.overrideWith((ref) => Stream.value(true)),
           keyValueStoreProvider.overrideWithValue(prefs),
           secureStoreProvider.overrideWithValue(
@@ -436,6 +437,7 @@ Future<void> pumpSignedIn(
   await tester.pumpWidget(
     ProviderScope(
       overrides: [
+        pushServiceProvider.overrideWithValue(const NoopPushService()),
         isOnlineProvider.overrideWith((ref) => Stream.value(true)),
         keyValueStoreProvider.overrideWithValue(
           MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'}),

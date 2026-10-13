@@ -47,7 +47,7 @@ class ParseFcmPushService implements PushService {
       Env.parseServerUrl,
       clientKey: Env.parseClientKey.isEmpty ? null : Env.parseClientKey,
       appName: AppInfo.name,
-      debug: Env.isDebug,
+      // `debug` sengaja tidak dinyalakan: SDK mencetak kunci dan body ke log.
       coreStore: await CoreStoreSembastImp.getInstance('${dir.path}/parse'),
     );
     await _local.initialize(onOpened: onOpened);
