@@ -88,6 +88,10 @@ release version:
 build-aab:
     flutter build appbundle --release {{defines}}
 
+# Cetak nilai FIREBASE_* dari google-services.json: `just firebase-env ~/Downloads/google-services.json`
+firebase-env file package="com.kubus.work.droid":
+    dart run tool/firebase_env.dart "{{file}}" "{{package}}"
+
 # ---------- Branding ----------
 
 # Generate ikon launcher Android/iOS dari assets/brand

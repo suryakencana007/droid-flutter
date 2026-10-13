@@ -54,6 +54,20 @@ Feature, page, dan test tidak berubah.
 | `FIREBASE_SENDER_ID`  | `project_number` / `messagingSenderId`                        |
 | `FIREBASE_PROJECT_ID` | `project_id`                                                  |
 
+Cara termudah mendapatkan empat nilai `FIREBASE_*`: Firebase console →
+*Project settings* → *General* → *Your apps* → tambahkan app Android dengan
+package `com.kubus.work.droid` bila belum ada → unduh `google-services.json`,
+lalu:
+
+```bash
+just firebase-env ~/Downloads/google-services.json
+```
+
+Tempel hasilnya ke `env/<flavor>.json`. Padanannya di dalam file:
+`project_info.project_number` → SENDER_ID, `project_info.project_id` →
+PROJECT_ID, `client[].client_info.mobilesdk_app_id` → APP_ID,
+`client[].api_key[].current_key` → API_KEY.
+
 Firebase diinisialisasi dari nilai itu (tanpa `google-services.json`), jadi
 build tetap jalan di flavor yang belum dikonfigurasi. Package name Android
 harus sama dengan yang didaftarkan di Firebase (`com.kubus.work.droid`).

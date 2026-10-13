@@ -6,10 +6,10 @@
   "FLAGSMITH_ENV_KEY": "",
   "FEATURE_FLAGS": "notes_create_enabled:true;beta_badge:true",
   "PARSE_SERVER_URL": "https://parse.kubus.work/parse",
-  "PARSE_APP_ID": "",
-  "PARSE_CLIENT_KEY": "",
+  "PARSE_APP_ID": "kubus",
+  "PARSE_CLIENT_KEY": "droid-sekret-client-key",
   "FIREBASE_API_KEY": "",
-  "FIREBASE_APP_ID": "",
+  "FIREBASE_APP_ID": "flutter-droid-app",
   "FIREBASE_SENDER_ID": "",
   "FIREBASE_PROJECT_ID": ""
 }
