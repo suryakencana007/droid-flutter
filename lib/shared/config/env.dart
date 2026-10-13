@@ -43,7 +43,7 @@ abstract final class Env {
   // ---------- Parse Server (push lewat FCM, opsional backend) ----------
   static const parseServerUrl = String.fromEnvironment(
     'PARSE_SERVER_URL',
-    defaultValue: 'https://parse.kubus.work',
+    defaultValue: 'https://parse.kubus.work/parse',
   );
   static const parseAppId = String.fromEnvironment('PARSE_APP_ID');
   static const parseClientKey = String.fromEnvironment('PARSE_CLIENT_KEY');

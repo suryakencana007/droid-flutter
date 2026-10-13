@@ -5,7 +5,7 @@
   "LOG_LEVEL": "INFO",
   "FLAGSMITH_ENV_KEY": "",
   "FEATURE_FLAGS": "notes_create_enabled:true;beta_badge:true",
-  "PARSE_SERVER_URL": "https://parse.kubus.work",
+  "PARSE_SERVER_URL": "https://parse.kubus.work/parse",
   "PARSE_APP_ID": "",
   "PARSE_CLIENT_KEY": "",
   "FIREBASE_API_KEY": "",

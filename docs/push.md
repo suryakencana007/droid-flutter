@@ -46,7 +46,7 @@ Feature, page, dan test tidak berubah.
 
 | Kunci                 | Sumber                                                        |
 |-----------------------|---------------------------------------------------------------|
-| `PARSE_SERVER_URL`    | URL server, contoh `https://parse.kubus.work`                 |
+| `PARSE_SERVER_URL`    | URL server, contoh `https://parse.kubus.work/parse` (termasuk mount path)                 |
 | `PARSE_APP_ID`        | `appId` di konfigurasi Parse Server                           |
 | `PARSE_CLIENT_KEY`    | `clientKey` (boleh kosong bila server tidak memakainya)       |
 | `FIREBASE_API_KEY`    | Firebase console → Project settings → app Android → `apiKey`  |
@@ -70,7 +70,7 @@ push: { android: { firebaseServiceAccount: '/path/service-account.json' } }
 Kirim uji dengan master key (dari mesin pengembang, bukan dari app):
 
 ```bash
-curl -X POST https://parse.kubus.work/push \
+curl -X POST https://parse.kubus.work/parse/push \
   -H "X-Parse-Application-Id: $PARSE_APP_ID" \
   -H "X-Parse-Master-Key: $PARSE_MASTER_KEY" \
   -H "Content-Type: application/json" \
