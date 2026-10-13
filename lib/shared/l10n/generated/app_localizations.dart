@@ -841,6 +841,54 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Buka pengaturan'**
   String get openSettings;
+
+  /// No description provided for @notificationsLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Notifikasi'**
+  String get notificationsLabel;
+
+  /// No description provided for @notificationsToggle.
+  ///
+  /// In id, this message translates to:
+  /// **'Terima notifikasi'**
+  String get notificationsToggle;
+
+  /// No description provided for @notificationsToggleBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Kabar penting dari aplikasi. Butuh izin notifikasi sistem.'**
+  String get notificationsToggleBody;
+
+  /// No description provided for @sendTestNotification.
+  ///
+  /// In id, this message translates to:
+  /// **'Kirim notifikasi uji'**
+  String get sendTestNotification;
+
+  /// No description provided for @testNotificationTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Halo dari {appName}'**
+  String testNotificationTitle(String appName);
+
+  /// No description provided for @testNotificationBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Ketuk untuk membuka catatan.'**
+  String get testNotificationBody;
+
+  /// No description provided for @notificationChannelName.
+  ///
+  /// In id, this message translates to:
+  /// **'Umum'**
+  String get notificationChannelName;
+
+  /// No description provided for @notificationChannelDescription.
+  ///
+  /// In id, this message translates to:
+  /// **'Notifikasi umum aplikasi'**
+  String get notificationChannelDescription;
 }
 
 class _AppLocalizationsDelegate

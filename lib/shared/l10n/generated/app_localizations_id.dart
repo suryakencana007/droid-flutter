@@ -407,4 +407,31 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get openSettings => 'Buka pengaturan';
+
+  @override
+  String get notificationsLabel => 'Notifikasi';
+
+  @override
+  String get notificationsToggle => 'Terima notifikasi';
+
+  @override
+  String get notificationsToggleBody =>
+      'Kabar penting dari aplikasi. Butuh izin notifikasi sistem.';
+
+  @override
+  String get sendTestNotification => 'Kirim notifikasi uji';
+
+  @override
+  String testNotificationTitle(String appName) {
+    return 'Halo dari $appName';
+  }
+
+  @override
+  String get testNotificationBody => 'Ketuk untuk membuka catatan.';
+
+  @override
+  String get notificationChannelName => 'Umum';
+
+  @override
+  String get notificationChannelDescription => 'Notifikasi umum aplikasi';
 }

@@ -1,3 +1,4 @@
+import 'package:droid/features/manage_notifications/index.dart';
 import 'package:droid/features/manage_permissions/index.dart';
 import 'package:droid/features/select_locale/index.dart';
 import 'package:droid/features/sign_out/index.dart';
@@ -23,6 +24,8 @@ class SettingsPage extends StatelessWidget {
           const ThemeModeSelector(),
           const Gap(AppSpacing.lg),
           const LocaleSelector(),
+          const Gap(AppSpacing.lg),
+          const NotificationSettings(),
           const Gap(AppSpacing.lg),
           const PermissionTiles(),
           const Gap(AppSpacing.lg),

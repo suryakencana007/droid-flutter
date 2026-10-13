@@ -175,5 +175,20 @@
   "permissionContinue": "Lanjutkan",
   "permissionDeniedTitle": "Izin ditolak",
   "permissionDeniedBody": "Aktifkan izin ini lewat pengaturan sistem.",
-  "openSettings": "Buka pengaturan"
+  "openSettings": "Buka pengaturan",
+  "notificationsLabel": "Notifikasi",
+  "notificationsToggle": "Terima notifikasi",
+  "notificationsToggleBody": "Kabar penting dari aplikasi. Butuh izin notifikasi sistem.",
+  "sendTestNotification": "Kirim notifikasi uji",
+  "testNotificationTitle": "Halo dari {appName}",
+  "@testNotificationTitle": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "testNotificationBody": "Ketuk untuk membuka catatan.",
+  "notificationChannelName": "Umum",
+  "notificationChannelDescription": "Notifikasi umum aplikasi"
 }

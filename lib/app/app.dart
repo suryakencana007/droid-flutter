@@ -8,6 +8,7 @@ import 'package:droid/shared/ui/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_ui/material_ui.dart';
 
+import 'push_bootstrap.dart';
 import 'router/app_router.dart';
 import 'theme/app_theme.dart';
 
@@ -19,6 +20,7 @@ class App extends ConsumerWidget {
     final themeMode = ref.watch(themeModeProvider).value ?? ThemeMode.system;
     final router = ref.watch(appRouterProvider);
     final locale = ref.watch(localeProvider).value;
+    ref.watch(pushBootstrapProvider);
 
     ref.listen(currentUserProvider, (_, next) {
       final id = next.value?.id;

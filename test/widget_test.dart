@@ -23,6 +23,7 @@ Widget buildApp({
 }) {
   return ProviderScope(
     overrides: [
+      pushServiceProvider.overrideWithValue(const NoopPushService()),
       isOnlineProvider.overrideWith((ref) => Stream.value(online)),
       keyValueStoreProvider.overrideWithValue(
         MemoryKeyValueStore({'locale': ?locale, ...prefs}),
@@ -204,6 +205,7 @@ void main() {
       tester,
       ProviderScope(
         overrides: [
+          pushServiceProvider.overrideWithValue(const NoopPushService()),
           analyticsProvider.overrideWithValue(analytics),
           isOnlineProvider.overrideWith((ref) => Stream.value(true)),
           keyValueStoreProvider.overrideWithValue(
@@ -245,6 +247,7 @@ void main() {
       tester,
       ProviderScope(
         overrides: [
+          pushServiceProvider.overrideWithValue(const NoopPushService()),
           permissionServiceProvider.overrideWithValue(permissions),
           isOnlineProvider.overrideWith((ref) => Stream.value(true)),
           keyValueStoreProvider.overrideWithValue(
@@ -273,6 +276,60 @@ void main() {
     await tester.pumpAndSettle();
     expect(find.text('Diizinkan'), findsOneWidget);
   });
+
+  testWidgets(
+    'notifikasi: toggle minta izin, uji menampilkan, ketukan membuka route',
+    (tester) async {
+      final push = MemoryPushService();
+      final permissions = MemoryPermissionService();
+      final api = FakeAuthApi(latency: Duration.zero);
+      final session = await tester.runAsync(
+        () => api.signIn(
+          email: FakeAuthApi.demoEmail,
+          password: FakeAuthApi.demoPassword,
+        ),
+      );
+      await pumpPhone(
+        tester,
+        ProviderScope(
+          overrides: [
+            pushServiceProvider.overrideWithValue(push),
+            permissionServiceProvider.overrideWithValue(permissions),
+            isOnlineProvider.overrideWith((ref) => Stream.value(true)),
+            keyValueStoreProvider.overrideWithValue(
+              MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'}),
+            ),
+            secureStoreProvider.overrideWithValue(
+              MemorySecureStore({'auth_token': session!.token}),
+            ),
+            authApiProvider.overrideWithValue(api),
+          ],
+          child: const App(),
+        ),
+      );
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Profil').last);
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Pengaturan'));
+      await tester.pumpAndSettle();
+
+      await tester.ensureVisible(find.byType(FSwitch));
+      await tester.tap(find.byType(FSwitch));
+      await tester.pumpAndSettle();
+      await tester.tap(find.text('Lanjutkan')); // dialog penjelasan izin
+      await tester.pumpAndSettle();
+
+      await tester.ensureVisible(find.text('Kirim notifikasi uji'));
+      await tester.tap(find.text('Kirim notifikasi uji'));
+      await tester.pumpAndSettle();
+      expect(push.shown, hasLength(1));
+      expect(push.shown.single.route, AppRoutes.notes);
+
+      push.open(const PushMessage(route: AppRoutes.notes));
+      await tester.pumpAndSettle();
+      expect(find.text('Catatan 40'), findsOneWidget);
+    },
+  );
 
   testWidgets('banner offline tampil saat tidak ada koneksi', (tester) async {
     final api = FakeAuthApi(latency: Duration.zero);

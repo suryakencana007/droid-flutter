@@ -405,4 +405,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get openSettings => 'Open settings';
+
+  @override
+  String get notificationsLabel => 'Notifications';
+
+  @override
+  String get notificationsToggle => 'Receive notifications';
+
+  @override
+  String get notificationsToggleBody =>
+      'Important updates from the app. Requires the system notification permission.';
+
+  @override
+  String get sendTestNotification => 'Send a test notification';
+
+  @override
+  String testNotificationTitle(String appName) {
+    return 'Hello from $appName';
+  }
+
+  @override
+  String get testNotificationBody => 'Tap to open your notes.';
+
+  @override
+  String get notificationChannelName => 'General';
+
+  @override
+  String get notificationChannelDescription => 'General app notifications';
 }

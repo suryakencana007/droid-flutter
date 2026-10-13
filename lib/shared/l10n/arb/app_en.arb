@@ -123,5 +123,13 @@
   "permissionContinue": "Continue",
   "permissionDeniedTitle": "Permission denied",
   "permissionDeniedBody": "Enable this permission in the system settings.",
-  "openSettings": "Open settings"
+  "openSettings": "Open settings",
+  "notificationsLabel": "Notifications",
+  "notificationsToggle": "Receive notifications",
+  "notificationsToggleBody": "Important updates from the app. Requires the system notification permission.",
+  "sendTestNotification": "Send a test notification",
+  "testNotificationTitle": "Hello from {appName}",
+  "testNotificationBody": "Tap to open your notes.",
+  "notificationChannelName": "General",
+  "notificationChannelDescription": "General app notifications"
 }
