@@ -9,7 +9,8 @@ import 'router/app_router.dart';
 final pushBootstrapProvider = FutureProvider<void>((ref) async {
   final push = ref.watch(pushServiceProvider);
   final router = ref.watch(appRouterProvider);
-  final log = ref.read(crashReporterProvider);
+  final reporter = ref.read(crashReporterProvider);
+  final logger = log('push');
 
   await push.initialize(
     onOpened: (message) {
@@ -19,9 +20,17 @@ final pushBootstrapProvider = FutureProvider<void>((ref) async {
   );
 
   final sub = push.onMessage.listen(
-    push.showLocal,
+    (message) async {
+      logger.info('menampilkan: ${message.title}');
+      try {
+        await push.showLocal(message);
+      } on Object catch (e, st) {
+        logger.warning('gagal menampilkan', e, st);
+        await reporter.record(e, st);
+      }
+    },
     onError: (Object e, StackTrace st) {
-      log.record(e, st);
+      reporter.record(e, st);
     },
   );
   ref.onDispose(sub.cancel);

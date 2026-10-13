@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -56,7 +57,10 @@ class ParseFcmPushService implements PushService {
     final messaging = FirebaseMessaging.instance;
     await _register(await messaging.getToken());
     messaging.onTokenRefresh.listen(_register);
-    FirebaseMessaging.onMessage.listen((m) => _messages.add(toPushMessage(m)));
+    FirebaseMessaging.onMessage.listen((m) {
+      _log.info('onMessage id=${m.messageId} data=${m.data}');
+      _messages.add(toPushMessage(m));
+    });
     FirebaseMessaging.onMessageOpenedApp.listen(
       (m) => onOpened(toPushMessage(m)),
     );
@@ -101,10 +105,24 @@ class ParseFcmPushService implements PushService {
     }
   }
 
-  /// Parse mengirim `data: {title, alert, ...}`; FCM biasa mengisi
-  /// `notification`. Keduanya didukung.
+  /// Parse mengirim payload sebagai JSON string di `data['data']`
+  /// (`{"title":..,"alert":..,"route":..}`); FCM biasa menaruh field langsung
+  /// di `data` atau `notification`. Semuanya didukung.
   static PushMessage toPushMessage(RemoteMessage m) {
-    final data = m.data.map((k, v) => MapEntry(k, v.toString()));
+    final data = <String, String>{
+      for (final e in m.data.entries) e.key: e.value.toString(),
+    };
+    final nested = data['data'];
+    if (nested != null && nested.trimLeft().startsWith('{')) {
+      try {
+        final parsed = jsonDecode(nested) as Map<String, dynamic>;
+        for (final e in parsed.entries) {
+          data.putIfAbsent(e.key, e.value.toString);
+        }
+      } on FormatException {
+        // bukan JSON, biarkan apa adanya
+      }
+    }
     return PushMessage(
       title: m.notification?.title ?? data['title'],
       body: m.notification?.body ?? data['alert'] ?? data['body'],
@@ -119,14 +137,22 @@ class ParseFcmPushService implements PushService {
 /// pesan dengan `notification` sudah ditampilkan sistem.
 @pragma('vm:entry-point')
 Future<void> parseFcmBackgroundHandler(RemoteMessage message) async {
+  debugPrint(
+    '[push.parse] background message data=${message.data} '
+    'notif=${message.notification?.title}',
+  );
   if (message.notification != null) return;
   final push = ParseFcmPushService.toPushMessage(message);
   if (push.title == null && push.body == null) return;
-  final local = LocalPushService(
-    channelName: 'General',
-    channelDescription: 'General app notifications',
-  );
-  await local.initialize(onOpened: (_) {});
-  await local.showLocal(push);
-  if (kDebugMode) debugPrint('[push.parse] background: ${push.title}');
+  try {
+    final local = LocalPushService(
+      channelName: 'General',
+      channelDescription: 'General app notifications',
+    );
+    await local.initialize(onOpened: (_) {});
+    await local.showLocal(push);
+    debugPrint('[push.parse] background shown: ${push.title}');
+  } on Object catch (e, st) {
+    debugPrint('[push.parse] background gagal: $e\n$st');
+  }
 }
