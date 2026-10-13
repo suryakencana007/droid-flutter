@@ -321,6 +321,14 @@ void main() {
         ProviderScope(
           overrides: [
             pushServiceProvider.overrideWithValue(push),
+            appDatabaseProvider.overrideWith((ref) {
+              final db = AppDatabase.memory();
+              ref.onDispose(db.close);
+              return db;
+            }),
+            remoteNoteApiProvider.overrideWithValue(
+              FakeNoteApi(latency: Duration.zero),
+            ),
             deviceAuthenticatorProvider.overrideWithValue(
               MemoryAuthenticator(available: false),
             ),
@@ -362,6 +370,10 @@ void main() {
       push.open(const PushMessage(route: AppRoutes.notes));
       await tester.pumpAndSettle();
       expect(find.text('Catatan 40'), findsOneWidget);
+      // Bongkar tree di dalam test agar timer penutupan stream drift sempat jalan.
+      await tester.pumpWidget(const SizedBox());
+      await tester.pump(const Duration(seconds: 1));
+      await tester.pumpAndSettle();
     },
   );
 

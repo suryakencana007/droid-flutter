@@ -1039,6 +1039,24 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Password saat ini salah.'**
   String get authWrongPassword;
+
+  /// No description provided for @pendingChanges.
+  ///
+  /// In id, this message translates to:
+  /// **'{count} perubahan menunggu sinkronisasi'**
+  String pendingChanges(int count);
+
+  /// No description provided for @syncNow.
+  ///
+  /// In id, this message translates to:
+  /// **'Sinkronkan'**
+  String get syncNow;
+
+  /// No description provided for @offlineSavedLocally.
+  ///
+  /// In id, this message translates to:
+  /// **'Disimpan di perangkat, akan dikirim saat online.'**
+  String get offlineSavedLocally;
 }
 
 class _AppLocalizationsDelegate

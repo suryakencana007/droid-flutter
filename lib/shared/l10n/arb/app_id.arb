@@ -229,5 +229,15 @@
   "passwordChanged": "Password diganti",
   "editProfileFailed": "Gagal menyimpan profil",
   "changePasswordFailed": "Gagal mengganti password",
-  "authWrongPassword": "Password saat ini salah."
+  "authWrongPassword": "Password saat ini salah.",
+  "pendingChanges": "{count} perubahan menunggu sinkronisasi",
+  "@pendingChanges": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "syncNow": "Sinkronkan",
+  "offlineSavedLocally": "Disimpan di perangkat, akan dikirim saat online."
 }

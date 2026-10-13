@@ -156,5 +156,8 @@
   "passwordChanged": "Password changed",
   "editProfileFailed": "Could not save profile",
   "changePasswordFailed": "Could not change password",
-  "authWrongPassword": "The current password is incorrect."
+  "authWrongPassword": "The current password is incorrect.",
+  "pendingChanges": "{count} changes waiting to sync",
+  "syncNow": "Sync now",
+  "offlineSavedLocally": "Saved on this device, will be sent when online."
 }

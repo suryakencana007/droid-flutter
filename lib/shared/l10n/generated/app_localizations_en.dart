@@ -513,4 +513,16 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authWrongPassword => 'The current password is incorrect.';
+
+  @override
+  String pendingChanges(int count) {
+    return '$count changes waiting to sync';
+  }
+
+  @override
+  String get syncNow => 'Sync now';
+
+  @override
+  String get offlineSavedLocally =>
+      'Saved on this device, will be sent when online.';
 }

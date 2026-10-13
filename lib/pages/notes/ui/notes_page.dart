@@ -52,6 +52,8 @@ class _NotesPageState extends ConsumerState<NotesPage> {
     final l10n = context.l10n;
     final notes = ref.watch(notesProvider);
     final canCreate = ref.watch(flagProvider('notes_create_enabled'));
+    final pending = ref.watch(pendingNoteOpsProvider).value ?? 0;
+    final sync = ref.watch(noteSyncProvider);
 
     return Scaffold(
       appBar: DroidAppBar(title: l10n.notesTitle),
@@ -73,14 +75,32 @@ class _NotesPageState extends ConsumerState<NotesPage> {
           body: l10n.notesEmptyBody,
         ),
         data: (page) => RefreshIndicator(
-          onRefresh: () => ref.read(notesProvider.notifier).refresh(),
+          onRefresh: () async {
+            await sync();
+            await ref.read(notesProvider.notifier).refresh();
+          },
           child: ListView.separated(
             controller: _scroll,
             physics: const AlwaysScrollableScrollPhysics(),
             padding: const EdgeInsets.all(AppSpacing.md),
-            itemCount: page.items.length + (page.hasMore ? 1 : 0),
+            itemCount:
+                (pending > 0 ? 1 : 0) +
+                page.items.length +
+                (page.hasMore ? 1 : 0),
             separatorBuilder: (_, _) => const Gap(AppSpacing.sm),
-            itemBuilder: (context, index) {
+            itemBuilder: (context, rawIndex) {
+              if (pending > 0 && rawIndex == 0) {
+                return FAlert(
+                  icon: const Icon(FLucideIcons.cloudUpload),
+                  title: Text(l10n.pendingChanges(pending)),
+                  subtitle: FButton(
+                    variant: FButtonVariant.outline,
+                    onPress: sync,
+                    child: Text(l10n.syncNow),
+                  ),
+                );
+              }
+              final index = pending > 0 ? rawIndex - 1 : rawIndex;
               if (index >= page.items.length) {
                 return const Padding(
                   padding: EdgeInsets.all(AppSpacing.md),

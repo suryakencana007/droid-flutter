@@ -515,4 +515,16 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get authWrongPassword => 'Password saat ini salah.';
+
+  @override
+  String pendingChanges(int count) {
+    return '$count perubahan menunggu sinkronisasi';
+  }
+
+  @override
+  String get syncNow => 'Sinkronkan';
+
+  @override
+  String get offlineSavedLocally =>
+      'Disimpan di perangkat, akan dikirim saat online.';
 }
