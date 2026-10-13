@@ -304,6 +304,15 @@ void main() {
     await tester.tap(find.text('Lanjutkan'));
     await tester.pumpAndSettle();
     expect(find.text('Diizinkan'), findsOneWidget);
+
+    // Sudah diizinkan: tap tile menawarkan pengaturan sistem, bukan mencabut.
+    await tester.tap(find.text('Kamera'));
+    await tester.pumpAndSettle();
+    expect(find.text('Ubah izin di pengaturan sistem?'), findsOneWidget);
+    await tester.tap(find.text('Buka pengaturan'));
+    await tester.pumpAndSettle();
+    expect(permissions.openedSettings, 1);
+    expect(find.text('Diizinkan'), findsOneWidget);
   });
 
   testWidgets(

@@ -525,4 +525,16 @@ class AppLocalizationsEn extends AppLocalizations {
   @override
   String get offlineSavedLocally =>
       'Saved on this device, will be sent when online.';
+
+  @override
+  String get permissionManageTitle =>
+      'Change this permission in system settings?';
+
+  @override
+  String get permissionManageBody =>
+      'Apps cannot revoke their own permissions. Open the system settings to turn it off or change it; the status here updates when you come back.';
+
+  @override
+  String get permissionGrantedHint =>
+      'Granted, tap to change in system settings';
 }

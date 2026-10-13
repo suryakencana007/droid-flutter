@@ -527,4 +527,15 @@ class AppLocalizationsId extends AppLocalizations {
   @override
   String get offlineSavedLocally =>
       'Disimpan di perangkat, akan dikirim saat online.';
+
+  @override
+  String get permissionManageTitle => 'Ubah izin di pengaturan sistem?';
+
+  @override
+  String get permissionManageBody =>
+      'Aplikasi tidak bisa mencabut izinnya sendiri. Buka pengaturan sistem untuk mematikan atau mengubahnya; status di sini akan diperbarui saat kamu kembali.';
+
+  @override
+  String get permissionGrantedHint =>
+      'Diizinkan, ketuk untuk mengubah di pengaturan sistem';
 }

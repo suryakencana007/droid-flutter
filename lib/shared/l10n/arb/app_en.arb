@@ -159,5 +159,8 @@
   "authWrongPassword": "The current password is incorrect.",
   "pendingChanges": "{count} changes waiting to sync",
   "syncNow": "Sync now",
-  "offlineSavedLocally": "Saved on this device, will be sent when online."
+  "offlineSavedLocally": "Saved on this device, will be sent when online.",
+  "permissionManageTitle": "Change this permission in system settings?",
+  "permissionManageBody": "Apps cannot revoke their own permissions. Open the system settings to turn it off or change it; the status here updates when you come back.",
+  "permissionGrantedHint": "Granted, tap to change in system settings"
 }

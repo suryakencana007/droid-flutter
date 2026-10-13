@@ -21,9 +21,23 @@ class PermissionTiles extends ConsumerWidget {
     };
 
     Future<void> ask(AppPermission p, String title, String rationale) async {
+      final service = ref.read(permissionServiceProvider);
+      if (statuses[p] == PermissionResult.granted) {
+        // Android tidak mengizinkan app mencabut izinnya sendiri; arahkan ke
+        // pengaturan sistem. Status dimuat ulang saat app kembali ke depan.
+        final open = await showConfirmDialog(
+          context,
+          title: l10n.permissionManageTitle,
+          message: l10n.permissionManageBody,
+          confirmLabel: l10n.openSettings,
+          cancelLabel: l10n.cancel,
+        );
+        if (open) await service.openSettings();
+        return;
+      }
       await ensurePermission(
         context,
-        service: ref.read(permissionServiceProvider),
+        service: service,
         permission: p,
         title: title,
         rationale: rationale,
@@ -60,6 +74,9 @@ class PermissionTiles extends ConsumerWidget {
           FTile(
             prefix: Icon(icon),
             title: Text(title),
+            subtitle: statuses[permission] == PermissionResult.granted
+                ? Text(l10n.permissionGrantedHint)
+                : null,
             details: Text(label(statuses[permission])),
             suffix: const Icon(FLucideIcons.chevronRight),
             onPress: () => ask(permission, title, body),

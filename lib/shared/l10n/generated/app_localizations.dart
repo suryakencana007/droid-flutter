@@ -1057,6 +1057,24 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Disimpan di perangkat, akan dikirim saat online.'**
   String get offlineSavedLocally;
+
+  /// No description provided for @permissionManageTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Ubah izin di pengaturan sistem?'**
+  String get permissionManageTitle;
+
+  /// No description provided for @permissionManageBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Aplikasi tidak bisa mencabut izinnya sendiri. Buka pengaturan sistem untuk mematikan atau mengubahnya; status di sini akan diperbarui saat kamu kembali.'**
+  String get permissionManageBody;
+
+  /// No description provided for @permissionGrantedHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Diizinkan, ketuk untuk mengubah di pengaturan sistem'**
+  String get permissionGrantedHint;
 }
 
 class _AppLocalizationsDelegate

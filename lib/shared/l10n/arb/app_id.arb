@@ -239,5 +239,8 @@
     }
   },
   "syncNow": "Sinkronkan",
-  "offlineSavedLocally": "Disimpan di perangkat, akan dikirim saat online."
+  "offlineSavedLocally": "Disimpan di perangkat, akan dikirim saat online.",
+  "permissionManageTitle": "Ubah izin di pengaturan sistem?",
+  "permissionManageBody": "Aplikasi tidak bisa mencabut izinnya sendiri. Buka pengaturan sistem untuk mematikan atau mengubahnya; status di sini akan diperbarui saat kamu kembali.",
+  "permissionGrantedHint": "Diizinkan, ketuk untuk mengubah di pengaturan sistem"
 }
