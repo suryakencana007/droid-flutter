@@ -16,7 +16,8 @@ val hasReleaseKey = keystoreProperties.containsKey("storeFile")
 
 android {
     namespace = "com.kubus.work.droid"
-    compileSdk = flutter.compileSdkVersion
+    // permission_handler 13.x butuh compileSdk 37 (lebih baru dari default Flutter).
+    compileSdk = 37
     ndkVersion = flutter.ndkVersion
 
     compileOptions {
