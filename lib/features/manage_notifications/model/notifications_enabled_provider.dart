@@ -4,7 +4,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 /// Preferensi "terima notifikasi". Mengaktifkan butuh izin sistem; pemanggil
 /// (UI) meminta izin lewat `ensurePermission` lalu memanggil [set].
 class NotificationsEnabledNotifier extends AsyncNotifier<bool> {
-  static const _key = 'notifications_enabled';
+  static const _key = notificationsEnabledKey;
 
   @override
   Future<bool> build() async =>

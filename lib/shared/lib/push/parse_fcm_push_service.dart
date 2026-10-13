@@ -29,6 +29,7 @@ class ParseFcmPushService implements PushService {
   final _messages = StreamController<PushMessage>.broadcast();
   final _log = log('push.parse');
   String? _userId;
+  bool _enabled = false;
 
   @override
   Future<void> initialize({
@@ -55,8 +56,10 @@ class ParseFcmPushService implements PushService {
 
     FirebaseMessaging.onBackgroundMessage(parseFcmBackgroundHandler);
     final messaging = FirebaseMessaging.instance;
-    await _register(await messaging.getToken());
-    messaging.onTokenRefresh.listen(_register);
+    // Token baru didaftarkan oleh [setEnabled] sesuai preferensi user.
+    messaging.onTokenRefresh.listen((token) {
+      if (_enabled) unawaited(_register(token));
+    });
     FirebaseMessaging.onMessage.listen((m) {
       _log.info('onMessage id=${m.messageId} data=${m.data}');
       _messages.add(toPushMessage(m));
@@ -81,7 +84,38 @@ class ParseFcmPushService implements PushService {
   @override
   Future<void> identify(String? userId) async {
     _userId = userId;
-    await _register(await FirebaseMessaging.instance.getToken());
+    if (_enabled) await _register(await FirebaseMessaging.instance.getToken());
+  }
+
+  @override
+  Future<void> setEnabled(bool enabled) async {
+    _enabled = enabled;
+    final messaging = FirebaseMessaging.instance;
+    if (enabled) {
+      await _register(await messaging.getToken());
+      return;
+    }
+    // Cabut dari dua sisi: token FCM dihapus dan deviceToken di Parse dikosongkan.
+    try {
+      await messaging.deleteToken();
+    } on Object catch (e) {
+      _log.warning('deleteToken gagal', e);
+    }
+    try {
+      final installation = await ParseInstallation.currentInstallation();
+      if (installation.objectId == null) return; // belum pernah terdaftar
+      // Parse menolak op Delete pada deviceToken (tipe String), tetapi
+      // menerima null; nilai null mengeluarkan installation dari target push.
+      installation.deviceToken = null;
+      final response = await installation.save();
+      if (response.success) {
+        _log.info('deviceToken dicabut dari Parse');
+      } else {
+        _log.warning('gagal mencabut deviceToken: ${response.error?.message}');
+      }
+    } on Object catch (e, st) {
+      _log.warning('gagal mencabut deviceToken', e, st);
+    }
   }
 
   Future<void> _register(String? token) async {

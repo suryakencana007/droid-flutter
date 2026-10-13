@@ -40,7 +40,15 @@ abstract interface class PushService {
 
   /// Kaitkan perangkat dengan user (untuk push tertarget); `null` saat keluar.
   Future<void> identify(String? userId);
+
+  /// Mengikuti preferensi user. `false` mencabut pendaftaran token di server
+  /// (push tidak lagi dikirim ke perangkat ini); `true` mendaftarkannya lagi.
+  Future<void> setEnabled(bool enabled);
 }
+
+/// Key preferensi notifikasi di [KeyValueStore]; dibaca juga oleh handler
+/// background (isolate terpisah) langsung dari shared_preferences.
+const notificationsEnabledKey = 'notifications_enabled';
 
 class LocalPushService implements PushService {
   LocalPushService({
@@ -88,6 +96,9 @@ class LocalPushService implements PushService {
   Future<void> identify(String? userId) async {}
 
   @override
+  Future<void> setEnabled(bool enabled) async {}
+
+  @override
   Future<void> showLocal(PushMessage message) async {
     await _plugin.show(
       id: _nextId++,
@@ -127,6 +138,9 @@ class NoopPushService implements PushService {
 
   @override
   Future<void> identify(String? userId) async {}
+
+  @override
+  Future<void> setEnabled(bool enabled) async {}
 }
 
 /// Untuk test: menyimpan notifikasi yang ditampilkan dan bisa mensimulasikan
@@ -153,9 +167,13 @@ class MemoryPushService implements PushService {
   Future<void> showLocal(PushMessage message) async => shown.add(message);
 
   String? identifiedUser;
+  bool? enabled;
 
   @override
   Future<void> identify(String? userId) async => identifiedUser = userId;
+
+  @override
+  Future<void> setEnabled(bool value) async => enabled = value;
 
   void open(PushMessage message) => _onOpened?.call(message);
 

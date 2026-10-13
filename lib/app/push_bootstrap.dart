@@ -1,3 +1,4 @@
+import 'package:droid/features/manage_notifications/index.dart';
 import 'package:droid/shared/lib/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -19,8 +20,20 @@ final pushBootstrapProvider = FutureProvider<void>((ref) async {
     },
   );
 
+  // Preferensi user menentukan pendaftaran token di server.
+  final enabled = await ref.read(notificationsEnabledProvider.future);
+  await push.setEnabled(enabled);
+  ref.listen(notificationsEnabledProvider, (_, next) {
+    final value = next.value;
+    if (value != null) push.setEnabled(value);
+  });
+
   final sub = push.onMessage.listen(
     (message) async {
+      if (ref.read(notificationsEnabledProvider).value != true) {
+        logger.info('diabaikan (notifikasi dimatikan): ${message.title}');
+        return;
+      }
       logger.info('menampilkan: ${message.title}');
       try {
         await push.showLocal(message);

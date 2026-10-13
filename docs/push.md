@@ -16,7 +16,14 @@ sebagai notifikasi lokal.
 
 Pengaturan punya toggle "Terima notifikasi" (meminta izin sistem lewat
 `ensurePermission`) dan tombol "Kirim notifikasi uji" yang membuka `/notes`
-saat diketuk.
+saat diketuk. Toggle itu nyata di tiga lapis lewat `PushService.setEnabled`:
+
+- **off**: token FCM dihapus (`deleteToken`) dan `deviceToken` di
+  `_Installation` Parse di-null-kan, jadi server tidak lagi menargetkan
+  perangkat (`_PushStatus.numSent` 0); pesan foreground dan handler background
+  juga mengabaikan pesan yang masih sempat masuk.
+- **on**: token diminta lagi dan didaftarkan bersama `userId`.
+- Default **off** (opt-in): tidak ada `_Installation` sampai user mengaktifkan.
 
 ## Menukar ke Firebase Cloud Messaging
 
