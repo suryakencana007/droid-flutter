@@ -42,5 +42,6 @@ class CurrentUserNotifier extends AsyncNotifier<User?> {
   }
 }
 
-final currentUserProvider =
-    AsyncNotifierProvider<CurrentUserNotifier, User?>(CurrentUserNotifier.new);
+final currentUserProvider = AsyncNotifierProvider<CurrentUserNotifier, User?>(
+  CurrentUserNotifier.new,
+);

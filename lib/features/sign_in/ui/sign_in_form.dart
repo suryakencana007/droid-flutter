@@ -72,7 +72,9 @@ class _SignInFormState extends ConsumerState<SignInForm> {
           const Gap(AppSpacing.lg),
           FButton(
             onPress: state.isLoading ? null : _submit,
-            child: Text(state.isLoading ? l10n.signInProcessing : l10n.signInAction),
+            child: Text(
+              state.isLoading ? l10n.signInProcessing : l10n.signInAction,
+            ),
           ),
         ],
       ),

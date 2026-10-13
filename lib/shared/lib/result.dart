@@ -9,9 +9,9 @@ sealed class Result<T> {
     required R Function(T value) ok,
     required R Function(Object error, StackTrace? stackTrace) err,
   }) => switch (this) {
-        Ok(:final value) => ok(value),
-        Err(:final error, :final stackTrace) => err(error, stackTrace),
-      };
+    Ok(:final value) => ok(value),
+    Err(:final error, :final stackTrace) => err(error, stackTrace),
+  };
 }
 
 final class Ok<T> extends Result<T> {

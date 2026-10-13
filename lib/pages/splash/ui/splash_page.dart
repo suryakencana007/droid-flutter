@@ -12,11 +12,7 @@ class SplashPage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
-          children: [
-            AppLogo(),
-            Gap(AppSpacing.xl),
-            FCircularProgress(),
-          ],
+          children: [AppLogo(), Gap(AppSpacing.xl), FCircularProgress()],
         ),
       ),
     );

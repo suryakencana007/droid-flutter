@@ -32,11 +32,9 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
 
   Future<void> _submit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    await ref.read(signUpControllerProvider.notifier).submit(
-          name: _name.text,
-          email: _email.text,
-          password: _password.text,
-        );
+    await ref
+        .read(signUpControllerProvider.notifier)
+        .submit(name: _name.text, email: _email.text, password: _password.text);
   }
 
   @override
@@ -100,7 +98,9 @@ class _SignUpFormState extends ConsumerState<SignUpForm> {
           const Gap(AppSpacing.lg),
           FButton(
             onPress: state.isLoading ? null : _submit,
-            child: Text(state.isLoading ? l10n.signUpProcessing : l10n.signUpAction),
+            child: Text(
+              state.isLoading ? l10n.signUpProcessing : l10n.signUpAction,
+            ),
           ),
         ],
       ),

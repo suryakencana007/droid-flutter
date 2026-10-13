@@ -15,10 +15,10 @@ class AppShell extends ConsumerWidget {
   final StatefulNavigationShell navigationShell;
 
   void _go(int index) => navigationShell.goBranch(
-        index,
-        // Tap tab yang sedang aktif mengembalikan ke root branch tersebut.
-        initialLocation: index == navigationShell.currentIndex,
-      );
+    index,
+    // Tap tab yang sedang aktif mengembalikan ke root branch tersebut.
+    initialLocation: index == navigationShell.currentIndex,
+  );
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -75,7 +75,10 @@ class AppShell extends ConsumerWidget {
         onChange: _go,
         children: [
           for (final tab in tabs)
-            FBottomNavigationBarItem(icon: Icon(tab.icon), label: Text(tab.label)),
+            FBottomNavigationBarItem(
+              icon: Icon(tab.icon),
+              label: Text(tab.label),
+            ),
         ],
       ),
     );

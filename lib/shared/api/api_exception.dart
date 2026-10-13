@@ -26,17 +26,16 @@ class ApiException implements Exception, DescribableError {
     final kind = switch (error.type) {
       DioExceptionType.connectionTimeout ||
       DioExceptionType.sendTimeout ||
-      DioExceptionType.receiveTimeout =>
-        ApiErrorKind.timeout,
+      DioExceptionType.receiveTimeout => ApiErrorKind.timeout,
       DioExceptionType.connectionError => ApiErrorKind.network,
       DioExceptionType.cancel => ApiErrorKind.cancelled,
       DioExceptionType.badResponse => switch (status) {
-          401 => ApiErrorKind.unauthorized,
-          403 => ApiErrorKind.forbidden,
-          404 => ApiErrorKind.notFound,
-          final int s when s >= 500 => ApiErrorKind.server,
-          _ => ApiErrorKind.unknown,
-        },
+        401 => ApiErrorKind.unauthorized,
+        403 => ApiErrorKind.forbidden,
+        404 => ApiErrorKind.notFound,
+        final int s when s >= 500 => ApiErrorKind.server,
+        _ => ApiErrorKind.unknown,
+      },
       _ => ApiErrorKind.unknown,
     };
 
@@ -56,20 +55,20 @@ class ApiException implements Exception, DescribableError {
   final Object? data;
 
   static String? _messageFrom(Object? body) => switch (body) {
-        {'message': final String m} => m,
-        {'error': final String m} => m,
-        _ => null,
-      };
+    {'message': final String m} => m,
+    {'error': final String m} => m,
+    _ => null,
+  };
 
   @override
   String describe(AppLocalizations l10n) => switch (kind) {
-        ApiErrorKind.network => l10n.errorNetwork,
-        ApiErrorKind.timeout => l10n.errorTimeout,
-        ApiErrorKind.unauthorized => l10n.errorUnauthorized,
-        ApiErrorKind.notFound => l10n.errorNotFound,
-        ApiErrorKind.server => l10n.errorServer,
-        _ => l10n.errorGeneric,
-      };
+    ApiErrorKind.network => l10n.errorNetwork,
+    ApiErrorKind.timeout => l10n.errorTimeout,
+    ApiErrorKind.unauthorized => l10n.errorUnauthorized,
+    ApiErrorKind.notFound => l10n.errorNotFound,
+    ApiErrorKind.server => l10n.errorServer,
+    _ => l10n.errorGeneric,
+  };
 
   @override
   String toString() => 'ApiException(${kind.name}, $statusCode): $message';

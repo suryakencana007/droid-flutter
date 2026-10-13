@@ -25,28 +25,26 @@ class DioAuthApi implements AuthApi {
   Future<AuthResult> signIn({
     required String email,
     required String password,
-  }) =>
-      _guard(() async {
-        final res = await _dio.post<Map<String, dynamic>>(
-          '/auth/sign-in',
-          data: {'email': email, 'password': password},
-        );
-        return _parseResult(res.data!);
-      }, unauthorizedAs: 'invalid-credentials');
+  }) => _guard(() async {
+    final res = await _dio.post<Map<String, dynamic>>(
+      '/auth/sign-in',
+      data: {'email': email, 'password': password},
+    );
+    return _parseResult(res.data!);
+  }, unauthorizedAs: 'invalid-credentials');
 
   @override
   Future<AuthResult> signUp({
     required String name,
     required String email,
     required String password,
-  }) =>
-      _guard(() async {
-        final res = await _dio.post<Map<String, dynamic>>(
-          '/auth/sign-up',
-          data: {'name': name, 'email': email, 'password': password},
-        );
-        return _parseResult(res.data!);
-      }, conflictAs: 'email-in-use');
+  }) => _guard(() async {
+    final res = await _dio.post<Map<String, dynamic>>(
+      '/auth/sign-up',
+      data: {'name': name, 'email': email, 'password': password},
+    );
+    return _parseResult(res.data!);
+  }, conflictAs: 'email-in-use');
 
   @override
   Future<User?> me(String token) async {
@@ -65,21 +63,21 @@ class DioAuthApi implements AuthApi {
 
   @override
   Future<void> signOut(String token) => _guard(() async {
-        await _dio.post<void>(
-          '/auth/sign-out',
-          options: Options(headers: {'Authorization': 'Bearer $token'}),
-        );
-      });
+    await _dio.post<void>(
+      '/auth/sign-out',
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+  });
 
   @override
   Future<void> requestPasswordReset(String email) => _guard(() async {
-        await _dio.post<void>('/auth/password-reset', data: {'email': email});
-      });
+    await _dio.post<void>('/auth/password-reset', data: {'email': email});
+  });
 
   AuthResult _parseResult(Map<String, dynamic> json) => AuthResult(
-        token: json['token'] as String,
-        user: User.fromJson(json['user'] as Map<String, dynamic>),
-      );
+    token: json['token'] as String,
+    user: User.fromJson(json['user'] as Map<String, dynamic>),
+  );
 
   Future<T> _guard<T>(
     Future<T> Function() body, {

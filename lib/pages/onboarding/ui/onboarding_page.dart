@@ -9,10 +9,22 @@ import 'package:material_ui/material_ui.dart';
 typedef _Slide = ({IconData icon, String title, String body});
 
 List<_Slide> _slides(AppLocalizations l10n) => [
-      (icon: FLucideIcons.layers, title: l10n.onboarding1Title, body: l10n.onboarding1Body),
-      (icon: FLucideIcons.palette, title: l10n.onboarding2Title, body: l10n.onboarding2Body),
-      (icon: FLucideIcons.rocket, title: l10n.onboarding3Title, body: l10n.onboarding3Body),
-    ];
+  (
+    icon: FLucideIcons.layers,
+    title: l10n.onboarding1Title,
+    body: l10n.onboarding1Body,
+  ),
+  (
+    icon: FLucideIcons.palette,
+    title: l10n.onboarding2Title,
+    body: l10n.onboarding2Body,
+  ),
+  (
+    icon: FLucideIcons.rocket,
+    title: l10n.onboarding3Title,
+    body: l10n.onboarding3Body,
+  ),
+];
 
 class OnboardingPage extends ConsumerStatefulWidget {
   const OnboardingPage({super.key});
@@ -37,9 +49,9 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
   }
 
   void _next() => _controller.nextPage(
-        duration: const Duration(milliseconds: 250),
-        curve: Curves.easeOut,
-      );
+    duration: const Duration(milliseconds: 250),
+    curve: Curves.easeOut,
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -71,7 +83,9 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                 itemBuilder: (context, index) {
                   final slide = slides[index];
                   return Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: AppSpacing.xl),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: AppSpacing.xl,
+                    ),
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -82,7 +96,11 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                             color: theme.colors.secondary,
                             shape: BoxShape.circle,
                           ),
-                          child: Icon(slide.icon, size: 56, color: theme.colors.primary),
+                          child: Icon(
+                            slide.icon,
+                            size: 56,
+                            color: theme.colors.primary,
+                          ),
                         ),
                         const Gap(AppSpacing.xl),
                         Text(
@@ -98,8 +116,9 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                         Text(
                           slide.body,
                           textAlign: TextAlign.center,
-                          style: theme.typography.body.md
-                              .copyWith(color: theme.colors.mutedForeground),
+                          style: theme.typography.body.md.copyWith(
+                            color: theme.colors.mutedForeground,
+                          ),
                         ),
                       ],
                     ),
@@ -117,7 +136,9 @@ class _OnboardingPageState extends ConsumerState<OnboardingPage> {
                     width: double.infinity,
                     child: FButton(
                       onPress: isLast ? _finish : _next,
-                      child: Text(isLast ? l10n.onboardingStart : l10n.onboardingNext),
+                      child: Text(
+                        isLast ? l10n.onboardingStart : l10n.onboardingNext,
+                      ),
                     ),
                   ),
                 ],

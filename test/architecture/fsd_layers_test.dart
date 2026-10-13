@@ -24,10 +24,7 @@ const sliceLessLayers = {'app', 'shared'};
 
 /// Package pihak ketiga yang dibungkus di satu tempat. Key: nama package,
 /// value: prefix path (relatif terhadap lib/) yang boleh mengimpornya.
-const wrappedPackages = {
-  'forui': 'shared/ui/',
-  'forui_lucide': 'shared/ui/',
-};
+const wrappedPackages = {'forui': 'shared/ui/', 'forui_lucide': 'shared/ui/'};
 
 /// Import yang dilarang di mana pun, beserta penggantinya.
 const forbiddenImports = {
@@ -60,12 +57,13 @@ Location? locate(String libRelativePath) {
 
 void main() {
   final libDir = Directory('lib');
-  final files = libDir
-      .listSync(recursive: true)
-      .whereType<File>()
-      .where((f) => f.path.endsWith('.dart'))
-      .toList()
-    ..sort((a, b) => a.path.compareTo(b.path));
+  final files =
+      libDir
+          .listSync(recursive: true)
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.dart'))
+          .toList()
+        ..sort((a, b) => a.path.compareTo(b.path));
 
   test('lib/ berisi minimal satu layer FSD', () {
     expect(files, isNotEmpty);
@@ -119,8 +117,8 @@ void main() {
         continue;
       }
 
-      final sameLocation = to.layer == from.layer &&
-          (!from.hasSlice || to.slice == from.slice);
+      final sameLocation =
+          to.layer == from.layer && (!from.hasSlice || to.slice == from.slice);
 
       if (sameLocation) {
         if (isPackageImport && from.hasSlice) {

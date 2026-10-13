@@ -52,7 +52,9 @@ void main(List<String> args) {
   }
 
   // Dart: nama package dan import.
-  replaceIn('pubspec.yaml', {'name: ${current.name}\n': 'name: ${next.name}\n'});
+  replaceIn('pubspec.yaml', {
+    'name: ${current.name}\n': 'name: ${next.name}\n',
+  });
   for (final dir in ['lib', 'test', 'tool', 'integration_test']) {
     for (final file in _dartFiles(dir)) {
       replaceIn(file.path, {
@@ -63,7 +65,8 @@ void main(List<String> args) {
     }
   }
   replaceIn('lib/shared/config/app_info.dart', {
-    "static const name = '${current.title}';": "static const name = '${next.title}';",
+    "static const name = '${current.title}';":
+        "static const name = '${next.title}';",
   });
   replaceIn('justfile', {
     'app_id := "${current.appId}"': 'app_id := "${next.appId}"',
@@ -85,21 +88,26 @@ void main(List<String> args) {
     final newDir = Directory(
       'android/app/src/main/kotlin/${next.appId.replaceAll('.', '/')}',
     );
-    final source = oldActivity
-        .readAsStringSync()
-        .replaceFirst('package ${current.appId}', 'package ${next.appId}');
+    final source = oldActivity.readAsStringSync().replaceFirst(
+      'package ${current.appId}',
+      'package ${next.appId}',
+    );
     changed.add('${newDir.path}/MainActivity.kt (dipindah)');
     if (!opts.dryRun) {
       newDir.createSync(recursive: true);
       File('${newDir.path}/MainActivity.kt').writeAsStringSync(source);
       oldActivity.deleteSync();
-      _pruneEmptyDirs(oldActivity.parent, Directory('android/app/src/main/kotlin'));
+      _pruneEmptyDirs(
+        oldActivity.parent,
+        Directory('android/app/src/main/kotlin'),
+      );
     }
   }
 
   // iOS.
   replaceIn('ios/Runner.xcodeproj/project.pbxproj', {
-    'PRODUCT_BUNDLE_IDENTIFIER = ${current.appId}': 'PRODUCT_BUNDLE_IDENTIFIER = ${next.appId}',
+    'PRODUCT_BUNDLE_IDENTIFIER = ${current.appId}':
+        'PRODUCT_BUNDLE_IDENTIFIER = ${next.appId}',
   });
   replaceIn('ios/Runner/Info.plist', {
     '<key>CFBundleDisplayName</key>\n\t<string>${current.title}</string>':
@@ -114,8 +122,12 @@ void main(List<String> args) {
   }
   if (!opts.dryRun) {
     stdout
-      ..writeln('\nSelesai. Jalankan: flutter clean && flutter pub get && dart fix --apply')
-      ..writeln('Lalu ganti assets/brand/*.png dan jalankan `just brand` untuk ikon dan splash.');
+      ..writeln(
+        '\nSelesai. Jalankan: flutter clean && flutter pub get && dart fix --apply',
+      )
+      ..writeln(
+        'Lalu ganti assets/brand/*.png dan jalankan `just brand` untuk ikon dan splash.',
+      );
   }
 }
 
@@ -159,9 +171,10 @@ _Identity? _parse(List<String> args) {
 /// Identitas saat ini dibaca dari file sumber, jadi tool bisa dijalankan
 /// berulang (template → app A → app A versi baru).
 _Identity _currentIdentity() {
-  final name = RegExp(r'^name:\s*(\S+)', multiLine: true)
-      .firstMatch(File('pubspec.yaml').readAsStringSync())!
-      .group(1)!;
+  final name = RegExp(
+    r'^name:\s*(\S+)',
+    multiLine: true,
+  ).firstMatch(File('pubspec.yaml').readAsStringSync())!.group(1)!;
   final appId = RegExp(r'applicationId\s*=\s*"([^"]+)"')
       .firstMatch(File('android/app/build.gradle.kts').readAsStringSync())!
       .group(1)!;
@@ -174,9 +187,9 @@ _Identity _currentIdentity() {
 Iterable<File> _dartFiles(String dir) => !Directory(dir).existsSync()
     ? const []
     : Directory(dir)
-    .listSync(recursive: true)
-    .whereType<File>()
-    .where((f) => f.path.endsWith('.dart'));
+          .listSync(recursive: true)
+          .whereType<File>()
+          .where((f) => f.path.endsWith('.dart'));
 
 void _pruneEmptyDirs(Directory dir, Directory stopAt) {
   var current = dir;

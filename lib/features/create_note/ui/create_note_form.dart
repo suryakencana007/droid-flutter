@@ -19,8 +19,9 @@ class CreateNoteForm extends ConsumerWidget {
       submitting: state.isLoading,
       error: state.hasError ? describeError(state.error!, context.l10n) : null,
       onSubmit: (draft) async {
-        final note =
-            await ref.read(createNoteControllerProvider.notifier).submit(draft);
+        final note = await ref
+            .read(createNoteControllerProvider.notifier)
+            .submit(draft);
         if (note != null) onCreated(note);
       },
     );

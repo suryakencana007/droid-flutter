@@ -20,5 +20,6 @@ class SignInController extends AsyncNotifier<void> {
   }
 }
 
-final signInControllerProvider =
-    AsyncNotifierProvider<SignInController, void>(SignInController.new);
+final signInControllerProvider = AsyncNotifierProvider<SignInController, void>(
+  SignInController.new,
+);

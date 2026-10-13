@@ -40,9 +40,9 @@ class DioNoteApi implements NoteApi {
 
   @override
   Future<Note> get(String id) => _notFoundAs(id, () async {
-        final res = await _dio.get<Map<String, dynamic>>('/notes/$id');
-        return Note.fromJson(res.data!);
-      });
+    final res = await _dio.get<Map<String, dynamic>>('/notes/$id');
+    return Note.fromJson(res.data!);
+  });
 
   @override
   Future<Note> create(NoteDraft draft) async {
@@ -55,12 +55,12 @@ class DioNoteApi implements NoteApi {
 
   @override
   Future<Note> update(String id, NoteDraft draft) => _notFoundAs(id, () async {
-        final res = await _dio.put<Map<String, dynamic>>(
-          '/notes/$id',
-          data: draft.toJson(),
-        );
-        return Note.fromJson(res.data!);
-      });
+    final res = await _dio.put<Map<String, dynamic>>(
+      '/notes/$id',
+      data: draft.toJson(),
+    );
+    return Note.fromJson(res.data!);
+  });
 
   @override
   Future<void> delete(String id) =>

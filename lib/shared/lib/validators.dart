@@ -9,24 +9,24 @@ abstract final class Validators {
       (value) => (value == null || value.trim().isEmpty) ? message : null;
 
   static Validator email(String message) => (value) {
-        if (value == null || value.isEmpty) return null;
-        return _emailPattern.hasMatch(value.trim()) ? null : message;
-      };
+    if (value == null || value.isEmpty) return null;
+    return _emailPattern.hasMatch(value.trim()) ? null : message;
+  };
 
   static Validator minLength(int length, String message) => (value) {
-        if (value == null || value.isEmpty) return null;
-        return value.length >= length ? null : message;
-      };
+    if (value == null || value.isEmpty) return null;
+    return value.length >= length ? null : message;
+  };
 
   /// [other] dibaca saat validasi supaya selalu dapat nilai terbaru.
   static Validator match(String Function() other, String message) =>
       (value) => value == other() ? null : message;
 
   static Validator compose(List<Validator> validators) => (value) {
-        for (final validator in validators) {
-          final error = validator(value);
-          if (error != null) return error;
-        }
-        return null;
-      };
+    for (final validator in validators) {
+      final error = validator(value);
+      if (error != null) return error;
+    }
+    return null;
+  };
 }

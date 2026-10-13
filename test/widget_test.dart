@@ -57,8 +57,9 @@ void main() {
   notesTests();
   responsiveTests();
 
-  testWidgets('alur pertama: onboarding → sign in → home → sign out',
-      (tester) async {
+  testWidgets('alur pertama: onboarding → sign in → home → sign out', (
+    tester,
+  ) async {
     await pumpPhone(tester, buildApp());
     await tester.pumpAndSettle();
 
@@ -99,8 +100,9 @@ void main() {
     expect(find.widgetWithText(FButton, 'Masuk'), findsOneWidget);
   });
 
-  testWidgets('token tersimpan langsung ke home tanpa onboarding',
-      (tester) async {
+  testWidgets('token tersimpan langsung ke home tanpa onboarding', (
+    tester,
+  ) async {
     final api = FakeAuthApi(latency: Duration.zero);
     // runAsync: FakeAuthApi memakai Future.delayed yang tidak jalan di zona
     // fake-async test sebelum ada pump.
@@ -111,11 +113,14 @@ void main() {
       ),
     );
 
-    await pumpPhone(tester, buildApp(
-      prefs: {'onboarding_done': true},
-      secrets: {'auth_token': session!.token},
-      authApi: api,
-    ));
+    await pumpPhone(
+      tester,
+      buildApp(
+        prefs: {'onboarding_done': true},
+        secrets: {'auth_token': session!.token},
+        authApi: api,
+      ),
+    );
     await tester.pumpAndSettle();
 
     expect(find.text('Halo, Demo'), findsOneWidget);
@@ -155,19 +160,25 @@ void main() {
         password: FakeAuthApi.demoPassword,
       ),
     );
-    final prefs = MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'});
+    final prefs = MemoryKeyValueStore({
+      'onboarding_done': true,
+      'locale': 'id',
+    });
 
-    await pumpPhone(tester, ProviderScope(
-      overrides: [
-        isOnlineProvider.overrideWith((ref) => Stream.value(true)),
-        keyValueStoreProvider.overrideWithValue(prefs),
-        secureStoreProvider.overrideWithValue(
-          MemorySecureStore({'auth_token': session!.token}),
-        ),
-        authApiProvider.overrideWithValue(api),
-      ],
-      child: const App(),
-    ));
+    await pumpPhone(
+      tester,
+      ProviderScope(
+        overrides: [
+          isOnlineProvider.overrideWith((ref) => Stream.value(true)),
+          keyValueStoreProvider.overrideWithValue(prefs),
+          secureStoreProvider.overrideWithValue(
+            MemorySecureStore({'auth_token': session!.token}),
+          ),
+          authApiProvider.overrideWithValue(api),
+        ],
+        child: const App(),
+      ),
+    );
     await tester.pumpAndSettle();
 
     await tester.tap(find.text('Profil'));
@@ -192,24 +203,33 @@ void main() {
         password: FakeAuthApi.demoPassword,
       ),
     );
-    await pumpPhone(tester, buildApp(
-      prefs: {'onboarding_done': true},
-      secrets: {'auth_token': session!.token},
-      authApi: api,
-      online: false,
-    ));
+    await pumpPhone(
+      tester,
+      buildApp(
+        prefs: {'onboarding_done': true},
+        secrets: {'auth_token': session!.token},
+        authApi: api,
+        online: false,
+      ),
+    );
     await tester.pumpAndSettle();
     expect(find.byType(OfflineBanner), findsOneWidget);
   });
 
   testWidgets('bahasa mengikuti pilihan user dan bisa diganti', (tester) async {
-    await pumpPhone(tester, buildApp(prefs: {'onboarding_done': true}, locale: 'en'));
+    await pumpPhone(
+      tester,
+      buildApp(prefs: {'onboarding_done': true}, locale: 'en'),
+    );
     await tester.pumpAndSettle();
     expect(find.text('Sign in'), findsWidgets);
     expect(find.text('Masuk'), findsNothing);
 
     // Tanpa preferensi: ikuti locale platform test (en_US).
-    await pumpPhone(tester, buildApp(prefs: {'onboarding_done': true}, locale: null));
+    await pumpPhone(
+      tester,
+      buildApp(prefs: {'onboarding_done': true}, locale: null),
+    );
     await tester.pumpAndSettle();
     expect(find.text('Sign in'), findsWidgets);
   });
@@ -228,27 +248,31 @@ Future<void> pumpSignedIn(
       password: FakeAuthApi.demoPassword,
     ),
   );
-  await tester.pumpWidget(ProviderScope(
-    overrides: [
-      isOnlineProvider.overrideWith((ref) => Stream.value(true)),
-      keyValueStoreProvider.overrideWithValue(
-        MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'}),
-      ),
-      secureStoreProvider.overrideWithValue(
-        MemorySecureStore({'auth_token': session!.token}),
-      ),
-      authApiProvider.overrideWithValue(api),
-      noteApiProvider.overrideWithValue(
-        notes ?? FakeNoteApi(latency: Duration.zero),
-      ),
-    ],
-    child: const App(),
-  ));
+  await tester.pumpWidget(
+    ProviderScope(
+      overrides: [
+        isOnlineProvider.overrideWith((ref) => Stream.value(true)),
+        keyValueStoreProvider.overrideWithValue(
+          MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'}),
+        ),
+        secureStoreProvider.overrideWithValue(
+          MemorySecureStore({'auth_token': session!.token}),
+        ),
+        authApiProvider.overrideWithValue(api),
+        noteApiProvider.overrideWithValue(
+          notes ?? FakeNoteApi(latency: Duration.zero),
+        ),
+      ],
+      child: const App(),
+    ),
+  );
   await tester.pumpAndSettle();
 }
 
 void notesTests() {
-  testWidgets('daftar catatan memuat halaman kedua saat digulir', (tester) async {
+  testWidgets('daftar catatan memuat halaman kedua saat digulir', (
+    tester,
+  ) async {
     await pumpSignedIn(tester);
     await tester.tap(find.text('Catatan').last);
     await tester.pumpAndSettle();
@@ -263,8 +287,9 @@ void notesTests() {
     expect(find.text('Catatan 1'), findsOneWidget);
   });
 
-  testWidgets('membuat catatan baru menampilkannya di detail dan daftar',
-      (tester) async {
+  testWidgets('membuat catatan baru menampilkannya di detail dan daftar', (
+    tester,
+  ) async {
     await pumpSignedIn(tester);
     await tester.tap(find.text('Catatan').last);
     await tester.pumpAndSettle();
@@ -290,7 +315,9 @@ void notesTests() {
     expect(find.text('Belanja mingguan'), findsOneWidget); // paling atas
   });
 
-  testWidgets('menghapus catatan dari detail kembali ke daftar', (tester) async {
+  testWidgets('menghapus catatan dari detail kembali ke daftar', (
+    tester,
+  ) async {
     await pumpSignedIn(tester);
     await tester.tap(find.text('Catatan').last);
     await tester.pumpAndSettle();

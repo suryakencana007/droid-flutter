@@ -6,11 +6,14 @@ import 'token_store.dart';
 
 /// Override provider ini di test atau prototipe dengan implementasi memory:
 /// `keyValueStoreProvider.overrideWithValue(MemoryKeyValueStore())`.
-final keyValueStoreProvider =
-    Provider<KeyValueStore>((_) => SharedPrefsKeyValueStore());
+final keyValueStoreProvider = Provider<KeyValueStore>(
+  (_) => SharedPrefsKeyValueStore(),
+);
 
-final secureStoreProvider =
-    Provider<SecureStore>((_) => const FlutterSecureStore());
+final secureStoreProvider = Provider<SecureStore>(
+  (_) => const FlutterSecureStore(),
+);
 
-final tokenStoreProvider =
-    Provider<TokenStore>((ref) => TokenStore(ref.watch(secureStoreProvider)));
+final tokenStoreProvider = Provider<TokenStore>(
+  (ref) => TokenStore(ref.watch(secureStoreProvider)),
+);

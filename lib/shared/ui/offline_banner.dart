@@ -22,14 +22,19 @@ class OfflineBanner extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(FLucideIcons.wifiOff, size: 16, color: theme.colors.destructiveForeground),
+          Icon(
+            FLucideIcons.wifiOff,
+            size: 16,
+            color: theme.colors.destructiveForeground,
+          ),
           const Gap(AppSpacing.sm),
           Flexible(
             child: Text(
               context.l10n.offlineBanner,
               overflow: TextOverflow.ellipsis,
-              style: theme.typography.body.sm
-                  .copyWith(color: theme.colors.destructiveForeground),
+              style: theme.typography.body.sm.copyWith(
+                color: theme.colors.destructiveForeground,
+              ),
             ),
           ),
         ],

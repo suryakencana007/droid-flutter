@@ -13,13 +13,10 @@ class NotesNotifier extends AsyncNotifier<Paginated<Note>> {
   bool _loadingMore = false;
 
   @override
-  Future<Paginated<Note>> build() =>
-      ref.read(noteApiProvider).list();
+  Future<Paginated<Note>> build() => ref.read(noteApiProvider).list();
 
   Future<void> refresh() async {
-    state = await AsyncValue.guard(
-      () => ref.read(noteApiProvider).list(),
-    );
+    state = await AsyncValue.guard(() => ref.read(noteApiProvider).list());
   }
 
   /// Memuat halaman berikutnya. Melempar bila gagal supaya halaman bisa
@@ -29,9 +26,7 @@ class NotesNotifier extends AsyncNotifier<Paginated<Note>> {
     if (current == null || !current.hasMore || _loadingMore) return;
     _loadingMore = true;
     try {
-      final next = await ref
-          .read(noteApiProvider)
-          .list(page: current.page + 1);
+      final next = await ref.read(noteApiProvider).list(page: current.page + 1);
       state = AsyncData(current.append(next));
     } finally {
       _loadingMore = false;
@@ -54,8 +49,9 @@ class NotesNotifier extends AsyncNotifier<Paginated<Note>> {
   }
 }
 
-final notesProvider =
-    AsyncNotifierProvider<NotesNotifier, Paginated<Note>>(NotesNotifier.new);
+final notesProvider = AsyncNotifierProvider<NotesNotifier, Paginated<Note>>(
+  NotesNotifier.new,
+);
 
 /// Satu catatan: diambil dari daftar bila sudah ada, selain itu dari API.
 final noteProvider = FutureProvider.autoDispose.family<Note, String>((ref, id) {

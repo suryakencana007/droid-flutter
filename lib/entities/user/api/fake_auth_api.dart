@@ -22,11 +22,11 @@ class FakeAuthApi implements AuthApi {
   final Set<String> _revoked = {};
 
   static Map<String, ({User user, String password})> _seed() => {
-        demoEmail: (
-          user: const User(id: '1', name: 'Demo', email: demoEmail),
-          password: demoPassword,
-        ),
-      };
+    demoEmail: (
+      user: const User(id: '1', name: 'Demo', email: demoEmail),
+      password: demoPassword,
+    ),
+  };
 
   Future<void> _wait() => Future<void>.delayed(latency);
 
@@ -57,7 +57,10 @@ class FakeAuthApi implements AuthApi {
         'Email atau password salah.',
       );
     }
-    return AuthResult(token: _issueToken(account.user.email), user: account.user);
+    return AuthResult(
+      token: _issueToken(account.user.email),
+      user: account.user,
+    );
   }
 
   @override

@@ -14,23 +14,31 @@ void main() {
   IntegrationTestWidgetsFlutterBinding.ensureInitialized();
 
   testWidgets('sign in demo → home → profil → keluar', (tester) async {
-    await tester.pumpWidget(ProviderScope(
-      overrides: [
-        keyValueStoreProvider.overrideWithValue(
-          MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'}),
-        ),
-        secureStoreProvider.overrideWithValue(MemorySecureStore()),
-        authApiProvider.overrideWithValue(
-          FakeAuthApi(latency: const Duration(milliseconds: 100)),
-        ),
-      ],
-      child: const App(),
-    ));
+    await tester.pumpWidget(
+      ProviderScope(
+        overrides: [
+          keyValueStoreProvider.overrideWithValue(
+            MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'}),
+          ),
+          secureStoreProvider.overrideWithValue(MemorySecureStore()),
+          authApiProvider.overrideWithValue(
+            FakeAuthApi(latency: const Duration(milliseconds: 100)),
+          ),
+        ],
+        child: const App(),
+      ),
+    );
     await tester.pumpAndSettle();
     expect(find.widgetWithText(FButton, 'Masuk'), findsOneWidget);
 
-    await tester.enterText(find.byType(EditableText).at(0), FakeAuthApi.demoEmail);
-    await tester.enterText(find.byType(EditableText).at(1), FakeAuthApi.demoPassword);
+    await tester.enterText(
+      find.byType(EditableText).at(0),
+      FakeAuthApi.demoEmail,
+    );
+    await tester.enterText(
+      find.byType(EditableText).at(1),
+      FakeAuthApi.demoPassword,
+    );
     await tester.tap(find.widgetWithText(FButton, 'Masuk'));
     await tester.pumpAndSettle();
     expect(find.text('Halo, Demo'), findsOneWidget);

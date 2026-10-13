@@ -51,8 +51,7 @@ class UnauthorizedInterceptor extends Interceptor {
   @override
   void onError(DioException err, ErrorInterceptorHandler handler) {
     final path = err.requestOptions.path;
-    if (err.response?.statusCode == 401 &&
-        !ignoredPaths.any(path.startsWith)) {
+    if (err.response?.statusCode == 401 && !ignoredPaths.any(path.startsWith)) {
       onUnauthorized();
     }
     handler.next(err);
@@ -78,11 +77,13 @@ final dioProvider = Provider<Dio>((ref) {
   ]);
   if (Env.isDebug) {
     final httpLog = log('http');
-    dio.interceptors.add(LogInterceptor(
-      requestBody: true,
-      responseBody: true,
-      logPrint: httpLog.fine,
-    ));
+    dio.interceptors.add(
+      LogInterceptor(
+        requestBody: true,
+        responseBody: true,
+        logPrint: httpLog.fine,
+      ),
+    );
   }
 
   ref.onDispose(dio.close);

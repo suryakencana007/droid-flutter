@@ -35,10 +35,14 @@ class SignInPage extends StatelessWidget {
           ),
           const Gap(AppSpacing.md),
           Text(
-            l10n.demoAccountHint(FakeAuthApi.demoEmail, FakeAuthApi.demoPassword),
+            l10n.demoAccountHint(
+              FakeAuthApi.demoEmail,
+              FakeAuthApi.demoPassword,
+            ),
             textAlign: TextAlign.center,
-            style: theme.typography.body.xs
-                .copyWith(color: theme.colors.mutedForeground),
+            style: theme.typography.body.xs.copyWith(
+              color: theme.colors.mutedForeground,
+            ),
           ),
         ],
       ),

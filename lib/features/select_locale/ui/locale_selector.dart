@@ -24,7 +24,9 @@ class LocaleSelector extends ConsumerWidget {
           final next = values.difference({selected});
           if (next.isEmpty) return;
           final locale = next.first;
-          ref.read(localeProvider.notifier).set(locale == system ? null : locale);
+          ref
+              .read(localeProvider.notifier)
+              .set(locale == system ? null : locale);
         },
       ),
       label: Text(l10n.languageLabel),

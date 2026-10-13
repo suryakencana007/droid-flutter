@@ -14,10 +14,10 @@ class Paginated<T> {
 
   /// Gabungkan halaman berikutnya ke daftar yang ada.
   Paginated<T> append(Paginated<T> next) => Paginated(
-        items: [...items, ...next.items],
-        page: next.page,
-        hasMore: next.hasMore,
-      );
+    items: [...items, ...next.items],
+    page: next.page,
+    hasMore: next.hasMore,
+  );
 
   Paginated<T> copyWith({List<T>? items, int? page, bool? hasMore}) =>
       Paginated(

@@ -41,9 +41,7 @@ Future<void> bootstrap({ProviderContainer? container}) async {
 
   log('bootstrap').info('flavor=${Env.flavor.name} api=${Env.apiBaseUrl}');
 
-  runApp(
-    UncontrolledProviderScope(container: container, child: const App()),
-  );
+  runApp(UncontrolledProviderScope(container: container, child: const App()));
 }
 
 /// Meneruskan error provider ke [CrashReporter].

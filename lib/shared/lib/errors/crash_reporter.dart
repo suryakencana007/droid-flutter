@@ -28,4 +28,6 @@ class LogCrashReporter implements CrashReporter {
   Future<void> setUser(String? id) async => _log.fine('user=$id');
 }
 
-final crashReporterProvider = Provider<CrashReporter>((_) => LogCrashReporter());
+final crashReporterProvider = Provider<CrashReporter>(
+  (_) => LogCrashReporter(),
+);

@@ -21,5 +21,6 @@ class OnboardingNotifier extends AsyncNotifier<bool> {
   }
 }
 
-final onboardingDoneProvider =
-    AsyncNotifierProvider<OnboardingNotifier, bool>(OnboardingNotifier.new);
+final onboardingDoneProvider = AsyncNotifierProvider<OnboardingNotifier, bool>(
+  OnboardingNotifier.new,
+);

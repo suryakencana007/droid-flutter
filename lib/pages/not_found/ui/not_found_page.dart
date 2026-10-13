@@ -22,7 +22,10 @@ class NotFoundPage extends StatelessWidget {
             children: [
               const Icon(FLucideIcons.compass, size: 48),
               const Gap(AppSpacing.md),
-              Text(l10n.notFoundMessage(uri.toString()), textAlign: TextAlign.center),
+              Text(
+                l10n.notFoundMessage(uri.toString()),
+                textAlign: TextAlign.center,
+              ),
               const Gap(AppSpacing.md),
               FButton(
                 onPress: () => context.go(AppRoutes.home),

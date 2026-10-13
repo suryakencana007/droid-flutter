@@ -19,7 +19,8 @@ class _FakeAdapter implements HttpClientAdapter {
     Future<void>? cancelFuture,
   ) async {
     last = options;
-    final (status, body) = routes[options.path] ?? (404, {'message': 'no route'});
+    final (status, body) =
+        routes[options.path] ?? (404, {'message': 'no route'});
     return ResponseBody.fromString(
       body == null ? '' : jsonEncode(body),
       status,
@@ -53,12 +54,22 @@ void main() {
   });
 
   test('401 saat sign in menjadi invalid-credentials', () {
-    final api = DioAuthApi(_dio(_FakeAdapter({
-      '/auth/sign-in': (401, {'message': 'bad'}),
-    })));
+    final api = DioAuthApi(
+      _dio(
+        _FakeAdapter({
+          '/auth/sign-in': (401, {'message': 'bad'}),
+        }),
+      ),
+    );
     expect(
       () => api.signIn(email: 'a@b.co', password: 'x'),
-      throwsA(isA<AuthException>().having((e) => e.code, 'code', 'invalid-credentials')),
+      throwsA(
+        isA<AuthException>().having(
+          (e) => e.code,
+          'code',
+          'invalid-credentials',
+        ),
+      ),
     );
   });
 
@@ -66,7 +77,9 @@ void main() {
     final api = DioAuthApi(_dio(_FakeAdapter({'/auth/sign-up': (409, null)})));
     expect(
       () => api.signUp(name: 'A', email: 'a@b.co', password: 'x'),
-      throwsA(isA<AuthException>().having((e) => e.code, 'code', 'email-in-use')),
+      throwsA(
+        isA<AuthException>().having((e) => e.code, 'code', 'email-in-use'),
+      ),
     );
   });
 

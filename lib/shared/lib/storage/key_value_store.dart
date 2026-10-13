@@ -12,7 +12,7 @@ abstract interface class KeyValueStore {
 
 class SharedPrefsKeyValueStore implements KeyValueStore {
   SharedPrefsKeyValueStore([SharedPreferencesAsync? prefs])
-      : _prefs = prefs ?? SharedPreferencesAsync();
+    : _prefs = prefs ?? SharedPreferencesAsync();
 
   final SharedPreferencesAsync _prefs;
 
@@ -35,8 +35,7 @@ class SharedPrefsKeyValueStore implements KeyValueStore {
 
 /// Implementasi in-memory untuk test dan prototipe.
 class MemoryKeyValueStore implements KeyValueStore {
-  MemoryKeyValueStore([Map<String, Object>? initial])
-      : _data = {...?initial};
+  MemoryKeyValueStore([Map<String, Object>? initial]) : _data = {...?initial};
 
   final Map<String, Object> _data;
 

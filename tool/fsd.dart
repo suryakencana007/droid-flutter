@@ -31,14 +31,18 @@ const allowedSegments = {'ui', 'model', 'api', 'lib', 'config'};
 
 void main(List<String> args) {
   if (args.length < 2) {
-    stderr.writeln('Pemakaian: dart run tool/fsd.dart <layer> <nama_slice> [segment ...]');
+    stderr.writeln(
+      'Pemakaian: dart run tool/fsd.dart <layer> <nama_slice> [segment ...]',
+    );
     stderr.writeln('Layer: ${layerAliases.keys.join(', ')}');
     exit(64);
   }
 
   final layer = layerAliases[args[0]];
   if (layer == null) {
-    stderr.writeln('Layer tidak dikenal: ${args[0]}. Pilihan: ${layerAliases.keys.join(', ')}');
+    stderr.writeln(
+      'Layer tidak dikenal: ${args[0]}. Pilihan: ${layerAliases.keys.join(', ')}',
+    );
     exit(64);
   }
 
@@ -51,7 +55,9 @@ void main(List<String> args) {
   final segments = args.length > 2 ? args.sublist(2) : defaultSegments[layer]!;
   final unknown = segments.where((s) => !allowedSegments.contains(s)).toList();
   if (unknown.isNotEmpty) {
-    stderr.writeln('Segment tidak dikenal: $unknown. Pilihan: ${allowedSegments.join(', ')}');
+    stderr.writeln(
+      'Segment tidak dikenal: $unknown. Pilihan: ${allowedSegments.join(', ')}',
+    );
     exit(64);
   }
 
@@ -63,7 +69,8 @@ void main(List<String> args) {
 
   final exports = <String>[];
   for (final segment in segments) {
-    final dir = Directory('${sliceDir.path}/$segment')..createSync(recursive: true);
+    final dir = Directory('${sliceDir.path}/$segment')
+      ..createSync(recursive: true);
     final fileName = _starterFileName(layer, slice, segment);
     if (fileName == null) continue;
     final file = File('${dir.path}/$fileName')
@@ -73,18 +80,16 @@ void main(List<String> args) {
   }
 
   final index = File('${sliceDir.path}/index.dart')
-    ..writeAsStringSync([
-      'library;',
-      '',
-      for (final e in exports) "export '$e';",
-      '',
-    ].join('\n'));
+    ..writeAsStringSync(
+      ['library;', '', for (final e in exports) "export '$e';", ''].join('\n'),
+    );
   stdout.writeln('  + ${index.path}');
   stdout.writeln('Selesai. Import dari layer di atasnya dengan:');
   stdout.writeln("  import 'package:droid/$layer/$slice/index.dart';");
 }
 
-String? _starterFileName(String layer, String slice, String segment) => switch (segment) {
+String? _starterFileName(String layer, String slice, String segment) =>
+    switch (segment) {
       'ui' when layer == 'pages' => '${slice}_page.dart',
       'ui' => '${slice}_widget.dart',
       'model' => '${slice}_model.dart',
@@ -99,7 +104,8 @@ String _starterContent(String layer, String slice, String segment) {
       .join();
 
   return switch (segment) {
-    'ui' when layer == 'pages' => '''
+    'ui' when layer == 'pages' =>
+      '''
 import 'package:flutter/material.dart';
 
 class ${className}Page extends StatelessWidget {
@@ -113,7 +119,8 @@ class ${className}Page extends StatelessWidget {
   }
 }
 ''',
-    'ui' => '''
+    'ui' =>
+      '''
 import 'package:flutter/material.dart';
 
 class ${className}Widget extends StatelessWidget {
@@ -125,10 +132,12 @@ class ${className}Widget extends StatelessWidget {
   }
 }
 ''',
-    'model' => '''
+    'model' =>
+      '''
 // Model, state, dan logika domain untuk slice `$slice`.
 ''',
-    'api' => '''
+    'api' =>
+      '''
 // Akses data (HTTP, storage, dll.) untuk slice `$slice`.
 // Gunakan `dioProvider` dari package:droid/shared/api/index.dart.
 ''',

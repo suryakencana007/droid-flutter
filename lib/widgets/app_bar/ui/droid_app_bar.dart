@@ -12,9 +12,6 @@ class DroidAppBar extends StatelessWidget implements PreferredSizeWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AppBar(
-      title: Text(title),
-      actions: const [ToggleThemeButton()],
-    );
+    return AppBar(title: Text(title), actions: const [ToggleThemeButton()]);
   }
 }

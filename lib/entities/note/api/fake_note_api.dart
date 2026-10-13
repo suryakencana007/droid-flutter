@@ -21,7 +21,8 @@ class FakeNoteApi implements NoteApi {
         Note(
           id: '$i',
           title: 'Catatan $i',
-          body: 'Isi catatan ke-$i. Lorem ipsum dolor sit amet, consectetur '
+          body:
+              'Isi catatan ke-$i. Lorem ipsum dolor sit amet, consectetur '
               'adipiscing elit, sed do eiusmod tempor incididunt ut labore.',
           createdAt: base.add(Duration(hours: i)),
           updatedAt: base.add(Duration(hours: i, minutes: 30)),
@@ -32,7 +33,8 @@ class FakeNoteApi implements NoteApi {
   Future<void> _wait() => Future<void>.delayed(latency);
 
   List<Note> get _sorted =>
-      _notes.values.toList()..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
+      _notes.values.toList()
+        ..sort((a, b) => b.updatedAt.compareTo(a.updatedAt));
 
   @override
   Future<Paginated<Note>> list({int page = 1, int pageSize = 20}) async {

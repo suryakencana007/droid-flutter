@@ -30,15 +30,14 @@ class AsyncValueView<T> extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) => value.when(
-        data: (d) => (isEmpty?.call(d) ?? false)
-            ? (empty ?? const EmptyView())
-            : data(d),
-        loading: () => const LoadingView(),
-        error: (error, _) => ErrorView(
-          message: describeError(error, context.l10n),
-          onRetry: onRetry,
-        ),
-      );
+    data: (d) =>
+        (isEmpty?.call(d) ?? false) ? (empty ?? const EmptyView()) : data(d),
+    loading: () => const LoadingView(),
+    error: (error, _) => ErrorView(
+      message: describeError(error, context.l10n),
+      onRetry: onRetry,
+    ),
+  );
 }
 
 class ErrorView extends StatelessWidget {
@@ -56,12 +55,18 @@ class ErrorView extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(FLucideIcons.circleAlert, size: 40, color: theme.colors.destructive),
+            Icon(
+              FLucideIcons.circleAlert,
+              size: 40,
+              color: theme.colors.destructive,
+            ),
             const Gap(AppSpacing.md),
             Text(
               message,
               textAlign: TextAlign.center,
-              style: theme.typography.body.md.copyWith(color: theme.colors.foreground),
+              style: theme.typography.body.md.copyWith(
+                color: theme.colors.foreground,
+              ),
             ),
             if (onRetry != null) ...[
               const Gap(AppSpacing.md),
@@ -117,7 +122,9 @@ class EmptyView extends StatelessWidget {
             Text(
               body ?? l10n.emptyBody,
               textAlign: TextAlign.center,
-              style: theme.typography.body.sm.copyWith(color: theme.colors.mutedForeground),
+              style: theme.typography.body.sm.copyWith(
+                color: theme.colors.mutedForeground,
+              ),
             ),
             if (action != null) ...[const Gap(AppSpacing.md), action!],
           ],

@@ -21,7 +21,11 @@ class NoteTile extends StatelessWidget {
     return FTile(
       prefix: const Icon(FLucideIcons.fileText),
       title: Text(note.title, maxLines: 1, overflow: TextOverflow.ellipsis),
-      subtitle: Text(note.excerpt, maxLines: 2, overflow: TextOverflow.ellipsis),
+      subtitle: Text(
+        note.excerpt,
+        maxLines: 2,
+        overflow: TextOverflow.ellipsis,
+      ),
       suffix: const Icon(FLucideIcons.chevronRight),
       onPress: onPress,
     );

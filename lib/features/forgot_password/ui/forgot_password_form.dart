@@ -26,7 +26,9 @@ class _ForgotPasswordFormState extends ConsumerState<ForgotPasswordForm> {
 
   Future<void> _submit() async {
     if (!(_formKey.currentState?.validate() ?? false)) return;
-    await ref.read(forgotPasswordControllerProvider.notifier).submit(_email.text);
+    await ref
+        .read(forgotPasswordControllerProvider.notifier)
+        .submit(_email.text);
   }
 
   @override

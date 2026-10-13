@@ -1,5 +1,7 @@
 # droid
 
+[![CI](https://github.com/suryakencana007/droid-flutter/actions/workflows/ci.yml/badge.svg)](https://github.com/suryakencana007/droid-flutter/actions/workflows/ci.yml)
+
 Template aplikasi Flutter yang siap dipakai sebagai bootstrap: arsitektur
 **Feature-Sliced Design (FSD)**, UI kit **forui** (bergaya shadcn/ui), dan
 alur layar yang hampir selalu ada di sebuah app. Repo ini adalah GitHub
@@ -21,7 +23,7 @@ Target platform: **Android** dan **iOS**. Application ID / bundle ID:
 | i18n            | Indonesia + English (ARB), pemilih bahasa                            | [docs/i18n.md](docs/i18n.md) |
 | Model           | freezed + json_serializable, `just gen`                              | [docs/screens.md](docs/screens.md) |
 | Branding        | Ikon launcher adaptif dan splash native dari `assets/brand`          | [docs/branding.md](docs/branding.md) |
-| Kualitas        | Analyzer ketat, widget test alur end-to-end, integration test di device, hook pre-commit | [docs/branding.md](docs/branding.md) |
+| Kualitas        | Analyzer ketat, widget test alur end-to-end, integration test di device, hook pre-commit, CI GitHub Actions, Dependabot | [docs/branding.md](docs/branding.md) |
 | Device          | Alur kerja Waydroid (Android container di Linux)                     | [docs/waydroid.md](docs/waydroid.md) |
 
 ## Prasyarat

@@ -23,5 +23,6 @@ class LocaleNotifier extends AsyncNotifier<Locale?> {
   }
 }
 
-final localeProvider =
-    AsyncNotifierProvider<LocaleNotifier, Locale?>(LocaleNotifier.new);
+final localeProvider = AsyncNotifierProvider<LocaleNotifier, Locale?>(
+  LocaleNotifier.new,
+);

@@ -20,6 +20,6 @@ void setupLogging({required String level}) {
 }
 
 Level _parseLevel(String name) => Level.LEVELS.firstWhere(
-      (l) => l.name == name.toUpperCase(),
-      orElse: () => Level.ALL,
-    );
+  (l) => l.name == name.toUpperCase(),
+  orElse: () => Level.ALL,
+);

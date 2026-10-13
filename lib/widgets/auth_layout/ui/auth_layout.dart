@@ -44,16 +44,14 @@ class AuthLayout extends StatelessWidget {
                     const Gap(AppSpacing.xs),
                     Text(
                       subtitle!,
-                      style: theme.typography.body.sm
-                          .copyWith(color: theme.colors.mutedForeground),
+                      style: theme.typography.body.sm.copyWith(
+                        color: theme.colors.mutedForeground,
+                      ),
                     ),
                   ],
                   const Gap(AppSpacing.lg),
                   child,
-                  if (footer != null) ...[
-                    const Gap(AppSpacing.lg),
-                    footer!,
-                  ],
+                  if (footer != null) ...[const Gap(AppSpacing.lg), footer!],
                 ],
               ),
             ),

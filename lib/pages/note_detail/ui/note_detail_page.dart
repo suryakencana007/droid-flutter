@@ -48,14 +48,17 @@ class NoteDetailPage extends ConsumerWidget {
             const Gap(AppSpacing.xs),
             Text(
               l10n.updatedAt(formatNoteDate(context, note.updatedAt)),
-              style: theme.typography.body.xs
-                  .copyWith(color: theme.colors.mutedForeground),
+              style: theme.typography.body.xs.copyWith(
+                color: theme.colors.mutedForeground,
+              ),
             ),
             const Gap(AppSpacing.lg),
             Text(
               note.body,
-              style: theme.typography.body.md
-                  .copyWith(color: theme.colors.foreground, height: 1.6),
+              style: theme.typography.body.md.copyWith(
+                color: theme.colors.foreground,
+                height: 1.6,
+              ),
             ),
             const Gap(AppSpacing.xl),
             DeleteNoteButton(

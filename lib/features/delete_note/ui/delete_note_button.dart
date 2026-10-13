@@ -7,7 +7,11 @@ import 'package:material_ui/material_ui.dart';
 import '../model/delete_note_controller.dart';
 
 class DeleteNoteButton extends ConsumerWidget {
-  const DeleteNoteButton({required this.noteId, required this.onDeleted, super.key});
+  const DeleteNoteButton({
+    required this.noteId,
+    required this.onDeleted,
+    super.key,
+  });
 
   final String noteId;
   final VoidCallback onDeleted;
@@ -23,8 +27,9 @@ class DeleteNoteButton extends ConsumerWidget {
       destructive: true,
     );
     if (!ok) return;
-    final deleted =
-        await ref.read(deleteNoteControllerProvider.notifier).delete(noteId);
+    final deleted = await ref
+        .read(deleteNoteControllerProvider.notifier)
+        .delete(noteId);
     if (!context.mounted) return;
     if (deleted) {
       showFToast(context: context, title: Text(l10n.noteDeleted));
