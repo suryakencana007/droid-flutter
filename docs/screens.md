@@ -147,7 +147,9 @@ Feature `sign_in`, `sign_up`, `sign_out`, `forgot_password` tidak perlu diubah.
 # Use this template di GitHub, lalu:
 git clone <repo-baru> && cd <repo-baru>
 just rename kasir_app com.perusahaan "Kasir App"
-just setup
+just setup            # mise, pub get, codegen, git hook
+# ganti assets/brand/*.png lalu:
+just brand            # ikon launcher + splash native
 just check
 ```
 

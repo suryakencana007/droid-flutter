@@ -53,7 +53,7 @@ void main(List<String> args) {
 
   // Dart: nama package dan import.
   replaceIn('pubspec.yaml', {'name: ${current.name}\n': 'name: ${next.name}\n'});
-  for (final dir in ['lib', 'test', 'tool']) {
+  for (final dir in ['lib', 'test', 'tool', 'integration_test']) {
     for (final file in _dartFiles(dir)) {
       replaceIn(file.path, {
         'package:${current.name}/': 'package:${next.name}/',
@@ -113,7 +113,9 @@ void main(List<String> args) {
     stdout.writeln('  ~ $path');
   }
   if (!opts.dryRun) {
-    stdout.writeln('\nSelesai. Jalankan: flutter clean && flutter pub get && dart fix --apply');
+    stdout
+      ..writeln('\nSelesai. Jalankan: flutter clean && flutter pub get && dart fix --apply')
+      ..writeln('Lalu ganti assets/brand/*.png dan jalankan `just brand` untuk ikon dan splash.');
   }
 }
 
@@ -169,7 +171,9 @@ _Identity _currentIdentity() {
   return (name: name, appId: appId, title: title, dryRun: false);
 }
 
-Iterable<File> _dartFiles(String dir) => Directory(dir)
+Iterable<File> _dartFiles(String dir) => !Directory(dir).existsSync()
+    ? const []
+    : Directory(dir)
     .listSync(recursive: true)
     .whereType<File>()
     .where((f) => f.path.endsWith('.dart'));

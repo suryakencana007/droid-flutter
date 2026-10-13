@@ -1,17 +1,38 @@
 # droid
 
-Bootstrap aplikasi Flutter dengan arsitektur **Feature-Sliced Design (FSD)**.
+Template aplikasi Flutter yang siap dipakai sebagai bootstrap: arsitektur
+**Feature-Sliced Design (FSD)**, UI kit **forui** (bergaya shadcn/ui), dan
+alur layar yang hampir selalu ada di sebuah app. Repo ini adalah GitHub
+template; lihat [Memulai app baru](#memulai-app-baru-dari-template).
 
-Target platform: **Android** dan **iOS**. Application ID / bundle ID: `com.kubus.work.droid`.
+Target platform: **Android** dan **iOS**. Application ID / bundle ID:
+`com.kubus.work.droid`.
+
+## Yang sudah ada
+
+| Area            | Isi                                                                 | Dokumen |
+|-----------------|---------------------------------------------------------------------|---------|
+| Arsitektur      | Layer `app > pages > widgets > features > entities > shared`, aturan import diuji otomatis, generator slice | [docs/ui-kit.md](docs/ui-kit.md), bagian [Aturan import](#aturan-import) |
+| UI kit          | forui lewat satu pintu `shared/ui`, tema terang/gelap persisten, `AsyncValueView`/`ErrorView`/`EmptyView`, dialog konfirmasi | [docs/ui-kit.md](docs/ui-kit.md) |
+| Alur layar      | Splash, onboarding, sign in / sign up / lupa password, bottom tabs (sidebar di tablet), profil, pengaturan, keluar | [docs/screens.md](docs/screens.md) |
+| Contoh CRUD     | Catatan: daftar berhalaman, detail, buat/ubah/hapus                  | [docs/screens.md](docs/screens.md) |
+| Auth & data     | `AuthApi` dengan `FakeAuthApi` dan `DioAuthApi`, token di secure storage, 401 otomatis keluar, pemetaan error jaringan, banner offline | [docs/networking.md](docs/networking.md) |
+| Flavor          | dev / staging / prod lewat `env/*.json`, pita flavor, logger, `CrashReporter` | [docs/flavors.md](docs/flavors.md) |
+| i18n            | Indonesia + English (ARB), pemilih bahasa                            | [docs/i18n.md](docs/i18n.md) |
+| Model           | freezed + json_serializable, `just gen`                              | [docs/screens.md](docs/screens.md) |
+| Branding        | Ikon launcher adaptif dan splash native dari `assets/brand`          | [docs/branding.md](docs/branding.md) |
+| Kualitas        | Analyzer ketat, widget test alur end-to-end, integration test di device, hook pre-commit | [docs/branding.md](docs/branding.md) |
+| Device          | Alur kerja Waydroid (Android container di Linux)                     | [docs/waydroid.md](docs/waydroid.md) |
 
 ## Prasyarat
 
-Toolchain dikelola lewat [mise](https://mise.jdx.dev): Flutter dan JDK dipin di
-`mise.toml`, `ANDROID_HOME` diekspor otomatis ke `~/.androidsdk`.
+Toolchain dikelola lewat [mise](https://mise.jdx.dev): Flutter, JDK, dan just
+dipin di `mise.toml`; `ANDROID_HOME` diekspor otomatis ke `~/.androidsdk`.
 
 ```bash
-mise install          # memasang Flutter + Temurin JDK 21 sesuai mise.toml
-flutter doctor        # cek toolchain
+mise install          # Flutter + Temurin JDK 21 + just
+just setup            # pub get, codegen, git hook
+flutter doctor
 ```
 
 Pemasangan Android SDK di mesin baru (sekali saja), cukup `sdkmanager` dari
@@ -23,100 +44,62 @@ sdkmanager "platform-tools" "platforms;android-36" "build-tools;36.0.0" "ndk;28.
 flutter config --android-sdk ~/.androidsdk
 ```
 
-## Menjalankan
+## Perintah harian
 
-Perintah harian dibungkus [just](https://github.com/casey/just) (dipin di
-`mise.toml`). Ketik `just` untuk daftar lengkap.
+Semua dibungkus [just](https://github.com/casey/just); `just` tanpa argumen
+menampilkan daftar lengkap. Flavor dipilih dengan `env=` (default `dev`).
 
-```bash
-just setup            # mise install + flutter pub get
-just doctor
-just run              # jalankan di Waydroid (connect adb + info device + flutter run)
-just check            # flutter analyze + flutter test
-just build-apk
-just slice feature auth
-```
+| Perintah                     | Fungsi                                              |
+|------------------------------|-----------------------------------------------------|
+| `just check`                 | `flutter analyze` + `flutter test`                  |
+| `just run` / `just env=staging run` | Jalankan di Waydroid dengan flavor            |
+| `just build-apk`, `just build-release` | Build APK                                 |
+| `just install`, `just launch`, `just stop` | Pasang/buka/hentikan di Waydroid      |
+| `just screenshot`, `just tap X Y`, `just type "..."`, `just logcat` | Kendali device |
+| `just itest`                 | Integration test di device                          |
+| `just gen`, `just gen-watch` | Codegen freezed/json                                |
+| `just l10n`                  | Generate lokalisasi dari ARB                        |
+| `just brand`                 | Ikon launcher + splash native                       |
+| `just slice feature auth`    | Buat slice FSD baru                                 |
+| `just rename nama com.org "Judul"` | Ganti identitas app dari template              |
 
-Tanpa just, perintah mentahnya:
+Tanpa just: `flutter run --dart-define-from-file=env/dev.json`, `flutter test`,
+`flutter analyze`.
 
-```bash
-flutter pub get
-flutter run           # pilih device/emulator yang tersedia
-flutter test          # unit + widget test + uji aturan arsitektur
-flutter analyze
-flutter build apk --debug
-```
+## Akun demo
 
-Untuk menjalankan di Waydroid (Android container di Linux), lihat
-[docs/waydroid.md](docs/waydroid.md).
-
-## Alur bawaan
-
-Splash → onboarding (sekali) → sign in / sign up / lupa password → menu utama
-bottom tabs (Beranda, Jelajah, Profil) → pengaturan (tema persisten, versi) →
-keluar. Auth memakai `FakeAuthApi` in-memory (akun demo `demo@example.com` /
-`password123`) yang bisa diganti lewat satu provider. Detail di
-[docs/screens.md](docs/screens.md).
-
-## Memulai app baru dari template
-
-Repo ini adalah GitHub template. Setelah "Use this template" dan clone:
-
-```bash
-just rename kasir_app com.perusahaan "Kasir App"   # nama package, app id, judul
-just setup
-just check
-```
-
-Konfigurasi runtime lewat `--dart-define`, misalnya:
-
-```bash
-flutter run --dart-define=API_BASE_URL=https://api.example.com
-```
+Flavor dev memakai `FakeAuthApi` in-memory: `demo@example.com` /
+`password123`. Data catatan contoh juga in-memory.
 
 ## Struktur `lib/`
 
 ```
 lib/
-├── main.dart            # entry point, hanya memanggil layer app
-├── app/                 # inisialisasi app: router, theme, provider global
-├── pages/               # satu slice per halaman/route
-├── widgets/             # blok UI komposit yang merakit features + entities
-├── features/            # interaksi user yang bernilai bisnis (aksi)
-├── entities/            # entitas bisnis: model + tampilan dasarnya
-└── shared/              # kode reusable tanpa makna bisnis: api, config, lib, ui
+├── main.dart            # memanggil app/bootstrap.dart
+├── app/                 # bootstrap, router (+ redirect), theme, App widget
+├── pages/               # satu slice per route
+├── widgets/             # blok UI komposit (AppShell, AuthLayout, AppBar)
+├── features/            # aksi user (sign_in, create_note, toggle_theme, ...)
+├── entities/            # entitas bisnis (user, note): model, api, ui dasar
+└── shared/              # api, config, l10n, lib (storage, errors, logging), ui
 ```
 
 Setiap **slice** (folder di `pages/`, `widgets/`, `features/`, `entities/`)
-dibagi ke dalam **segment**:
-
-| Segment  | Isi                                                     |
-|----------|---------------------------------------------------------|
-| `ui/`    | Widget                                                  |
-| `model/` | State, provider, tipe data, logika domain               |
-| `api/`   | Akses data: HTTP, database, storage                     |
-| `lib/`   | Helper internal slice                                   |
-| `config/`| Konstanta / konfigurasi slice                           |
-
-Setiap slice wajib punya `index.dart` sebagai **public API**. Kode lain hanya
-boleh mengimpor slice lewat file itu.
+dibagi ke dalam **segment** `ui/`, `model/`, `api/`, `lib/`, `config/` dan
+wajib punya `index.dart` sebagai public API.
 
 ## Aturan import
 
-1. **Searah ke bawah.** Sebuah layer hanya boleh mengimpor layer di bawahnya:
-   `app → pages → widgets → features → entities → shared`.
-2. **Tidak ada import antar slice sejajar.** `features/a` tidak boleh mengimpor
-   `features/b`. Kalau butuh, turunkan kode bersama ke layer di bawahnya atau
-   rakit keduanya di layer di atasnya.
-3. **Lintas slice lewat public API.** Gunakan
-   `package:droid/<layer>/<slice>/index.dart`, bukan path ke file internal.
-4. **Di dalam slice pakai import relatif.** Contoh: `import '../model/foo.dart';`
-5. `app/` dan `shared/` tidak memiliki slice, hanya segment, sehingga bebas
-   saling impor di dalam layernya sendiri.
+1. **Searah ke bawah.** `app → pages → widgets → features → entities → shared`.
+2. **Tidak ada import antar slice sejajar.** Turunkan kode bersama ke layer di
+   bawahnya atau rakit di layer di atasnya.
+3. **Lintas slice lewat public API** `package:droid/<layer>/<slice>/index.dart`.
+4. **Di dalam slice pakai import relatif.**
+5. **forui hanya lewat `shared/ui/index.dart`**, dan Material dari
+   `package:material_ui`, bukan `package:flutter/material.dart`.
 
-Aturan ini diuji otomatis oleh `test/architecture/fsd_layers_test.dart`.
-Pelanggaran membuat `flutter test` gagal dengan pesan yang menunjuk file dan
-import yang bermasalah.
+Semua aturan diuji oleh `test/architecture/fsd_layers_test.dart`; pelanggaran
+membuat `just check` gagal dengan pesan yang menunjuk file dan importnya.
 
 ## Membuat slice baru
 
@@ -124,28 +107,27 @@ import yang bermasalah.
 just slice feature auth                        # lib/features/auth/{ui,model}
 just slice entity product ui model api
 just slice page profile
-just slice widget sidebar
-# atau langsung: dart run tool/fsd.dart <layer> <slice> [segment ...]
 ```
 
-Setelah membuat page baru, daftarkan route-nya di `lib/app/router/app_router.dart`
-dan path-nya di `lib/shared/config/app_routes.dart`.
+## Memulai app baru dari template
+
+```bash
+# "Use this template" di GitHub, lalu:
+git clone <repo-baru> && cd <repo-baru>
+just rename kasir_app com.perusahaan "Kasir App"   # package, app id, judul
+just setup
+# ganti assets/brand/*.png, lalu:
+just brand
+just check
+```
+
+Setelah itu ganti backend: isi `env/*.json`, lalu sesuaikan `DioAuthApi` dan
+`DioNoteApi` dengan kontrak server (lihat [docs/networking.md](docs/networking.md)).
 
 ## Dependensi utama
 
-- `flutter_riverpod`: dependency injection dan state management
-- `go_router`: routing deklaratif
-- `dio`: HTTP client (`dioProvider` di `shared/api`)
-- `forui`: UI kit bergaya shadcn/ui, dipakai lewat `shared/ui` (lihat
-  [docs/ui-kit.md](docs/ui-kit.md))
-- `shared_preferences`, `flutter_secure_storage`: preferensi dan token, dibungkus
-  `KeyValueStore` / `SecureStore` di `shared/lib/storage`
-- `package_info_plus`: versi app di halaman pengaturan
-
-## Contoh alur yang sudah ada
-
-`HomePage` (pages) memakai `DroidAppBar` (widgets) yang menyertakan
-`ToggleThemeButton` (features, `FButton.icon`). Halaman yang sama menampilkan
-`UserCard` (entities, `FCard` + `FAvatar`) dengan spasi dan komponen forui dari
-`shared/ui`. Layer `app` membaca `themeModeProvider` dari feature
-`toggle_theme` untuk mengatur `themeMode` dan membungkus app dengan `FTheme`.
+- `flutter_riverpod`: DI dan state; `go_router`: routing; `dio`: HTTP
+- `forui` + `forui_lucide`: UI kit dan ikon; `material_ui`: Material 3
+- `shared_preferences`, `flutter_secure_storage`: preferensi dan token
+- `freezed`, `json_serializable`: model; `intl` + `flutter_localizations`: i18n
+- `connectivity_plus`, `package_info_plus`, `logging`
