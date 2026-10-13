@@ -451,4 +451,35 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get refresh => 'Muat ulang';
+
+  @override
+  String get appLockLabel => 'Kunci aplikasi';
+
+  @override
+  String get appLockToggle => 'Kunci dengan biometrik';
+
+  @override
+  String get appLockToggleBody =>
+      'Minta sidik jari, wajah, atau PIN perangkat saat kembali ke aplikasi.';
+
+  @override
+  String get appLockUnavailable =>
+      'Perangkat ini belum punya biometrik atau PIN.';
+
+  @override
+  String get lockTitle => 'Aplikasi terkunci';
+
+  @override
+  String get lockBody => 'Buka dengan biometrik atau PIN perangkat.';
+
+  @override
+  String get unlock => 'Buka';
+
+  @override
+  String unlockReason(String appName) {
+    return 'Buka $appName';
+  }
+
+  @override
+  String get unlockFailed => 'Verifikasi gagal. Coba lagi.';
 }

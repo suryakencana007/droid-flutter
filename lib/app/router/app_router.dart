@@ -1,8 +1,10 @@
 import 'package:droid/entities/user/index.dart';
+import 'package:droid/features/app_lock/index.dart';
 import 'package:droid/features/complete_onboarding/index.dart';
 import 'package:droid/pages/feature_flags/index.dart';
 import 'package:droid/pages/forgot_password/index.dart';
 import 'package:droid/pages/home/index.dart';
+import 'package:droid/pages/lock/index.dart';
 import 'package:droid/pages/not_found/index.dart';
 import 'package:droid/pages/note_detail/index.dart';
 import 'package:droid/pages/note_edit/index.dart';
@@ -26,6 +28,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
   ref
     ..listen(currentUserProvider, (_, _) => refresh.refresh())
     ..listen(onboardingDoneProvider, (_, _) => refresh.refresh())
+    ..listen(appLockProvider, (_, _) => refresh.refresh())
     ..onDispose(refresh.dispose);
 
   final analytics = ref.watch(analyticsProvider);
@@ -57,6 +60,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
       GoRoute(
         path: AppRoutes.forgotPassword,
         builder: (context, state) => const ForgotPasswordPage(),
+      ),
+      GoRoute(
+        path: AppRoutes.lock,
+        builder: (context, state) => const LockPage(),
       ),
       StatefulShellRoute.indexedStack(
         builder: (context, state, navigationShell) =>
@@ -130,7 +137,8 @@ final appRouterProvider = Provider<GoRouter>((ref) {
 });
 
 /// Satu-satunya tempat aturan alur layar diputuskan:
-/// splash (saat memulihkan sesi) → onboarding (sekali) → auth → menu utama.
+/// splash (saat memulihkan sesi) → onboarding (sekali) → auth → kunci app
+/// (bila aktif) → menu utama.
 String? _redirect(Ref ref, GoRouterState state) {
   final user = ref.read(currentUserProvider);
   final onboarded = ref.read(onboardingDoneProvider);
@@ -148,6 +156,19 @@ String? _redirect(Ref ref, GoRouterState state) {
   final onAuthPage = AppRoutes.authPages.contains(location);
 
   if (!signedIn) return onAuthPage ? null : AppRoutes.signIn;
+
+  final locked = ref.read(appLockProvider).value?.locked ?? false;
+  if (locked) {
+    if (location == AppRoutes.lock) return null;
+    // Simpan asal agar setelah dibuka kembali ke halaman yang sama.
+    return Uri(
+      path: AppRoutes.lock,
+      queryParameters: {'from': state.uri.toString()},
+    ).toString();
+  }
+  if (location == AppRoutes.lock) {
+    return state.uri.queryParameters['from'] ?? AppRoutes.home;
+  }
 
   if (onAuthPage ||
       location == AppRoutes.splash ||

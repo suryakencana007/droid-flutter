@@ -136,5 +136,14 @@
   "featureFlagsDescription": "Active values from {source}.",
   "featureFlagsEmpty": "No flags.",
   "betaBadge": "Beta",
-  "refresh": "Refresh"
+  "refresh": "Refresh",
+  "appLockLabel": "App lock",
+  "appLockToggle": "Lock with biometrics",
+  "appLockToggleBody": "Ask for fingerprint, face, or device PIN when returning to the app.",
+  "appLockUnavailable": "This device has no biometrics or PIN set up.",
+  "lockTitle": "App locked",
+  "lockBody": "Unlock with biometrics or your device PIN.",
+  "unlock": "Unlock",
+  "unlockReason": "Unlock {appName}",
+  "unlockFailed": "Verification failed. Try again."
 }

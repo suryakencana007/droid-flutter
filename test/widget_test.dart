@@ -1,10 +1,13 @@
 import 'package:droid/app/index.dart';
 import 'package:droid/entities/note/index.dart';
 import 'package:droid/entities/user/index.dart';
+import 'package:droid/features/app_lock/index.dart';
 import 'package:droid/features/delete_note/index.dart';
+import 'package:droid/features/manage_notifications/index.dart';
 import 'package:droid/features/sign_out/index.dart';
 import 'package:droid/features/toggle_theme/index.dart';
 import 'package:droid/pages/feature_flags/index.dart';
+import 'package:droid/pages/lock/index.dart';
 import 'package:droid/pages/settings/index.dart';
 import 'package:droid/shared/config/index.dart';
 import 'package:droid/shared/lib/index.dart';
@@ -26,6 +29,9 @@ Widget buildApp({
   return ProviderScope(
     overrides: [
       pushServiceProvider.overrideWithValue(const NoopPushService()),
+      deviceAuthenticatorProvider.overrideWithValue(
+        MemoryAuthenticator(available: false),
+      ),
       isOnlineProvider.overrideWith((ref) => Stream.value(online)),
       keyValueStoreProvider.overrideWithValue(
         MemoryKeyValueStore({'locale': ?locale, ...prefs}),
@@ -60,6 +66,7 @@ Future<void> enterField(WidgetTester tester, int index, String text) async {
 void main() {
   notesTests();
   flagTests();
+  appLockTests();
   responsiveTests();
 
   testWidgets('alur pertama: onboarding → sign in → home → sign out', (
@@ -209,6 +216,9 @@ void main() {
       ProviderScope(
         overrides: [
           pushServiceProvider.overrideWithValue(const NoopPushService()),
+          deviceAuthenticatorProvider.overrideWithValue(
+            MemoryAuthenticator(available: false),
+          ),
           analyticsProvider.overrideWithValue(analytics),
           isOnlineProvider.overrideWith((ref) => Stream.value(true)),
           keyValueStoreProvider.overrideWithValue(
@@ -251,6 +261,9 @@ void main() {
       ProviderScope(
         overrides: [
           pushServiceProvider.overrideWithValue(const NoopPushService()),
+          deviceAuthenticatorProvider.overrideWithValue(
+            MemoryAuthenticator(available: false),
+          ),
           permissionServiceProvider.overrideWithValue(permissions),
           isOnlineProvider.overrideWith((ref) => Stream.value(true)),
           keyValueStoreProvider.overrideWithValue(
@@ -270,7 +283,17 @@ void main() {
     await tester.tap(find.text('Pengaturan'));
     await tester.pumpAndSettle();
 
-    await tester.ensureVisible(find.text('Kamera'));
+    final settingsList = find.descendant(
+      of: find.byType(SettingsPage),
+      matching: find.byType(Scrollable),
+    );
+    await tester.scrollUntilVisible(
+      find.text('Kamera'),
+      200,
+      scrollable: settingsList.first,
+    );
+    await tester.drag(settingsList.first, const Offset(0, -200));
+    await tester.pumpAndSettle();
     expect(find.text('Ditolak'), findsOneWidget);
     await tester.tap(find.text('Kamera'));
     await tester.pumpAndSettle();
@@ -297,6 +320,9 @@ void main() {
         ProviderScope(
           overrides: [
             pushServiceProvider.overrideWithValue(push),
+            deviceAuthenticatorProvider.overrideWithValue(
+              MemoryAuthenticator(available: false),
+            ),
             permissionServiceProvider.overrideWithValue(permissions),
             isOnlineProvider.overrideWith((ref) => Stream.value(true)),
             keyValueStoreProvider.overrideWithValue(
@@ -316,8 +342,12 @@ void main() {
       await tester.tap(find.text('Pengaturan'));
       await tester.pumpAndSettle();
 
-      await tester.ensureVisible(find.byType(FSwitch));
-      await tester.tap(find.byType(FSwitch));
+      final notifSwitch = find.descendant(
+        of: find.byType(NotificationSettings),
+        matching: find.byType(FSwitch),
+      );
+      await tester.ensureVisible(notifSwitch);
+      await tester.tap(notifSwitch);
       await tester.pumpAndSettle();
       await tester.tap(find.text('Lanjutkan')); // dialog penjelasan izin
       await tester.pumpAndSettle();
@@ -379,6 +409,8 @@ Future<void> pumpSignedIn(
   FakeNoteApi? notes,
   bool phone = true,
   Map<String, bool>? flags,
+  MemoryAuthenticator? authenticator,
+  Duration? lockAfter,
 }) async {
   if (phone) usePhoneViewport(tester);
   final api = FakeAuthApi(latency: Duration.zero);
@@ -404,6 +436,10 @@ Future<void> pumpSignedIn(
         ),
         if (flags != null)
           featureFlagsProvider.overrideWithValue(MemoryFeatureFlags(flags)),
+        if (authenticator != null)
+          deviceAuthenticatorProvider.overrideWithValue(authenticator),
+        if (lockAfter != null)
+          appLockTimeoutProvider.overrideWithValue(lockAfter),
       ],
       child: const App(),
     ),
@@ -509,6 +545,79 @@ void flagTests() {
     await tester.pumpAndSettle();
     expect(find.byType(FeatureFlagsPage), findsOneWidget);
     expect(find.text('notes_create_enabled'), findsOneWidget);
+  });
+}
+
+void appLockTests() {
+  testWidgets('kunci aplikasi: aktifkan, kembali dari background, buka', (
+    tester,
+  ) async {
+    final auth = MemoryAuthenticator();
+    await pumpSignedIn(tester, authenticator: auth, lockAfter: Duration.zero);
+    await tester.tap(find.text('Profil').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Pengaturan'));
+    await tester.pumpAndSettle();
+
+    final settingsList = find.descendant(
+      of: find.byType(SettingsPage),
+      matching: find.byType(Scrollable),
+    );
+    await tester.scrollUntilVisible(
+      find.byType(AppLockSwitch),
+      200,
+      scrollable: settingsList.first,
+    );
+    await tester.drag(settingsList.first, const Offset(0, -200));
+    await tester.pumpAndSettle();
+    await tester.tap(
+      find.descendant(
+        of: find.byType(AppLockSwitch),
+        matching: find.byType(FSwitch),
+      ),
+    );
+    await tester.pumpAndSettle();
+    expect(auth.attempts, 1); // verifikasi saat mengaktifkan
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.paused);
+    await tester.pump();
+    tester.binding.handleAppLifecycleStateChanged(AppLifecycleState.resumed);
+    await tester.pumpAndSettle();
+    expect(find.byType(LockPage), findsOneWidget);
+
+    auth.result = false;
+    await tester.tap(find.widgetWithText(FButton, 'Buka'));
+    await tester.pumpAndSettle();
+    expect(find.text('Verifikasi gagal. Coba lagi.'), findsOneWidget);
+
+    auth.result = true;
+    await tester.tap(find.widgetWithText(FButton, 'Buka'));
+    await tester.pumpAndSettle();
+    expect(find.byType(LockPage), findsNothing);
+    expect(find.byType(SettingsPage), findsOneWidget);
+  });
+
+  testWidgets('tanpa biometrik toggle kunci nonaktif', (tester) async {
+    await pumpSignedIn(
+      tester,
+      authenticator: MemoryAuthenticator(available: false),
+    );
+    await tester.tap(find.text('Profil').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Pengaturan'));
+    await tester.pumpAndSettle();
+    final settingsList = find.descendant(
+      of: find.byType(SettingsPage),
+      matching: find.byType(Scrollable),
+    );
+    await tester.scrollUntilVisible(
+      find.byType(AppLockSwitch),
+      200,
+      scrollable: settingsList.first,
+    );
+    expect(
+      find.text('Perangkat ini belum punya biometrik atau PIN.'),
+      findsOneWidget,
+    );
   });
 }
 

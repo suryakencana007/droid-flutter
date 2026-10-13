@@ -202,5 +202,21 @@
   },
   "featureFlagsEmpty": "Tidak ada flag.",
   "betaBadge": "Beta",
-  "refresh": "Muat ulang"
+  "refresh": "Muat ulang",
+  "appLockLabel": "Kunci aplikasi",
+  "appLockToggle": "Kunci dengan biometrik",
+  "appLockToggleBody": "Minta sidik jari, wajah, atau PIN perangkat saat kembali ke aplikasi.",
+  "appLockUnavailable": "Perangkat ini belum punya biometrik atau PIN.",
+  "lockTitle": "Aplikasi terkunci",
+  "lockBody": "Buka dengan biometrik atau PIN perangkat.",
+  "unlock": "Buka",
+  "unlockReason": "Buka {appName}",
+  "@unlockReason": {
+    "placeholders": {
+      "appName": {
+        "type": "String"
+      }
+    }
+  },
+  "unlockFailed": "Verifikasi gagal. Coba lagi."
 }

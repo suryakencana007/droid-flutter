@@ -919,6 +919,60 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Muat ulang'**
   String get refresh;
+
+  /// No description provided for @appLockLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Kunci aplikasi'**
+  String get appLockLabel;
+
+  /// No description provided for @appLockToggle.
+  ///
+  /// In id, this message translates to:
+  /// **'Kunci dengan biometrik'**
+  String get appLockToggle;
+
+  /// No description provided for @appLockToggleBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Minta sidik jari, wajah, atau PIN perangkat saat kembali ke aplikasi.'**
+  String get appLockToggleBody;
+
+  /// No description provided for @appLockUnavailable.
+  ///
+  /// In id, this message translates to:
+  /// **'Perangkat ini belum punya biometrik atau PIN.'**
+  String get appLockUnavailable;
+
+  /// No description provided for @lockTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Aplikasi terkunci'**
+  String get lockTitle;
+
+  /// No description provided for @lockBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka dengan biometrik atau PIN perangkat.'**
+  String get lockBody;
+
+  /// No description provided for @unlock.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka'**
+  String get unlock;
+
+  /// No description provided for @unlockReason.
+  ///
+  /// In id, this message translates to:
+  /// **'Buka {appName}'**
+  String unlockReason(String appName);
+
+  /// No description provided for @unlockFailed.
+  ///
+  /// In id, this message translates to:
+  /// **'Verifikasi gagal. Coba lagi.'**
+  String get unlockFailed;
 }
 
 class _AppLocalizationsDelegate

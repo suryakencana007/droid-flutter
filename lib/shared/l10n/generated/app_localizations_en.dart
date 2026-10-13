@@ -449,4 +449,35 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get refresh => 'Refresh';
+
+  @override
+  String get appLockLabel => 'App lock';
+
+  @override
+  String get appLockToggle => 'Lock with biometrics';
+
+  @override
+  String get appLockToggleBody =>
+      'Ask for fingerprint, face, or device PIN when returning to the app.';
+
+  @override
+  String get appLockUnavailable =>
+      'This device has no biometrics or PIN set up.';
+
+  @override
+  String get lockTitle => 'App locked';
+
+  @override
+  String get lockBody => 'Unlock with biometrics or your device PIN.';
+
+  @override
+  String get unlock => 'Unlock';
+
+  @override
+  String unlockReason(String appName) {
+    return 'Unlock $appName';
+  }
+
+  @override
+  String get unlockFailed => 'Verification failed. Try again.';
 }

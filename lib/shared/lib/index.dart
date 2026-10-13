@@ -3,6 +3,7 @@ library;
 export 'analytics/analytics.dart';
 export 'analytics/analytics_route_observer.dart';
 export 'connectivity/connectivity_provider.dart';
+export 'device_auth/device_authenticator.dart';
 export 'errors/crash_reporter.dart';
 export 'errors/describe_error.dart';
 export 'flags/feature_flags.dart';
