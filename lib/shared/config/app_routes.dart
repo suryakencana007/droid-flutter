@@ -8,7 +8,10 @@ abstract final class AppRoutes {
   static const forgotPassword = '/forgot-password';
 
   static const home = '/';
-  static const explore = '/explore';
+  static const notes = '/notes';
+  static const noteNew = '/notes/new';
+  static String noteDetail(String id) => '/notes/$id';
+  static String noteEdit(String id) => '/notes/$id/edit';
   static const profile = '/profile';
   static const settings = '/profile/settings';
 

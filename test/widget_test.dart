@@ -1,5 +1,7 @@
 import 'package:droid/app/index.dart';
+import 'package:droid/entities/note/index.dart';
 import 'package:droid/entities/user/index.dart';
+import 'package:droid/features/delete_note/index.dart';
 import 'package:droid/features/sign_out/index.dart';
 import 'package:droid/features/toggle_theme/index.dart';
 import 'package:droid/shared/lib/index.dart';
@@ -39,6 +41,8 @@ Future<void> enterField(WidgetTester tester, int index, String text) async {
 }
 
 void main() {
+  notesTests();
+
   testWidgets('alur pertama: onboarding → sign in → home → sign out',
       (tester) async {
     await tester.pumpWidget(buildApp());
@@ -194,5 +198,94 @@ void main() {
     await tester.pumpWidget(buildApp(prefs: {'onboarding_done': true}, locale: null));
     await tester.pumpAndSettle();
     expect(find.text('Sign in'), findsWidgets);
+  });
+}
+
+Future<void> pumpSignedIn(WidgetTester tester, {FakeNoteApi? notes}) async {
+  final api = FakeAuthApi(latency: Duration.zero);
+  final session = await tester.runAsync(
+    () => api.signIn(
+      email: FakeAuthApi.demoEmail,
+      password: FakeAuthApi.demoPassword,
+    ),
+  );
+  await tester.pumpWidget(ProviderScope(
+    overrides: [
+      isOnlineProvider.overrideWith((ref) => Stream.value(true)),
+      keyValueStoreProvider.overrideWithValue(
+        MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'}),
+      ),
+      secureStoreProvider.overrideWithValue(
+        MemorySecureStore({'auth_token': session!.token}),
+      ),
+      authApiProvider.overrideWithValue(api),
+      noteApiProvider.overrideWithValue(
+        notes ?? FakeNoteApi(latency: Duration.zero),
+      ),
+    ],
+    child: const App(),
+  ));
+  await tester.pumpAndSettle();
+}
+
+void notesTests() {
+  testWidgets('daftar catatan memuat halaman kedua saat digulir', (tester) async {
+    await pumpSignedIn(tester);
+    await tester.tap(find.text('Catatan').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Catatan 40'), findsOneWidget); // terbaru di atas
+    expect(find.text('Catatan 1'), findsNothing); // halaman 2 belum dimuat
+
+    for (var i = 0; i < 6; i++) {
+      await tester.drag(find.byType(ListView), const Offset(0, -2000));
+      await tester.pumpAndSettle();
+    }
+    expect(find.text('Catatan 1'), findsOneWidget);
+  });
+
+  testWidgets('membuat catatan baru menampilkannya di detail dan daftar',
+      (tester) async {
+    await pumpSignedIn(tester);
+    await tester.tap(find.text('Catatan').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.bySemanticsLabel('Catatan baru'));
+    await tester.pumpAndSettle();
+    expect(find.text('Catatan baru'), findsWidgets);
+
+    await tester.tap(find.widgetWithText(FButton, 'Simpan'));
+    await tester.pumpAndSettle();
+    expect(find.text('Wajib diisi'), findsWidgets); // validasi
+
+    await enterField(tester, 0, 'Belanja mingguan');
+    await enterField(tester, 1, 'Telur, susu, kopi.');
+    await tester.tap(find.widgetWithText(FButton, 'Simpan'));
+    await tester.pumpAndSettle();
+
+    expect(find.text('Belanja mingguan'), findsOneWidget); // halaman detail
+    expect(find.text('Telur, susu, kopi.'), findsOneWidget);
+
+    await tester.tap(find.text('Catatan').last); // kembali ke root tab
+    await tester.pumpAndSettle();
+    expect(find.text('Belanja mingguan'), findsOneWidget); // paling atas
+  });
+
+  testWidgets('menghapus catatan dari detail kembali ke daftar', (tester) async {
+    await pumpSignedIn(tester);
+    await tester.tap(find.text('Catatan').last);
+    await tester.pumpAndSettle();
+
+    await tester.tap(find.text('Catatan 40'));
+    await tester.pumpAndSettle();
+    await tester.ensureVisible(find.byType(DeleteNoteButton));
+    await tester.tap(find.byType(DeleteNoteButton));
+    await tester.pumpAndSettle();
+    expect(find.text('Hapus catatan?'), findsOneWidget);
+    await tester.tap(find.widgetWithText(FButton, 'Hapus').last);
+    await tester.pumpAndSettle();
+
+    expect(find.text('Catatan 40'), findsNothing);
+    expect(find.text('Catatan 39'), findsOneWidget);
   });
 }

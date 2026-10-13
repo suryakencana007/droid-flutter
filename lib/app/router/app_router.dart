@@ -1,9 +1,11 @@
 import 'package:droid/entities/user/index.dart';
 import 'package:droid/features/complete_onboarding/index.dart';
-import 'package:droid/pages/explore/index.dart';
 import 'package:droid/pages/forgot_password/index.dart';
 import 'package:droid/pages/home/index.dart';
 import 'package:droid/pages/not_found/index.dart';
+import 'package:droid/pages/note_detail/index.dart';
+import 'package:droid/pages/note_edit/index.dart';
+import 'package:droid/pages/notes/index.dart';
 import 'package:droid/pages/onboarding/index.dart';
 import 'package:droid/pages/profile/index.dart';
 import 'package:droid/pages/settings/index.dart';
@@ -65,8 +67,27 @@ final appRouterProvider = Provider<GoRouter>((ref) {
           StatefulShellBranch(
             routes: [
               GoRoute(
-                path: AppRoutes.explore,
-                builder: (context, state) => const ExplorePage(),
+                path: AppRoutes.notes,
+                builder: (context, state) => const NotesPage(),
+                routes: [
+                  // `new` harus sebelum `:id` agar tidak dianggap id.
+                  GoRoute(
+                    path: 'new',
+                    builder: (context, state) => const NoteEditPage(),
+                  ),
+                  GoRoute(
+                    path: ':id',
+                    builder: (context, state) =>
+                        NoteDetailPage(id: state.pathParameters['id']!),
+                    routes: [
+                      GoRoute(
+                        path: 'edit',
+                        builder: (context, state) =>
+                            NoteEditPage(id: state.pathParameters['id']),
+                      ),
+                    ],
+                  ),
+                ],
               ),
             ],
           ),

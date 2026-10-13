@@ -140,9 +140,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get tabHome => 'Home';
 
   @override
-  String get tabExplore => 'Explore';
-
-  @override
   String get tabProfile => 'Profile';
 
   @override
@@ -165,30 +162,6 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get toastBody => 'Components are used through shared/ui.';
-
-  @override
-  String get exploreListLabel => 'Sample list';
-
-  @override
-  String get exploreItemBody => 'Sample item. Replace it with a real feature.';
-
-  @override
-  String get exploreFsd => 'Feature-Sliced Design';
-
-  @override
-  String get exploreFsdSub => 'Layer and slice rules';
-
-  @override
-  String get exploreUiKit => 'forui UI kit';
-
-  @override
-  String get exploreUiKitSub => 'Components and theme';
-
-  @override
-  String get exploreWaydroid => 'Waydroid';
-
-  @override
-  String get exploreWaydroidSub => 'Test on Android without an emulator';
 
   @override
   String get settingsTitle => 'Settings';
@@ -314,4 +287,69 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get emptyBody => 'Data will show up here.';
+
+  @override
+  String get tabNotes => 'Notes';
+
+  @override
+  String get notesTitle => 'Notes';
+
+  @override
+  String get noteNew => 'New note';
+
+  @override
+  String get noteEdit => 'Edit note';
+
+  @override
+  String get noteTitleLabel => 'Title';
+
+  @override
+  String get noteTitleHint => 'Note title';
+
+  @override
+  String get noteBodyLabel => 'Body';
+
+  @override
+  String get noteBodyHint => 'Write something...';
+
+  @override
+  String get save => 'Save';
+
+  @override
+  String get saving => 'Saving...';
+
+  @override
+  String get delete => 'Delete';
+
+  @override
+  String get deleting => 'Deleting...';
+
+  @override
+  String get edit => 'Edit';
+
+  @override
+  String get noteDeleteConfirmTitle => 'Delete this note?';
+
+  @override
+  String get noteDeleteConfirmBody => 'Deleted notes cannot be recovered.';
+
+  @override
+  String get notesEmptyTitle => 'No notes yet';
+
+  @override
+  String get notesEmptyBody => 'Tap + to create your first note.';
+
+  @override
+  String get noteSaved => 'Note saved';
+
+  @override
+  String get noteDeleted => 'Note deleted';
+
+  @override
+  String updatedAt(String date) {
+    return 'Updated $date';
+  }
+
+  @override
+  String get loadMoreFailed => 'Could not load the next page';
 }

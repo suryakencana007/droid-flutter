@@ -41,12 +41,35 @@ Aturan perpindahan ada di satu tempat: `_redirect` di
 | `/sign-up`         | `pages/sign_up`         | `features/sign_up`, `widgets/auth_layout`         |
 | `/forgot-password` | `pages/forgot_password` | `features/forgot_password`, `widgets/auth_layout` |
 | `/`                | `pages/home`            | `entities/user` (`UserCard`), `widgets/app_bar`   |
-| `/explore`         | `pages/explore`         | placeholder `FTileGroup`                          |
+| `/notes`           | `pages/notes`           | `entities/note` (`NoteTile`), `AsyncValueView`, pull-to-refresh, infinite scroll |
+| `/notes/new`       | `pages/note_edit`       | `features/create_note`                            |
+| `/notes/:id`       | `pages/note_detail`     | `features/delete_note`                            |
+| `/notes/:id/edit`  | `pages/note_edit`       | `features/edit_note`                              |
 | `/profile`         | `pages/profile`         | `features/sign_out`, `entities/user`              |
 | `/profile/settings`| `pages/settings`        | `features/toggle_theme` (`ThemeModeSelector`), `features/sign_out` |
 
 Tiga tab utama dibungkus `widgets/app_shell` (`FBottomNavigationBar` di atas
 `StatefulShellRoute.indexedStack`), jadi state tiap tab terjaga.
+
+## Contoh CRUD: catatan
+
+Tab Catatan adalah pola list → detail → form yang bisa disalin untuk entity
+lain:
+
+- `entities/note/api`: kontrak `NoteApi`, `FakeNoteApi` (40 contoh, in-memory)
+  dan `DioNoteApi` (`/notes` REST); dipilih lewat `USE_FAKE_API`.
+- `entities/note/model/notes_provider.dart`: `NotesNotifier` memegang
+  `Paginated<Note>` dengan `loadMore()`, `refresh()`, `upsert()`, `remove()`
+  sehingga daftar tetap sinkron setelah buat/ubah/hapus tanpa memuat ulang.
+  `noteProvider(id)` mengambil dari daftar bila ada, selain itu dari API.
+- `entities/note/ui/note_form.dart`: form judul + isi dengan callback
+  `onSubmit`; dipakai `features/create_note` dan `features/edit_note`.
+- `features/delete_note`: tombol hapus dengan konfirmasi dan toast.
+- `pages/notes`: `AsyncValueView` + `RefreshIndicator` + `ScrollController`
+  untuk memuat halaman berikutnya saat mendekati bawah.
+
+Untuk entity baru: `just slice entity produk ui model api`, salin pola di atas,
+lalu daftarkan route dan tab.
 
 ## State dan penyimpanan
 

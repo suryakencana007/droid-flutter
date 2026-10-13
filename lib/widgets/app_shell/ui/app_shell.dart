@@ -36,8 +36,8 @@ class AppShell extends ConsumerWidget {
             label: Text(l10n.tabHome),
           ),
           FBottomNavigationBarItem(
-            icon: const Icon(FLucideIcons.compass),
-            label: Text(l10n.tabExplore),
+            icon: const Icon(FLucideIcons.notebookPen),
+            label: Text(l10n.tabNotes),
           ),
           FBottomNavigationBarItem(
             icon: const Icon(FLucideIcons.user),

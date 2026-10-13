@@ -140,9 +140,6 @@ class AppLocalizationsId extends AppLocalizations {
   String get tabHome => 'Beranda';
 
   @override
-  String get tabExplore => 'Jelajah';
-
-  @override
   String get tabProfile => 'Profil';
 
   @override
@@ -165,30 +162,6 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get toastBody => 'Komponen dipakai lewat shared/ui.';
-
-  @override
-  String get exploreListLabel => 'Contoh daftar';
-
-  @override
-  String get exploreItemBody => 'Contoh item. Ganti dengan fitur nyata.';
-
-  @override
-  String get exploreFsd => 'Feature-Sliced Design';
-
-  @override
-  String get exploreFsdSub => 'Aturan layer dan slice';
-
-  @override
-  String get exploreUiKit => 'UI kit forui';
-
-  @override
-  String get exploreUiKitSub => 'Komponen dan tema';
-
-  @override
-  String get exploreWaydroid => 'Waydroid';
-
-  @override
-  String get exploreWaydroidSub => 'Uji di Android tanpa emulator';
 
   @override
   String get settingsTitle => 'Pengaturan';
@@ -315,4 +288,70 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get emptyBody => 'Data akan muncul di sini.';
+
+  @override
+  String get tabNotes => 'Catatan';
+
+  @override
+  String get notesTitle => 'Catatan';
+
+  @override
+  String get noteNew => 'Catatan baru';
+
+  @override
+  String get noteEdit => 'Ubah catatan';
+
+  @override
+  String get noteTitleLabel => 'Judul';
+
+  @override
+  String get noteTitleHint => 'Judul catatan';
+
+  @override
+  String get noteBodyLabel => 'Isi';
+
+  @override
+  String get noteBodyHint => 'Tulis sesuatu...';
+
+  @override
+  String get save => 'Simpan';
+
+  @override
+  String get saving => 'Menyimpan...';
+
+  @override
+  String get delete => 'Hapus';
+
+  @override
+  String get deleting => 'Menghapus...';
+
+  @override
+  String get edit => 'Ubah';
+
+  @override
+  String get noteDeleteConfirmTitle => 'Hapus catatan?';
+
+  @override
+  String get noteDeleteConfirmBody =>
+      'Catatan yang dihapus tidak bisa dikembalikan.';
+
+  @override
+  String get notesEmptyTitle => 'Belum ada catatan';
+
+  @override
+  String get notesEmptyBody => 'Tekan + untuk membuat catatan pertama.';
+
+  @override
+  String get noteSaved => 'Catatan disimpan';
+
+  @override
+  String get noteDeleted => 'Catatan dihapus';
+
+  @override
+  String updatedAt(String date) {
+    return 'Diperbarui $date';
+  }
+
+  @override
+  String get loadMoreFailed => 'Gagal memuat halaman berikutnya';
 }

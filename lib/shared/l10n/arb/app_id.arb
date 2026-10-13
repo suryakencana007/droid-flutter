@@ -64,7 +64,6 @@
   },
   "backToSignIn": "Kembali ke masuk",
   "tabHome": "Beranda",
-  "tabExplore": "Jelajah",
   "tabProfile": "Profil",
   "homeGreeting": "Halo, {name}",
   "@homeGreeting": {
@@ -79,14 +78,6 @@
   "showToast": "Tampilkan toast",
   "toastTitle": "UI kit: forui",
   "toastBody": "Komponen dipakai lewat shared/ui.",
-  "exploreListLabel": "Contoh daftar",
-  "exploreItemBody": "Contoh item. Ganti dengan fitur nyata.",
-  "exploreFsd": "Feature-Sliced Design",
-  "exploreFsdSub": "Aturan layer dan slice",
-  "exploreUiKit": "UI kit forui",
-  "exploreUiKitSub": "Komponen dan tema",
-  "exploreWaydroid": "Waydroid",
-  "exploreWaydroidSub": "Uji di Android tanpa emulator",
   "settingsTitle": "Pengaturan",
   "settingsSubtitle": "Tema, bahasa, dan info aplikasi",
   "signOut": "Keluar",
@@ -140,5 +131,33 @@
   "retry": "Coba lagi",
   "offlineBanner": "Tidak ada koneksi internet",
   "emptyTitle": "Belum ada data",
-  "emptyBody": "Data akan muncul di sini."
+  "emptyBody": "Data akan muncul di sini.",
+  "tabNotes": "Catatan",
+  "notesTitle": "Catatan",
+  "noteNew": "Catatan baru",
+  "noteEdit": "Ubah catatan",
+  "noteTitleLabel": "Judul",
+  "noteTitleHint": "Judul catatan",
+  "noteBodyLabel": "Isi",
+  "noteBodyHint": "Tulis sesuatu...",
+  "save": "Simpan",
+  "saving": "Menyimpan...",
+  "delete": "Hapus",
+  "deleting": "Menghapus...",
+  "edit": "Ubah",
+  "noteDeleteConfirmTitle": "Hapus catatan?",
+  "noteDeleteConfirmBody": "Catatan yang dihapus tidak bisa dikembalikan.",
+  "notesEmptyTitle": "Belum ada catatan",
+  "notesEmptyBody": "Tekan + untuk membuat catatan pertama.",
+  "noteSaved": "Catatan disimpan",
+  "noteDeleted": "Catatan dihapus",
+  "updatedAt": "Diperbarui {date}",
+  "@updatedAt": {
+    "placeholders": {
+      "date": {
+        "type": "String"
+      }
+    }
+  },
+  "loadMoreFailed": "Gagal memuat halaman berikutnya"
 }

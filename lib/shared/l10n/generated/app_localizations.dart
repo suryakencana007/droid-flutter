@@ -338,12 +338,6 @@ abstract class AppLocalizations {
   /// **'Beranda'**
   String get tabHome;
 
-  /// No description provided for @tabExplore.
-  ///
-  /// In id, this message translates to:
-  /// **'Jelajah'**
-  String get tabExplore;
-
   /// No description provided for @tabProfile.
   ///
   /// In id, this message translates to:
@@ -385,54 +379,6 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Komponen dipakai lewat shared/ui.'**
   String get toastBody;
-
-  /// No description provided for @exploreListLabel.
-  ///
-  /// In id, this message translates to:
-  /// **'Contoh daftar'**
-  String get exploreListLabel;
-
-  /// No description provided for @exploreItemBody.
-  ///
-  /// In id, this message translates to:
-  /// **'Contoh item. Ganti dengan fitur nyata.'**
-  String get exploreItemBody;
-
-  /// No description provided for @exploreFsd.
-  ///
-  /// In id, this message translates to:
-  /// **'Feature-Sliced Design'**
-  String get exploreFsd;
-
-  /// No description provided for @exploreFsdSub.
-  ///
-  /// In id, this message translates to:
-  /// **'Aturan layer dan slice'**
-  String get exploreFsdSub;
-
-  /// No description provided for @exploreUiKit.
-  ///
-  /// In id, this message translates to:
-  /// **'UI kit forui'**
-  String get exploreUiKit;
-
-  /// No description provided for @exploreUiKitSub.
-  ///
-  /// In id, this message translates to:
-  /// **'Komponen dan tema'**
-  String get exploreUiKitSub;
-
-  /// No description provided for @exploreWaydroid.
-  ///
-  /// In id, this message translates to:
-  /// **'Waydroid'**
-  String get exploreWaydroid;
-
-  /// No description provided for @exploreWaydroidSub.
-  ///
-  /// In id, this message translates to:
-  /// **'Uji di Android tanpa emulator'**
-  String get exploreWaydroidSub;
 
   /// No description provided for @settingsTitle.
   ///
@@ -673,6 +619,132 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Data akan muncul di sini.'**
   String get emptyBody;
+
+  /// No description provided for @tabNotes.
+  ///
+  /// In id, this message translates to:
+  /// **'Catatan'**
+  String get tabNotes;
+
+  /// No description provided for @notesTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Catatan'**
+  String get notesTitle;
+
+  /// No description provided for @noteNew.
+  ///
+  /// In id, this message translates to:
+  /// **'Catatan baru'**
+  String get noteNew;
+
+  /// No description provided for @noteEdit.
+  ///
+  /// In id, this message translates to:
+  /// **'Ubah catatan'**
+  String get noteEdit;
+
+  /// No description provided for @noteTitleLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Judul'**
+  String get noteTitleLabel;
+
+  /// No description provided for @noteTitleHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Judul catatan'**
+  String get noteTitleHint;
+
+  /// No description provided for @noteBodyLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Isi'**
+  String get noteBodyLabel;
+
+  /// No description provided for @noteBodyHint.
+  ///
+  /// In id, this message translates to:
+  /// **'Tulis sesuatu...'**
+  String get noteBodyHint;
+
+  /// No description provided for @save.
+  ///
+  /// In id, this message translates to:
+  /// **'Simpan'**
+  String get save;
+
+  /// No description provided for @saving.
+  ///
+  /// In id, this message translates to:
+  /// **'Menyimpan...'**
+  String get saving;
+
+  /// No description provided for @delete.
+  ///
+  /// In id, this message translates to:
+  /// **'Hapus'**
+  String get delete;
+
+  /// No description provided for @deleting.
+  ///
+  /// In id, this message translates to:
+  /// **'Menghapus...'**
+  String get deleting;
+
+  /// No description provided for @edit.
+  ///
+  /// In id, this message translates to:
+  /// **'Ubah'**
+  String get edit;
+
+  /// No description provided for @noteDeleteConfirmTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Hapus catatan?'**
+  String get noteDeleteConfirmTitle;
+
+  /// No description provided for @noteDeleteConfirmBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Catatan yang dihapus tidak bisa dikembalikan.'**
+  String get noteDeleteConfirmBody;
+
+  /// No description provided for @notesEmptyTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Belum ada catatan'**
+  String get notesEmptyTitle;
+
+  /// No description provided for @notesEmptyBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Tekan + untuk membuat catatan pertama.'**
+  String get notesEmptyBody;
+
+  /// No description provided for @noteSaved.
+  ///
+  /// In id, this message translates to:
+  /// **'Catatan disimpan'**
+  String get noteSaved;
+
+  /// No description provided for @noteDeleted.
+  ///
+  /// In id, this message translates to:
+  /// **'Catatan dihapus'**
+  String get noteDeleted;
+
+  /// No description provided for @updatedAt.
+  ///
+  /// In id, this message translates to:
+  /// **'Diperbarui {date}'**
+  String updatedAt(String date);
+
+  /// No description provided for @loadMoreFailed.
+  ///
+  /// In id, this message translates to:
+  /// **'Gagal memuat halaman berikutnya'**
+  String get loadMoreFailed;
 }
 
 class _AppLocalizationsDelegate
