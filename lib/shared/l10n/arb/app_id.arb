@@ -218,5 +218,16 @@
       }
     }
   },
-  "unlockFailed": "Verifikasi gagal. Coba lagi."
+  "unlockFailed": "Verifikasi gagal. Coba lagi.",
+  "editProfileTitle": "Ubah profil",
+  "editProfileSubtitle": "Nama dan data akun",
+  "changePasswordTitle": "Ganti password",
+  "changePasswordSubtitle": "Perbarui password akun",
+  "currentPasswordLabel": "Password saat ini",
+  "newPasswordLabel": "Password baru",
+  "profileSaved": "Profil disimpan",
+  "passwordChanged": "Password diganti",
+  "editProfileFailed": "Gagal menyimpan profil",
+  "changePasswordFailed": "Gagal mengganti password",
+  "authWrongPassword": "Password saat ini salah."
 }

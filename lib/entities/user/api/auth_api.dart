@@ -40,4 +40,13 @@ abstract interface class AuthApi {
   Future<void> signOut(String token);
 
   Future<void> requestPasswordReset(String email);
+
+  Future<User> updateProfile(String token, {required String name});
+
+  /// Melempar [AuthException] `wrong-password` bila [current] salah.
+  Future<void> changePassword(
+    String token, {
+    required String current,
+    required String next,
+  });
 }

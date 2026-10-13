@@ -8,6 +8,7 @@ String describeAuthError(Object error, AppLocalizations l10n) =>
     switch (error) {
       AuthException(code: 'invalid-credentials') => l10n.authInvalidCredentials,
       AuthException(code: 'email-in-use') => l10n.authEmailInUse,
+      AuthException(code: 'wrong-password') => l10n.authWrongPassword,
       AuthException(cause: final DescribableError cause) => cause.describe(
         l10n,
       ),

@@ -1,6 +1,8 @@
 import 'package:droid/entities/user/index.dart';
 import 'package:droid/features/app_lock/index.dart';
 import 'package:droid/features/complete_onboarding/index.dart';
+import 'package:droid/pages/change_password/index.dart';
+import 'package:droid/pages/edit_profile/index.dart';
 import 'package:droid/pages/feature_flags/index.dart';
 import 'package:droid/pages/forgot_password/index.dart';
 import 'package:droid/pages/home/index.dart';
@@ -113,6 +115,14 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                 path: AppRoutes.profile,
                 builder: (context, state) => const ProfilePage(),
                 routes: [
+                  GoRoute(
+                    path: 'edit',
+                    builder: (context, state) => const EditProfilePage(),
+                  ),
+                  GoRoute(
+                    path: 'password',
+                    builder: (context, state) => const ChangePasswordPage(),
+                  ),
                   GoRoute(
                     path: 'settings',
                     builder: (context, state) => const SettingsPage(),

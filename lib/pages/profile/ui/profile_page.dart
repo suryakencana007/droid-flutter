@@ -26,6 +26,20 @@ class ProfilePage extends ConsumerWidget {
           FTileGroup(
             children: [
               FTile(
+                prefix: const Icon(FLucideIcons.userPen),
+                title: Text(l10n.editProfileTitle),
+                subtitle: Text(l10n.editProfileSubtitle),
+                suffix: const Icon(FLucideIcons.chevronRight),
+                onPress: () => context.go(AppRoutes.editProfile),
+              ),
+              FTile(
+                prefix: const Icon(FLucideIcons.keyRound),
+                title: Text(l10n.changePasswordTitle),
+                subtitle: Text(l10n.changePasswordSubtitle),
+                suffix: const Icon(FLucideIcons.chevronRight),
+                onPress: () => context.go(AppRoutes.changePassword),
+              ),
+              FTile(
                 prefix: const Icon(FLucideIcons.settings),
                 title: Text(l10n.settingsTitle),
                 subtitle: Text(l10n.settingsSubtitle),

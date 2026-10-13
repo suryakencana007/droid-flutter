@@ -482,4 +482,37 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get unlockFailed => 'Verifikasi gagal. Coba lagi.';
+
+  @override
+  String get editProfileTitle => 'Ubah profil';
+
+  @override
+  String get editProfileSubtitle => 'Nama dan data akun';
+
+  @override
+  String get changePasswordTitle => 'Ganti password';
+
+  @override
+  String get changePasswordSubtitle => 'Perbarui password akun';
+
+  @override
+  String get currentPasswordLabel => 'Password saat ini';
+
+  @override
+  String get newPasswordLabel => 'Password baru';
+
+  @override
+  String get profileSaved => 'Profil disimpan';
+
+  @override
+  String get passwordChanged => 'Password diganti';
+
+  @override
+  String get editProfileFailed => 'Gagal menyimpan profil';
+
+  @override
+  String get changePasswordFailed => 'Gagal mengganti password';
+
+  @override
+  String get authWrongPassword => 'Password saat ini salah.';
 }

@@ -97,6 +97,37 @@ class FakeAuthApi implements AuthApi {
   }
 
   @override
+  Future<User> updateProfile(String token, {required String name}) async {
+    await _wait();
+    final email = _emailOf(token);
+    final account = email == null ? null : _accounts[email];
+    if (account == null) {
+      throw const AuthException('unauthorized', 'Sesi tidak valid.');
+    }
+    final updated = account.user.copyWith(name: name.trim());
+    _accounts[email!] = (user: updated, password: account.password);
+    return updated;
+  }
+
+  @override
+  Future<void> changePassword(
+    String token, {
+    required String current,
+    required String next,
+  }) async {
+    await _wait();
+    final email = _emailOf(token);
+    final account = email == null ? null : _accounts[email];
+    if (account == null) {
+      throw const AuthException('unauthorized', 'Sesi tidak valid.');
+    }
+    if (account.password != current) {
+      throw const AuthException('wrong-password', 'Password saat ini salah.');
+    }
+    _accounts[email!] = (user: account.user, password: next);
+  }
+
+  @override
   Future<void> requestPasswordReset(String email) async {
     // Selalu sukses agar tidak membocorkan email mana yang terdaftar.
     await _wait();

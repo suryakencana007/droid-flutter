@@ -13,6 +13,8 @@ import 'auth_api.dart';
 /// | GET    | /auth/me               | Authorization: Bearer     | user               |
 /// | POST   | /auth/sign-out         | Authorization: Bearer     | 204                |
 /// | POST   | /auth/password-reset   | {email}                   | 204                |
+/// | PATCH  | /auth/me               | {name} + Bearer           | user               |
+/// | POST   | /auth/change-password  | {current_password, new_password} + Bearer | 204; 400/422 bila salah |
 ///
 /// `user` = `{id, name, email}`. Sesuaikan [_parseResult] dan path bila
 /// backend berbeda; feature dan page tidak perlu berubah.
@@ -74,6 +76,30 @@ class DioAuthApi implements AuthApi {
     await _dio.post<void>('/auth/password-reset', data: {'email': email});
   });
 
+  @override
+  Future<User> updateProfile(String token, {required String name}) =>
+      _guard(() async {
+        final res = await _dio.patch<Map<String, dynamic>>(
+          '/auth/me',
+          data: {'name': name},
+          options: Options(headers: {'Authorization': 'Bearer $token'}),
+        );
+        return User.fromJson(res.data!);
+      });
+
+  @override
+  Future<void> changePassword(
+    String token, {
+    required String current,
+    required String next,
+  }) => _guard(() async {
+    await _dio.post<void>(
+      '/auth/change-password',
+      data: {'current_password': current, 'new_password': next},
+      options: Options(headers: {'Authorization': 'Bearer $token'}),
+    );
+  }, badRequestAs: 'wrong-password');
+
   AuthResult _parseResult(Map<String, dynamic> json) => AuthResult(
     token: json['token'] as String,
     user: User.fromJson(json['user'] as Map<String, dynamic>),
@@ -83,6 +109,7 @@ class DioAuthApi implements AuthApi {
     Future<T> Function() body, {
     String? unauthorizedAs,
     String? conflictAs,
+    String? badRequestAs,
   }) async {
     try {
       return await body();
@@ -93,6 +120,10 @@ class DioAuthApi implements AuthApi {
       }
       if (conflictAs != null && api.statusCode == 409) {
         throw AuthException(conflictAs, api.message ?? conflictAs);
+      }
+      if (badRequestAs != null &&
+          (api.statusCode == 400 || api.statusCode == 422)) {
+        throw AuthException(badRequestAs, api.message ?? badRequestAs);
       }
       throw _toAuth(api);
     }

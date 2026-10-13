@@ -973,6 +973,72 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Verifikasi gagal. Coba lagi.'**
   String get unlockFailed;
+
+  /// No description provided for @editProfileTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Ubah profil'**
+  String get editProfileTitle;
+
+  /// No description provided for @editProfileSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Nama dan data akun'**
+  String get editProfileSubtitle;
+
+  /// No description provided for @changePasswordTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Ganti password'**
+  String get changePasswordTitle;
+
+  /// No description provided for @changePasswordSubtitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Perbarui password akun'**
+  String get changePasswordSubtitle;
+
+  /// No description provided for @currentPasswordLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Password saat ini'**
+  String get currentPasswordLabel;
+
+  /// No description provided for @newPasswordLabel.
+  ///
+  /// In id, this message translates to:
+  /// **'Password baru'**
+  String get newPasswordLabel;
+
+  /// No description provided for @profileSaved.
+  ///
+  /// In id, this message translates to:
+  /// **'Profil disimpan'**
+  String get profileSaved;
+
+  /// No description provided for @passwordChanged.
+  ///
+  /// In id, this message translates to:
+  /// **'Password diganti'**
+  String get passwordChanged;
+
+  /// No description provided for @editProfileFailed.
+  ///
+  /// In id, this message translates to:
+  /// **'Gagal menyimpan profil'**
+  String get editProfileFailed;
+
+  /// No description provided for @changePasswordFailed.
+  ///
+  /// In id, this message translates to:
+  /// **'Gagal mengganti password'**
+  String get changePasswordFailed;
+
+  /// No description provided for @authWrongPassword.
+  ///
+  /// In id, this message translates to:
+  /// **'Password saat ini salah.'**
+  String get authWrongPassword;
 }
 
 class _AppLocalizationsDelegate

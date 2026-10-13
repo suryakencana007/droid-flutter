@@ -480,4 +480,37 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get unlockFailed => 'Verification failed. Try again.';
+
+  @override
+  String get editProfileTitle => 'Edit profile';
+
+  @override
+  String get editProfileSubtitle => 'Name and account details';
+
+  @override
+  String get changePasswordTitle => 'Change password';
+
+  @override
+  String get changePasswordSubtitle => 'Update your account password';
+
+  @override
+  String get currentPasswordLabel => 'Current password';
+
+  @override
+  String get newPasswordLabel => 'New password';
+
+  @override
+  String get profileSaved => 'Profile saved';
+
+  @override
+  String get passwordChanged => 'Password changed';
+
+  @override
+  String get editProfileFailed => 'Could not save profile';
+
+  @override
+  String get changePasswordFailed => 'Could not change password';
+
+  @override
+  String get authWrongPassword => 'The current password is incorrect.';
 }

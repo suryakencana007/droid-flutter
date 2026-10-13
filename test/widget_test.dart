@@ -67,6 +67,7 @@ void main() {
   notesTests();
   flagTests();
   appLockTests();
+  profileTests();
   responsiveTests();
 
   testWidgets('alur pertama: onboarding → sign in → home → sign out', (
@@ -618,6 +619,51 @@ void appLockTests() {
       find.text('Perangkat ini belum punya biometrik atau PIN.'),
       findsOneWidget,
     );
+  });
+}
+
+void profileTests() {
+  testWidgets('ubah profil memperbarui sapaan di beranda', (tester) async {
+    await pumpSignedIn(tester);
+    await tester.tap(find.text('Profil').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Ubah profil'));
+    await tester.pumpAndSettle();
+
+    await enterField(tester, 0, 'Demo Baru');
+    await tester.tap(find.widgetWithText(FButton, 'Simpan'));
+    await tester.pumpAndSettle();
+    expect(find.text('Demo Baru'), findsWidgets); // kartu profil
+
+    await tester.tap(find.text('Beranda').last);
+    await tester.pumpAndSettle();
+    expect(find.text('Halo, Demo Baru'), findsOneWidget);
+  });
+
+  testWidgets('ganti password menolak password lama yang salah', (
+    tester,
+  ) async {
+    await pumpSignedIn(tester);
+    await tester.tap(find.text('Profil').last);
+    await tester.pumpAndSettle();
+    await tester.tap(find.text('Ganti password'));
+    await tester.pumpAndSettle();
+
+    await enterField(tester, 0, 'salah');
+    await enterField(tester, 1, 'baru1234');
+    await enterField(tester, 2, 'baru1234');
+    await tester.tap(find.widgetWithText(FButton, 'Simpan'));
+    await tester.pumpAndSettle();
+    expect(find.text('Password saat ini salah.'), findsOneWidget);
+
+    await enterField(tester, 0, FakeAuthApi.demoPassword);
+    await tester.tap(find.widgetWithText(FButton, 'Simpan'));
+    await tester.pumpAndSettle();
+    expect(find.text('Password diganti'), findsOneWidget); // toast
+    expect(
+      find.text('Ganti password'),
+      findsOneWidget,
+    ); // kembali ke tile profil
   });
 }
 

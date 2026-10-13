@@ -14,6 +14,8 @@ abstract final class AppRoutes {
   static String noteDetail(String id) => '/notes/$id';
   static String noteEdit(String id) => '/notes/$id/edit';
   static const profile = '/profile';
+  static const editProfile = '/profile/edit';
+  static const changePassword = '/profile/password';
   static const settings = '/profile/settings';
   static const featureFlags = '/profile/settings/flags';
 

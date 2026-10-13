@@ -145,5 +145,16 @@
   "lockBody": "Unlock with biometrics or your device PIN.",
   "unlock": "Unlock",
   "unlockReason": "Unlock {appName}",
-  "unlockFailed": "Verification failed. Try again."
+  "unlockFailed": "Verification failed. Try again.",
+  "editProfileTitle": "Edit profile",
+  "editProfileSubtitle": "Name and account details",
+  "changePasswordTitle": "Change password",
+  "changePasswordSubtitle": "Update your account password",
+  "currentPasswordLabel": "Current password",
+  "newPasswordLabel": "New password",
+  "profileSaved": "Profile saved",
+  "passwordChanged": "Password changed",
+  "editProfileFailed": "Could not save profile",
+  "changePasswordFailed": "Could not change password",
+  "authWrongPassword": "The current password is incorrect."
 }

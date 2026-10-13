@@ -59,6 +59,36 @@ void main() {
     );
   });
 
+  test('updateProfile dan changePassword memakai token sesi', () async {
+    final session = await api.signIn(
+      email: FakeAuthApi.demoEmail,
+      password: FakeAuthApi.demoPassword,
+    );
+    final updated = await api.updateProfile(session.token, name: 'Demo Baru');
+    expect(updated.name, 'Demo Baru');
+    expect((await api.me(session.token))!.name, 'Demo Baru');
+
+    expect(
+      () =>
+          api.changePassword(session.token, current: 'salah', next: 'baru1234'),
+      throwsA(
+        isA<AuthException>().having((e) => e.code, 'code', 'wrong-password'),
+      ),
+    );
+    await api.changePassword(
+      session.token,
+      current: FakeAuthApi.demoPassword,
+      next: 'baru1234',
+    );
+    expect(
+      (await api.signIn(
+        email: FakeAuthApi.demoEmail,
+        password: 'baru1234',
+      )).user.id,
+      '1',
+    );
+  });
+
   test('describeAuthError memetakan kode ke bahasa aktif', () async {
     final l10n = await AppLocalizations.delegate.load(const Locale('en'));
     expect(
