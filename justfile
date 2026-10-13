@@ -125,7 +125,7 @@ run-release: info
 
 # Build lalu pasang APK debug ke Waydroid tanpa menjalankan sesi flutter
 install: connect build-apk
-    flutter install -d {{device}} --debug {{defines}}
+    flutter install -d {{device}} --debug
 
 # Hapus aplikasi dari Waydroid
 uninstall: connect
