@@ -24,10 +24,13 @@ class OfflineBanner extends StatelessWidget {
         children: [
           Icon(FLucideIcons.wifiOff, size: 16, color: theme.colors.destructiveForeground),
           const Gap(AppSpacing.sm),
-          Text(
-            context.l10n.offlineBanner,
-            style: theme.typography.body.sm
-                .copyWith(color: theme.colors.destructiveForeground),
+          Flexible(
+            child: Text(
+              context.l10n.offlineBanner,
+              overflow: TextOverflow.ellipsis,
+              style: theme.typography.body.sm
+                  .copyWith(color: theme.colors.destructiveForeground),
+            ),
           ),
         ],
       ),

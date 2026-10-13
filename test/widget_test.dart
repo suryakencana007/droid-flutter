@@ -35,6 +35,19 @@ Widget buildApp({
   );
 }
 
+/// Viewport test bawaan 800x600 melewati breakpoint sidebar (640), jadi test
+/// alur ponsel memakai ukuran ponsel secara eksplisit.
+void usePhoneViewport(WidgetTester tester) {
+  tester.view.physicalSize = const Size(480, 900);
+  tester.view.devicePixelRatio = 1;
+  addTearDown(tester.view.reset);
+}
+
+Future<void> pumpPhone(WidgetTester tester, Widget app) async {
+  usePhoneViewport(tester);
+  await tester.pumpWidget(app);
+}
+
 Future<void> enterField(WidgetTester tester, int index, String text) async {
   await tester.enterText(find.byType(EditableText).at(index), text);
   await tester.pump();
@@ -42,10 +55,11 @@ Future<void> enterField(WidgetTester tester, int index, String text) async {
 
 void main() {
   notesTests();
+  responsiveTests();
 
   testWidgets('alur pertama: onboarding → sign in → home → sign out',
       (tester) async {
-    await tester.pumpWidget(buildApp());
+    await pumpPhone(tester, buildApp());
     await tester.pumpAndSettle();
 
     // Onboarding tampil karena flag belum ada.
@@ -97,7 +111,7 @@ void main() {
       ),
     );
 
-    await tester.pumpWidget(buildApp(
+    await pumpPhone(tester, buildApp(
       prefs: {'onboarding_done': true},
       secrets: {'auth_token': session!.token},
       authApi: api,
@@ -108,7 +122,7 @@ void main() {
   });
 
   testWidgets('sign up membuat akun dan masuk', (tester) async {
-    await tester.pumpWidget(buildApp(prefs: {'onboarding_done': true}));
+    await pumpPhone(tester, buildApp(prefs: {'onboarding_done': true}));
     await tester.pumpAndSettle();
 
     // Tautan berada di bawah lipatan viewport test (800x600), gulir dulu.
@@ -143,7 +157,7 @@ void main() {
     );
     final prefs = MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'});
 
-    await tester.pumpWidget(ProviderScope(
+    await pumpPhone(tester, ProviderScope(
       overrides: [
         isOnlineProvider.overrideWith((ref) => Stream.value(true)),
         keyValueStoreProvider.overrideWithValue(prefs),
@@ -178,7 +192,7 @@ void main() {
         password: FakeAuthApi.demoPassword,
       ),
     );
-    await tester.pumpWidget(buildApp(
+    await pumpPhone(tester, buildApp(
       prefs: {'onboarding_done': true},
       secrets: {'auth_token': session!.token},
       authApi: api,
@@ -189,19 +203,24 @@ void main() {
   });
 
   testWidgets('bahasa mengikuti pilihan user dan bisa diganti', (tester) async {
-    await tester.pumpWidget(buildApp(prefs: {'onboarding_done': true}, locale: 'en'));
+    await pumpPhone(tester, buildApp(prefs: {'onboarding_done': true}, locale: 'en'));
     await tester.pumpAndSettle();
     expect(find.text('Sign in'), findsWidgets);
     expect(find.text('Masuk'), findsNothing);
 
     // Tanpa preferensi: ikuti locale platform test (en_US).
-    await tester.pumpWidget(buildApp(prefs: {'onboarding_done': true}, locale: null));
+    await pumpPhone(tester, buildApp(prefs: {'onboarding_done': true}, locale: null));
     await tester.pumpAndSettle();
     expect(find.text('Sign in'), findsWidgets);
   });
 }
 
-Future<void> pumpSignedIn(WidgetTester tester, {FakeNoteApi? notes}) async {
+Future<void> pumpSignedIn(
+  WidgetTester tester, {
+  FakeNoteApi? notes,
+  bool phone = true,
+}) async {
+  if (phone) usePhoneViewport(tester);
   final api = FakeAuthApi(latency: Duration.zero);
   final session = await tester.runAsync(
     () => api.signIn(
@@ -287,5 +306,21 @@ void notesTests() {
 
     expect(find.text('Catatan 40'), findsNothing);
     expect(find.text('Catatan 39'), findsOneWidget);
+  });
+}
+
+void responsiveTests() {
+  testWidgets('layar lebar memakai sidebar, bukan bottom tabs', (tester) async {
+    tester.view.physicalSize = const Size(1200, 800);
+    tester.view.devicePixelRatio = 1;
+    addTearDown(tester.view.reset);
+
+    await pumpSignedIn(tester, phone: false);
+    expect(find.byType(FSidebar), findsOneWidget);
+    expect(find.byType(FBottomNavigationBar), findsNothing);
+
+    await tester.tap(find.widgetWithText(FSidebarItem, 'Catatan'));
+    await tester.pumpAndSettle();
+    expect(find.text('Catatan 40'), findsOneWidget);
   });
 }
