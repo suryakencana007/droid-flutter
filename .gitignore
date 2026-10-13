@@ -47,3 +47,7 @@ app.*.map.json
 # Widget Preview related
 .widget_preview/
 screenshots/
+
+# Signing release (jangan di-commit)
+android/key.properties
+android/keystore/

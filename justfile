@@ -68,6 +68,26 @@ clean:
     flutter clean
     flutter pub get
 
+# ---------- Release ----------
+
+# Buat keystore release di android/keystore/release.jks (sekali), lalu isi android/key.properties
+keygen:
+    mkdir -p android/keystore
+    keytool -genkeypair -v -keystore android/keystore/release.jks -alias release -keyalg RSA -keysize 2048 -validity 10000
+    @echo "Salin android/key.properties.example ke android/key.properties dan isi password."
+
+# Naikkan versi: `just bump patch|minor|major|1.2.3`
+bump part="patch":
+    dart run tool/bump.dart {{part}}
+
+# Siapkan rilis: changelog, bump, commit, tag. `just release 1.2.0`
+release version:
+    dart run tool/release.dart {{version}}
+
+# Build App Bundle release untuk Play Store (flavor dari `env=`, default dev)
+build-aab:
+    flutter build appbundle --release {{defines}}
+
 # ---------- Branding ----------
 
 # Generate ikon launcher Android/iOS dari assets/brand

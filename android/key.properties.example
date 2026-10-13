@@ -1,0 +1,5 @@
+# Salin ke android/key.properties (di-gitignore) dan isi. Buat keystore dengan `just keygen`.
+storeFile=../keystore/release.jks
+storePassword=GANTI
+keyAlias=release
+keyPassword=GANTI
