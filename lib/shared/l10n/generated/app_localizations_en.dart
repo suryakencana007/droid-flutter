@@ -287,4 +287,31 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get authEmailInUse => 'This email is already registered.';
+
+  @override
+  String get errorNetwork => 'No internet connection.';
+
+  @override
+  String get errorTimeout => 'The server did not respond. Try again.';
+
+  @override
+  String get errorUnauthorized => 'Your session expired, please sign in again.';
+
+  @override
+  String get errorNotFound => 'Not found.';
+
+  @override
+  String get errorServer => 'The server had a problem. Try again later.';
+
+  @override
+  String get retry => 'Retry';
+
+  @override
+  String get offlineBanner => 'No internet connection';
+
+  @override
+  String get emptyTitle => 'Nothing here yet';
+
+  @override
+  String get emptyBody => 'Data will show up here.';
 }

@@ -1,20 +1,28 @@
 import 'package:droid/shared/l10n/index.dart';
+import 'package:droid/shared/lib/index.dart';
 import 'package:droid/shared/ui/index.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:material_ui/material_ui.dart';
 
-/// Kerangka menu utama: bottom tabs yang membungkus branch go_router.
-class AppShell extends StatelessWidget {
+/// Kerangka menu utama: banner offline, konten branch, dan bottom tabs.
+class AppShell extends ConsumerWidget {
   const AppShell({required this.navigationShell, super.key});
 
   final StatefulNavigationShell navigationShell;
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     final l10n = context.l10n;
+    final online = ref.watch(isOnlineProvider).value ?? true;
 
     return Scaffold(
-      body: navigationShell,
+      body: Column(
+        children: [
+          if (!online) const SafeArea(bottom: false, child: OfflineBanner()),
+          Expanded(child: navigationShell),
+        ],
+      ),
       bottomNavigationBar: FBottomNavigationBar(
         index: navigationShell.currentIndex,
         onChange: (index) => navigationShell.goBranch(

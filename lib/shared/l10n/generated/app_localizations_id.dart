@@ -287,4 +287,32 @@ class AppLocalizationsId extends AppLocalizations {
 
   @override
   String get authEmailInUse => 'Email sudah terdaftar.';
+
+  @override
+  String get errorNetwork => 'Tidak ada koneksi internet.';
+
+  @override
+  String get errorTimeout => 'Server tidak merespons. Coba lagi.';
+
+  @override
+  String get errorUnauthorized => 'Sesi berakhir, silakan masuk lagi.';
+
+  @override
+  String get errorNotFound => 'Data tidak ditemukan.';
+
+  @override
+  String get errorServer =>
+      'Server sedang bermasalah. Coba beberapa saat lagi.';
+
+  @override
+  String get retry => 'Coba lagi';
+
+  @override
+  String get offlineBanner => 'Tidak ada koneksi internet';
+
+  @override
+  String get emptyTitle => 'Belum ada data';
+
+  @override
+  String get emptyBody => 'Data akan muncul di sini.';
 }

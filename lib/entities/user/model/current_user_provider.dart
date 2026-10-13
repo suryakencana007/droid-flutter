@@ -1,3 +1,4 @@
+import 'package:droid/shared/api/index.dart';
 import 'package:droid/shared/lib/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -8,10 +9,15 @@ import 'user.dart';
 /// User yang sedang masuk. `null` berarti belum sign in.
 ///
 /// Saat app mulai, sesi dipulihkan dari token di [TokenStore]; selama proses
-/// itu state-nya loading dan router menahan di splash.
+/// itu state-nya loading dan router menahan di splash. Respons 401 dari
+/// server (lewat [sessionExpiredProvider]) membersihkan sesi otomatis.
 class CurrentUserNotifier extends AsyncNotifier<User?> {
   @override
   Future<User?> build() async {
+    ref.listen(sessionExpiredProvider, (previous, next) {
+      if (next > (previous ?? 0)) _expire();
+    });
+
     final tokens = ref.read(tokenStoreProvider);
     final token = await tokens.read();
     if (token == null) return null;
@@ -29,6 +35,11 @@ class CurrentUserNotifier extends AsyncNotifier<User?> {
   void set(User user) => state = AsyncData(user);
 
   void clear() => state = const AsyncData(null);
+
+  Future<void> _expire() async {
+    await ref.read(tokenStoreProvider).clear();
+    state = const AsyncData(null);
+  }
 }
 
 final currentUserProvider =

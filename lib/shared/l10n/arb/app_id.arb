@@ -131,5 +131,14 @@
   },
   "errorGeneric": "Terjadi kesalahan. Coba lagi.",
   "authInvalidCredentials": "Email atau password salah.",
-  "authEmailInUse": "Email sudah terdaftar."
+  "authEmailInUse": "Email sudah terdaftar.",
+  "errorNetwork": "Tidak ada koneksi internet.",
+  "errorTimeout": "Server tidak merespons. Coba lagi.",
+  "errorUnauthorized": "Sesi berakhir, silakan masuk lagi.",
+  "errorNotFound": "Data tidak ditemukan.",
+  "errorServer": "Server sedang bermasalah. Coba beberapa saat lagi.",
+  "retry": "Coba lagi",
+  "offlineBanner": "Tidak ada koneksi internet",
+  "emptyTitle": "Belum ada data",
+  "emptyBody": "Data akan muncul di sini."
 }

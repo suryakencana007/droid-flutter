@@ -16,9 +16,11 @@ Widget buildApp({
   Map<String, String> secrets = const {},
   FakeAuthApi? authApi,
   String? locale = 'id',
+  bool online = true,
 }) {
   return ProviderScope(
     overrides: [
+      isOnlineProvider.overrideWith((ref) => Stream.value(online)),
       keyValueStoreProvider.overrideWithValue(
         MemoryKeyValueStore({'locale': ?locale, ...prefs}),
       ),
@@ -139,6 +141,7 @@ void main() {
 
     await tester.pumpWidget(ProviderScope(
       overrides: [
+        isOnlineProvider.overrideWith((ref) => Stream.value(true)),
         keyValueStoreProvider.overrideWithValue(prefs),
         secureStoreProvider.overrideWithValue(
           MemorySecureStore({'auth_token': session!.token}),
@@ -161,6 +164,24 @@ void main() {
     final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
     expect(app.themeMode, ThemeMode.dark);
     expect(await prefs.getString('theme_mode'), 'dark');
+  });
+
+  testWidgets('banner offline tampil saat tidak ada koneksi', (tester) async {
+    final api = FakeAuthApi(latency: Duration.zero);
+    final session = await tester.runAsync(
+      () => api.signIn(
+        email: FakeAuthApi.demoEmail,
+        password: FakeAuthApi.demoPassword,
+      ),
+    );
+    await tester.pumpWidget(buildApp(
+      prefs: {'onboarding_done': true},
+      secrets: {'auth_token': session!.token},
+      authApi: api,
+      online: false,
+    ));
+    await tester.pumpAndSettle();
+    expect(find.byType(OfflineBanner), findsOneWidget);
   });
 
   testWidgets('bahasa mengikuti pilihan user dan bisa diganti', (tester) async {

@@ -1,5 +1,6 @@
 library;
 
+export 'connectivity/connectivity_provider.dart';
 export 'errors/crash_reporter.dart';
 export 'errors/describe_error.dart';
 export 'logging/app_logger.dart';

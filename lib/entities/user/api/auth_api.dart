@@ -11,10 +11,13 @@ class AuthResult {
 /// Kegagalan auth yang bisa ditampilkan ke user. [code] stabil untuk logika,
 /// [message] untuk UI.
 class AuthException implements Exception {
-  const AuthException(this.code, this.message);
+  const AuthException(this.code, this.message, {this.cause});
 
   final String code;
   final String message;
+
+  /// Error asal (misalnya [ApiException]) bila ada, untuk pesan terlokalisasi.
+  final Object? cause;
 
   @override
   String toString() => 'AuthException($code): $message';

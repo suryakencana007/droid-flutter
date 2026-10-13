@@ -86,5 +86,14 @@
   "validationMinLength": "At least {count} characters",
   "errorGeneric": "Something went wrong. Try again.",
   "authInvalidCredentials": "Incorrect email or password.",
-  "authEmailInUse": "This email is already registered."
+  "authEmailInUse": "This email is already registered.",
+  "errorNetwork": "No internet connection.",
+  "errorTimeout": "The server did not respond. Try again.",
+  "errorUnauthorized": "Your session expired, please sign in again.",
+  "errorNotFound": "Not found.",
+  "errorServer": "The server had a problem. Try again later.",
+  "retry": "Retry",
+  "offlineBanner": "No internet connection",
+  "emptyTitle": "Nothing here yet",
+  "emptyBody": "Data will show up here."
 }

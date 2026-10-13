@@ -619,6 +619,60 @@ abstract class AppLocalizations {
   /// In id, this message translates to:
   /// **'Email sudah terdaftar.'**
   String get authEmailInUse;
+
+  /// No description provided for @errorNetwork.
+  ///
+  /// In id, this message translates to:
+  /// **'Tidak ada koneksi internet.'**
+  String get errorNetwork;
+
+  /// No description provided for @errorTimeout.
+  ///
+  /// In id, this message translates to:
+  /// **'Server tidak merespons. Coba lagi.'**
+  String get errorTimeout;
+
+  /// No description provided for @errorUnauthorized.
+  ///
+  /// In id, this message translates to:
+  /// **'Sesi berakhir, silakan masuk lagi.'**
+  String get errorUnauthorized;
+
+  /// No description provided for @errorNotFound.
+  ///
+  /// In id, this message translates to:
+  /// **'Data tidak ditemukan.'**
+  String get errorNotFound;
+
+  /// No description provided for @errorServer.
+  ///
+  /// In id, this message translates to:
+  /// **'Server sedang bermasalah. Coba beberapa saat lagi.'**
+  String get errorServer;
+
+  /// No description provided for @retry.
+  ///
+  /// In id, this message translates to:
+  /// **'Coba lagi'**
+  String get retry;
+
+  /// No description provided for @offlineBanner.
+  ///
+  /// In id, this message translates to:
+  /// **'Tidak ada koneksi internet'**
+  String get offlineBanner;
+
+  /// No description provided for @emptyTitle.
+  ///
+  /// In id, this message translates to:
+  /// **'Belum ada data'**
+  String get emptyTitle;
+
+  /// No description provided for @emptyBody.
+  ///
+  /// In id, this message translates to:
+  /// **'Data akan muncul di sini.'**
+  String get emptyBody;
 }
 
 class _AppLocalizationsDelegate
