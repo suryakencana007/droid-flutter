@@ -23,6 +23,12 @@ Target platform: **Android** dan **iOS**. Application ID / bundle ID:
 | i18n            | Indonesia + English (ARB), pemilih bahasa                            | [docs/i18n.md](docs/i18n.md) |
 | Model           | freezed + json_serializable, `just gen`                              | [docs/screens.md](docs/screens.md) |
 | Branding        | Ikon launcher adaptif dan splash native dari `assets/brand`          | [docs/branding.md](docs/branding.md) |
+| Rilis           | Signing release, `just bump`/`release`, CHANGELOG                    | [docs/release.md](docs/release.md) |
+| Notifikasi      | `PushService` dengan notifikasi lokal, siap FCM, toggle + izin       | [docs/push.md](docs/push.md) |
+| Feature flags   | Lokal dari `env/*.json` atau Flagsmith, contoh flag, halaman debug   | [docs/feature-flags.md](docs/feature-flags.md) |
+| Offline         | Cache drift + antrian operasi untuk catatan, sinkron saat online     | [docs/offline.md](docs/offline.md) |
+| Keamanan & akun | Kunci aplikasi biometrik, izin dengan dialog penjelasan, ubah profil, ganti password | [docs/screens.md](docs/screens.md) |
+| Analitik        | `Analytics` interface + screen view otomatis dari router             | [docs/flavors.md](docs/flavors.md) |
 | Kualitas        | Analyzer ketat, widget test alur end-to-end, integration test di device, hook pre-commit, CI GitHub Actions, Dependabot | [docs/branding.md](docs/branding.md) |
 | Device          | Alur kerja Waydroid (Android container di Linux)                     | [docs/waydroid.md](docs/waydroid.md) |
 
@@ -133,3 +139,4 @@ Setelah itu ganti backend: isi `env/*.json`, lalu sesuaikan `DioAuthApi` dan
 - `shared_preferences`, `flutter_secure_storage`: preferensi dan token
 - `freezed`, `json_serializable`: model; `intl` + `flutter_localizations`: i18n
 - `connectivity_plus`, `package_info_plus`, `logging`
+- `permission_handler`, `flutter_local_notifications`, `local_auth`, `flagsmith`, `drift`

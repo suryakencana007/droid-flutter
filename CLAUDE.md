@@ -29,6 +29,10 @@ saat ganti sesi atau akun. Letakkan catatan operasional di `docs/`:
 - `docs/i18n.md`: ARB, `context.l10n`, menambah string/bahasa.
 - `docs/networking.md`: `ApiException`, 401, `DioAuthApi`, `AsyncValueView`, offline.
 - `docs/branding.md`: ikon/splash (`just brand`), git hook, integration test.
+- `docs/release.md`: signing Android, `just bump`/`release`, CHANGELOG.
+- `docs/push.md`: `PushService`, notifikasi lokal, resep tukar ke FCM.
+- `docs/feature-flags.md`: `FeatureFlags` lokal dan Flagsmith, `flagProvider`.
+- `docs/offline.md`: cache drift dan antrian offline (`CachedNoteApi`).
   Material diimpor dari `package:material_ui`, bukan `package:flutter/material.dart`.
 
 ## Task runner
