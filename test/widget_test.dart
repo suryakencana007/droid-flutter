@@ -4,6 +4,7 @@ import 'package:droid/entities/user/index.dart';
 import 'package:droid/features/delete_note/index.dart';
 import 'package:droid/features/sign_out/index.dart';
 import 'package:droid/features/toggle_theme/index.dart';
+import 'package:droid/shared/config/index.dart';
 import 'package:droid/shared/lib/index.dart';
 import 'package:droid/shared/ui/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -193,6 +194,38 @@ void main() {
     final app = tester.widget<MaterialApp>(find.byType(MaterialApp));
     expect(app.themeMode, ThemeMode.dark);
     expect(await prefs.getString('theme_mode'), 'dark');
+  });
+
+  testWidgets('analytics mencatat event sign in, user, dan screen', (
+    tester,
+  ) async {
+    final analytics = MemoryAnalytics();
+    await pumpPhone(
+      tester,
+      ProviderScope(
+        overrides: [
+          analyticsProvider.overrideWithValue(analytics),
+          isOnlineProvider.overrideWith((ref) => Stream.value(true)),
+          keyValueStoreProvider.overrideWithValue(
+            MemoryKeyValueStore({'onboarding_done': true, 'locale': 'id'}),
+          ),
+          secureStoreProvider.overrideWithValue(MemorySecureStore()),
+          authApiProvider.overrideWithValue(
+            FakeAuthApi(latency: Duration.zero),
+          ),
+        ],
+        child: const App(),
+      ),
+    );
+    await tester.pumpAndSettle();
+    await enterField(tester, 0, FakeAuthApi.demoEmail);
+    await enterField(tester, 1, FakeAuthApi.demoPassword);
+    await tester.tap(find.widgetWithText(FButton, 'Masuk'));
+    await tester.pumpAndSettle();
+
+    expect(analytics.events.map((e) => e.$1), contains('sign_in'));
+    expect(analytics.userId, '1');
+    expect(analytics.screens, containsAll([AppRoutes.signIn, AppRoutes.home]));
   });
 
   testWidgets('banner offline tampil saat tidak ada koneksi', (tester) async {

@@ -13,6 +13,7 @@ import 'package:droid/pages/sign_in/index.dart';
 import 'package:droid/pages/sign_up/index.dart';
 import 'package:droid/pages/splash/index.dart';
 import 'package:droid/shared/config/index.dart';
+import 'package:droid/shared/lib/index.dart';
 import 'package:droid/widgets/app_shell/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
@@ -26,8 +27,12 @@ final appRouterProvider = Provider<GoRouter>((ref) {
     ..listen(onboardingDoneProvider, (_, _) => refresh.refresh())
     ..onDispose(refresh.dispose);
 
+  final analytics = ref.watch(analyticsProvider);
+  AnalyticsRouteObserver observer() => AnalyticsRouteObserver(analytics);
+
   final router = GoRouter(
     initialLocation: AppRoutes.splash,
+    observers: [observer()],
     debugLogDiagnostics: Env.isDebug,
     refreshListenable: refresh,
     redirect: (context, state) => _redirect(ref, state),
@@ -57,6 +62,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             AppShell(navigationShell: navigationShell),
         branches: [
           StatefulShellBranch(
+            observers: [observer()],
             routes: [
               GoRoute(
                 path: AppRoutes.home,
@@ -65,6 +71,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
+            observers: [observer()],
             routes: [
               GoRoute(
                 path: AppRoutes.notes,
@@ -92,6 +99,7 @@ final appRouterProvider = Provider<GoRouter>((ref) {
             ],
           ),
           StatefulShellBranch(
+            observers: [observer()],
             routes: [
               GoRoute(
                 path: AppRoutes.profile,

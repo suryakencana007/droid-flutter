@@ -1,5 +1,7 @@
 library;
 
+export 'analytics/analytics.dart';
+export 'analytics/analytics_route_observer.dart';
 export 'connectivity/connectivity_provider.dart';
 export 'errors/crash_reporter.dart';
 export 'errors/describe_error.dart';

@@ -21,7 +21,9 @@ class App extends ConsumerWidget {
     final locale = ref.watch(localeProvider).value;
 
     ref.listen(currentUserProvider, (_, next) {
-      ref.read(crashReporterProvider).setUser(next.value?.id);
+      final id = next.value?.id;
+      ref.read(crashReporterProvider).setUser(id);
+      ref.read(analyticsProvider).setUser(id);
     });
 
     return MaterialApp.router(

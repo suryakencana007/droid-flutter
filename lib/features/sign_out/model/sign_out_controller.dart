@@ -20,6 +20,7 @@ class SignOutController extends AsyncNotifier<void> {
       }
       await tokens.clear();
       ref.read(currentUserProvider.notifier).clear();
+      await ref.read(analyticsProvider).logEvent('sign_out');
     });
   }
 }

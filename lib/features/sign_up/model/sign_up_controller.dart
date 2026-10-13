@@ -18,6 +18,7 @@ class SignUpController extends AsyncNotifier<void> {
           .signUp(name: name, email: email, password: password);
       await ref.read(tokenStoreProvider).write(result.token);
       ref.read(currentUserProvider.notifier).set(result.user);
+      await ref.read(analyticsProvider).logEvent('sign_up');
     });
     return !state.hasError;
   }

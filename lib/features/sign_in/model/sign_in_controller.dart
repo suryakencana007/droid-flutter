@@ -15,6 +15,7 @@ class SignInController extends AsyncNotifier<void> {
           .signIn(email: email, password: password);
       await ref.read(tokenStoreProvider).write(result.token);
       ref.read(currentUserProvider.notifier).set(result.user);
+      await ref.read(analyticsProvider).logEvent('sign_in');
     });
     return !state.hasError;
   }

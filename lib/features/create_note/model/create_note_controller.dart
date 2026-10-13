@@ -1,4 +1,5 @@
 import 'package:droid/entities/note/index.dart';
+import 'package:droid/shared/lib/index.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class CreateNoteController extends AsyncNotifier<void> {
@@ -12,6 +13,7 @@ class CreateNoteController extends AsyncNotifier<void> {
     state = await AsyncValue.guard(() async {
       created = await ref.read(noteApiProvider).create(draft);
       ref.read(notesProvider.notifier).upsert(created!);
+      await ref.read(analyticsProvider).logEvent('note_create');
     });
     return state.hasError ? null : created;
   }
