@@ -7,6 +7,10 @@ ip := `waydroid status 2>/dev/null | awk -F'\t' '/IP address/{print $2}' || true
 device := ip + ":5555"
 app_id := "com.kubus.work.droid"
 
+# Flavor: dev (default), staging, prod. Contoh: `just env=staging run`
+env := "dev"
+defines := "--dart-define-from-file=env/" + env + ".json"
+
 # Tampilkan daftar recipe
 default:
     @just --list --unsorted
@@ -30,7 +34,7 @@ analyze:
 
 # Semua test, termasuk uji aturan arsitektur FSD
 test *args:
-    flutter test {{args}}
+    flutter test {{defines}} {{args}}
 
 # Hanya uji aturan import FSD
 test-arch:
@@ -49,13 +53,13 @@ fix:
 
 # ---------- Build ----------
 
-# Build APK debug
+# Build APK debug (flavor dari `env=`)
 build-apk:
-    flutter build apk --debug
+    flutter build apk --debug {{defines}}
 
-# Build APK release
+# Build APK release (flavor dari `env=`)
 build-release:
-    flutter build apk --release
+    flutter build apk --release {{defines}}
 
 # Bersihkan artefak build lalu pub get
 clean:
@@ -113,15 +117,15 @@ info: connect
 
 # Jalankan aplikasi di Waydroid (hot reload: r, hot restart: R, keluar: q)
 run *args: info
-    flutter run -d {{device}} {{args}}
+    flutter run -d {{device}} {{defines}} {{args}}
 
 # Jalankan aplikasi dalam mode release di Waydroid
 run-release: info
-    flutter run -d {{device}} --release
+    flutter run -d {{device}} --release {{defines}}
 
 # Build lalu pasang APK debug ke Waydroid tanpa menjalankan sesi flutter
 install: connect build-apk
-    flutter install -d {{device}} --debug
+    flutter install -d {{device}} --debug {{defines}}
 
 # Hapus aplikasi dari Waydroid
 uninstall: connect

@@ -1,0 +1,6 @@
+{
+  "APP_ENV": "dev",
+  "API_BASE_URL": "http://10.0.2.2:8080",
+  "USE_FAKE_API": true,
+  "LOG_LEVEL": "ALL"
+}

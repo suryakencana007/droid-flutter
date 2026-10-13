@@ -1,12 +1,36 @@
 import 'package:flutter/foundation.dart';
 
-/// Konfigurasi runtime. Override lewat `--dart-define`, contoh:
-/// `flutter run --dart-define=API_BASE_URL=https://api.example.com`
+enum AppFlavor { dev, staging, prod }
+
+/// Konfigurasi runtime dari `--dart-define-from-file=env/<flavor>.json`
+/// (lihat `env/` dan recipe `just env=staging run`). Tanpa define, nilainya
+/// setara `env/dev.json` supaya `flutter run` polos tetap jalan.
 abstract final class Env {
+  static const _env = String.fromEnvironment('APP_ENV', defaultValue: 'dev');
+
+  static final AppFlavor flavor = AppFlavor.values.firstWhere(
+    (f) => f.name == _env,
+    orElse: () => AppFlavor.dev,
+  );
+
   static const apiBaseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'https://jsonplaceholder.typicode.com',
+    defaultValue: 'http://10.0.2.2:8080',
   );
+
+  /// Pakai implementasi API in-memory (`FakeAuthApi`, dst.) alih-alih HTTP.
+  static const useFakeApi = bool.fromEnvironment(
+    'USE_FAKE_API',
+    defaultValue: true,
+  );
+
+  /// Nama level `package:logging`: ALL, FINE, INFO, WARNING, SEVERE, OFF.
+  static const logLevel = String.fromEnvironment(
+    'LOG_LEVEL',
+    defaultValue: 'ALL',
+  );
+
+  static bool get isProd => flavor == AppFlavor.prod;
 
   static const bool isDebug = kDebugMode;
 }

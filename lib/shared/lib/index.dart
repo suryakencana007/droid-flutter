@@ -1,5 +1,8 @@
 library;
 
+export 'errors/crash_reporter.dart';
+export 'errors/describe_error.dart';
+export 'logging/app_logger.dart';
 export 'result.dart';
 export 'storage/key_value_store.dart';
 export 'storage/secure_store.dart';
