@@ -17,10 +17,11 @@ default:
 
 # ---------- Setup ----------
 
-# Pasang toolchain (mise) dan dependensi Dart
+# Pasang toolchain (mise), dependensi Dart, dan generate kode
 setup:
     mise install
     flutter pub get
+    just gen
 
 # Cek toolchain Flutter dan Android
 doctor:
@@ -65,6 +66,16 @@ build-release:
 clean:
     flutter clean
     flutter pub get
+
+# ---------- Codegen ----------
+
+# Generate kode freezed / json_serializable (hasilnya di-commit)
+gen:
+    dart run build_runner build --delete-conflicting-outputs
+
+# Generate terus-menerus saat file berubah
+gen-watch:
+    dart run build_runner watch --delete-conflicting-outputs
 
 # ---------- i18n ----------
 

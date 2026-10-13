@@ -61,6 +61,24 @@ Tiga tab utama dibungkus `widgets/app_shell` (`FBottomNavigationBar` di atas
 (`MemoryKeyValueStore`, `MemorySecureStore`) untuk test, dioverride lewat
 `keyValueStoreProvider` dan `secureStoreProvider`.
 
+## Model dan codegen
+
+Model data memakai [freezed](https://pub.dev/packages/freezed) +
+json_serializable, contoh `lib/entities/user/model/user.dart`:
+
+```dart
+@freezed
+abstract class User with _$User {
+  const User._();                      // agar bisa punya getter/method
+  const factory User({required String id, required String name}) = _User;
+  factory User.fromJson(Map<String, dynamic> json) => _$UserFromJson(json);
+}
+```
+
+Setelah mengubah model jalankan `just gen` (atau `just gen-watch` saat
+mengembangkan). File `*.freezed.dart` dan `*.g.dart` ikut di-commit supaya
+clone langsung bisa `just check`; analyzer dan test arsitektur mengabaikannya.
+
 ## Mengganti backend auth
 
 Kontrak ada di `lib/entities/user/api/auth_api.dart`:
