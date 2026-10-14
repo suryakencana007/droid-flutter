@@ -34,3 +34,16 @@ just release 1.2.0        # changelog → [1.2.0] - tanggal, bump pubspec, commi
 git push && git push --tags
 just env=prod build-aab   # unggah ke Play Console
 ```
+
+## Peringatan build yang diketahui
+
+- `WARNING: Your app uses the following plugins that apply Kotlin Gradle Plugin (KGP): firebase_core`
+  berasal dari plugin `firebase_core` (versi 4.15.0 masih memakai
+  `apply plugin: 'kotlin-android'`), bukan dari project ini. Build tetap
+  berhasil. Dependabot akan membawa versi baru; saat FlutterFire merilis versi
+  dengan Built-in Kotlin, peringatan hilang sendiri. Pantau di
+  https://github.com/firebase/flutterfire.
+- `Warning: SDK processing. This version only understands SDK XML versions up to 3`
+  muncul bila ada dua salinan `cmdline-tools` di `~/.androidsdk` (hasil unzip
+  manual di `latest` dan `cmdline-tools;latest` dari sdkmanager di `latest-2`).
+  Sisakan satu salinan di `cmdline-tools/latest`.
